@@ -2,12 +2,10 @@ package com.spring.springtest.Service;
 
 import com.spring.springtest.domain.Member;
 import com.spring.springtest.repository.MemberRepository;
-import org.springframework.stereotype.Controller;
 
 import java.util.List;
 import java.util.Optional;
 
-@Controller
 public class MemberService {
     private final MemberRepository memberRepository;
 
