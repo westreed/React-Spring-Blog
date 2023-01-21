@@ -17,4 +17,4 @@ const about = (props) => {
     console.log(props.match.params.id);
 }
 ```
-2. Bootstrap 참고 https://react-bootstrap.netlify.app/components/
+2. Bootstrap 참고 https://react-bootstrap.netlify.app/components/alerts

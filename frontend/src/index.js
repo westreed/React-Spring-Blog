@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Navbars from './pages/navbars';
+import Widget from './pages/widget';
 import Home from './pages/home';
-import Categories from './pages/categories';
+import Category from './components/category';
 import "./styles/common.css";
+import "./styles/font.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
@@ -16,10 +18,12 @@ root.render(
         <BrowserRouter>
             <Navbars/>
             <Container>
-                <Routes>
-                    <Route exact path='/' element={<Home/>}></Route>
-                    <Route exact path='/categories' element={<Categories/>}></Route>
-                </Routes>
+                <div style={{display:"flex", flexDirection:"row"}}>
+                    <Widget/>
+                    <Routes>
+                        <Route exact path='/' element={<Home/>}></Route>
+                    </Routes>
+                </div>
             </Container>
         </BrowserRouter>
   </div>

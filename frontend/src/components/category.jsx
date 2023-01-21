@@ -1,12 +1,12 @@
 
 
-const Home = (props) => {
+const Categories = (props) => {
     console.log(props);
     return (
         <div className="blogCard" style={{flex:1}}>
-            <h1>Home</h1>
+            <p>카테고리</p>
         </div>
     );
 }
 
-export default Home;
+export default Categories;
