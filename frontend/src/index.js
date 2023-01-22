@@ -9,13 +9,13 @@ import { Container } from 'react-bootstrap';
 import Navbars from './pages/navbars';
 import Widget from './pages/widget';
 import Home from './pages/home';
-import Category from './components/category';
+// import Category from './components/category';
 import Footer from './pages/footer';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
-  <div className="App">
+    <div className="App">
         <BrowserRouter>
             <Navbars/>
             <Container>
@@ -28,7 +28,7 @@ root.render(
             </Container>
             <Footer/>
         </BrowserRouter>
-  </div>
+    </div>
   // </React.StrictMode>
 );
 
