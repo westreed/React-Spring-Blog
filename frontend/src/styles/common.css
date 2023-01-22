@@ -22,3 +22,6 @@ a:hover {
     width: 64px;
     height: 64px;
 }
+
+.ck-editor__editable { height: 400px; }
+.ck-content { font-size: 12px; }

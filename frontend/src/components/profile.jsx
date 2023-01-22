@@ -3,7 +3,7 @@
 
 const Profile = () => {
     return (
-        <div className="blogCard text-center">
+        <div className="blogCard text-center shadow-sm bg-body rounded">
             <img src='/avatar.png' style={{maxHeight:"150px", objectFit: "cover"}} alt="profile" />
             <h5 className="mt-3">갈대</h5>
             <div style={{fontSize:"15px"}}>
