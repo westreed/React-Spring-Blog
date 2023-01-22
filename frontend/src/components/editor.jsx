@@ -283,6 +283,20 @@ const editorConfiguration  = {
             ],
         },
     },
+    style: {
+        definitions: [
+            {
+                name: 'Side quote',
+                element: 'blockquote',
+                classes: [ 'side-quote' ]
+            },
+            {
+                name: 'Spoiler',
+                element: 'span',
+                classes: [ 'spoiler' ]
+            },
+        ]
+    }
 };
 
 const Editor = (props) => {
