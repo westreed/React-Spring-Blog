@@ -23,5 +23,11 @@ a:hover {
     height: 64px;
 }
 
-.ck-editor__editable { height: 400px; }
-.ck-content { font-size: 12px; }
+.ck.ck-editor__editable:not(.ck-editor__nested-editable) { min-height: 400px; max-height: 800px; }
+.ck-content {
+    font-size: 14px;
+    font-family: 'nanumgothic';
+}
+.ck-content p {
+    margin-bottom: 0;
+}
