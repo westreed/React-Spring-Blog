@@ -18,3 +18,16 @@ const about = (props) => {
 }
 ```
 2. Bootstrap 참고 https://react-bootstrap.netlify.app/components/alerts
+
+3. CKEditor5 적용
+
+* https://velog.io/@yund_272/%EB%A6%AC%EC%95%A1%ED%8A%B8-CKEditor5-%EC%A0%81%EC%9A%A9%EA%B8%B0-88vylruv
+
+// "start": "react-scripts start",
+// "build": "react-scripts build",
+// "test": "react-scripts test",
+// "eject": "react-scripts eject"
+// "start": "craco start",
+// "build": "craco build",
+// "test": "craco test",
+// "eject": "react-scripts eject"

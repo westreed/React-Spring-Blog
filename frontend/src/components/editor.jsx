@@ -1,128 +1,204 @@
-import CKEditor from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-// import InlineEditor from '@ckeditor/ckeditor5-build-inline';
-import Highlight from '@ckeditor/ckeditor5-highlight/src/highlight';
-import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
-import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
-import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
-import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
-import Heading from '@ckeditor/ckeditor5-heading/src/heading';
-import UploadAdapter from '@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapter';
-import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat';
-import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote';
-import EasyImage from '@ckeditor/ckeditor5-easy-image/src/easyimage';
-import Image from '@ckeditor/ckeditor5-image/src/image';
-import ImageCaption from '@ckeditor/ckeditor5-image/src/imagecaption';
-import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle';
-import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar';
-import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload';
-import Link from '@ckeditor/ckeditor5-link/src/link';
-import List from '@ckeditor/ckeditor5-list/src/list';
-import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment'; 
-import CKFinder from '@ckeditor/ckeditor5-ckfinder/src/ckfinder';
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import CustomEditor from "@ckeditor/ckeditor5-custom";
+// import DecoupledEditor from "@ckeditor/ckeditor5-editor-decoupled/src/decouplededitor";
+// import Essentials from "@ckeditor/ckeditor5-essentials/src/essentials";
+// import Paragraph from "@ckeditor/ckeditor5-paragraph/src/paragraph";
+// import Bold from "@ckeditor/ckeditor5-basic-styles/src/bold";
+// import Italic from "@ckeditor/ckeditor5-basic-styles/src/italic";
+// import Underline from "@ckeditor/ckeditor5-basic-styles/src/underline";
+// import Strikethrough from "@ckeditor/ckeditor5-basic-styles/src/strikethrough";
+// import BlockQuote from "@ckeditor/ckeditor5-block-quote/src/blockquote";
+// import Link from "@ckeditor/ckeditor5-link/src/link";
+// // import PasteFromOffice from "@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice";
+// import Heading from "@ckeditor/ckeditor5-heading/src/heading";
+// import Font from "@ckeditor/ckeditor5-font/src/font";
+// import Image from "@ckeditor/ckeditor5-image/src/image";
+// import ImageStyle from "@ckeditor/ckeditor5-image/src/imagestyle";
+// import ImageToolbar from "@ckeditor/ckeditor5-image/src/imagetoolbar";
+// import ImageUpload from "@ckeditor/ckeditor5-image/src/imageupload";
+// import ImageResize from "@ckeditor/ckeditor5-image/src/imageresize";
+// import List from "@ckeditor/ckeditor5-list/src/list";
+// import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment";
+// import Table from "@ckeditor/ckeditor5-table/src/table";
+// import TableToolbar from "@ckeditor/ckeditor5-table/src/tabletoolbar";
+// // import TextTransformation from "@ckeditor/ckeditor5-typing/src/texttransformation";
+// import Indent from "@ckeditor/ckeditor5-indent/src/indent";
+// import IndentBlock from "@ckeditor/ckeditor5-indent/src/indentblock";
+// // import TableProperties from "@ckeditor/ckeditor5-table/src/tableproperties";
+// // import TableCellProperties from "@ckeditor/ckeditor5-table/src/tablecellproperties";
+// import Base64UploadAdapter from "@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter";
 
-const Editor = () => {
+const editorConfiguration  = {
+    language: "ko",
+    placeholder : "내용을 입력해주세요.",
+    // plugins: [
+    //     Essentials,
+    //     Paragraph,
+    //     Bold,
+    //     Italic,
+    //     Heading,
+    //     Indent,
+    //     IndentBlock,
+    //     Underline,
+    //     Strikethrough,
+    //     BlockQuote,
+    //     Font,
+    //     Alignment,
+    //     List,
+    //     Link,
+    //     Image,
+    //     ImageStyle,
+    //     ImageToolbar,
+    //     ImageUpload,
+    //     ImageResize,
+    //     Base64UploadAdapter,
+    //     Table,
+    //     TableToolbar,
+    //     // TableProperties,
+    //     // TableCellProperties,
+    //     // TextTransformation
+    // ],
+    toolbar: {
+        items: [
+            "heading",
+            "|",
+            "bold",
+            "italic",
+            "underline",
+            "strikethrough",
+            "|",
+            "fontSize",
+            "fontColor",
+            "fontBackgroundColor",
+            "|",
+            "alignment",
+            "outdent",
+            "indent",
+            "bulletedList",
+            "numberedList",
+            "blockQuote",
+            "|",
+            "link",
+            "insertTable",
+            "imageUpload",
+            "|",
+            "undo",
+            "redo",
+        ],
+    },
+    heading: {
+        options: [
+            {
+                model: "paragraph",
+                view: "p",
+                title: "본문",
+                class: "ck-heading_paragraph",
+            },
+            {
+                model: "heading1",
+                view: "h1",
+                title: "헤더1",
+                class: "ck-heading_heading1",
+            },
+            {
+                model: "heading2",
+                view: "h2",
+                title: "헤더2",
+                class: "ck-heading_heading2",
+            },
+            {
+                model: "heading3",
+                view: "h3",
+                title: "헤더3",
+                class: "ck-heading_heading3",
+            },
+        ],
+    },
+    fontSize: {
+        options: [
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            'default',
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+        ],
+    },
+    alignment: {
+        options: ["justify", "left", "center", "right"],
+    },
+    table: {
+        contentToolbar: [
+            "tableColumn",
+            "tableRow",
+            "mergeTableCells",
+            // "tableProperties",
+            // "tableCellProperties",
+        ],
+    },
+    image: {
+        resizeUnit: "px",
+        toolbar: [
+            "imageStyle:alignLeft",
+            // "imageStyle:full",
+            "imageStyle:alignRight",
+            "|",
+            "imageTextAlternative",
+        ],
+        styles: ["full", "alignLeft", "alignRight"],
+        type: ["JPEG", "JPG", "GIF", "PNG"],
+    },
+    // typing: {
+    //     transformations: {
+    //         remove: [
+    //             "enDash",
+    //             "emDash",
+    //             "oneHalf",
+    //             "oneThird",
+    //             "twoThirds",
+    //             "oneForth",
+    //             "threeQuarters",
+    //         ],
+    //     },
+    // },
+};
+
+const Editor = (props) => {
     return (
         <div className="editorContainer">
-            <h2>Using CKEditor 5 build in React</h2>
             <CKEditor
-                editor={ ClassicEditor }
-                data="<p>Hello from CKEditor 5!</p>"
-                onInit={ editor => {
-                    // You can store the "editor" and use when it is needed.
-                } }
-                onChange={ ( event, editor ) => {
-                    const data = editor.getData();
-                    console.log( { event, editor, data } );
-                } }
-                onBlur={ editor => {
-                    console.log( 'Blur.', editor );
-                } }
-                onFocus={ editor => {
-                    console.log( 'Focus.', editor );
-                } }
-                config = {
-                    {
-                plugins: [ CKFinder, Highlight, Essentials, Paragraph, Bold, Italic, Heading, UploadAdapter, Autoformat, BlockQuote, 
-                EasyImage, Image, ImageCaption, ImageStyle, ImageToolbar, ImageUpload, Link, List, Alignment ],
-
-                highlight: {
-                    options: [
-                    {
-                        model: 'redPen',
-                        class: 'pen-red',
-                        title: 'Red pen',
-                        color: 'var(--ck-highlight-pen-red)',
-                        type: 'pen'
-                    },
-                    {
-                        model: 'greenPen',
-                        class: 'pen-green',
-                        title: 'Green pen',
-                        color: 'var(--ck-highlight-pen-green)',
-                        type: 'pen'
-                    },
-                    {
-                        model: 'yellowMarker',
-                        class: 'marker-yellow',
-                        title: 'Yellow marker',
-                        color: 'var(--ck-highlight-marker-yellow)',
-                        type: 'marker'
-                    },
-                    {
-                        model: 'greenMarker',
-                        class: 'marker-green',
-                        title: 'Green marker',
-                        color: 'var(--ck-highlight-marker-green)',
-                        type: 'marker'
-                    },
-                    {
-                        model: 'pinkMarker',
-                        class: 'marker-pink',
-                        title: 'Pink marker',
-                        color: 'var(--ck-highlight-marker-pink)',
-                        type: 'marker'
-                    },
-                    {
-                        model: 'blueMarker',
-                        class: 'marker-blue',
-                        title: 'Blue marker',
-                        color: 'var(--ck-highlight-marker-blue)',
-                        type: 'marker'
-                    },
-                    ]
-                },
-                toolbar: {
-                    items:
-                    [
-                    'heading', '|', 
-                    'alignment',  
-                    'bold', 'italic', 'highlight', 'link', 'bulletedList', 
-                    'numberedList', 'imageUpload', 'blockQuote', 'insertTable', 
-                    'mediaEmbed', 'undo', 'redo'
-                    ],
-
-                },
-                image: {
-                    toolbar: [
-                        'imageStyle:full',
-                        'imageStyle:side',
-                        '|',
-                        'imageTextAlternative'
-                    ]
-                },
-                heading: {
-                    options: [
-                        { model: 'heading1', view: 'h1', title: '헤더1', class: 'ck-heading_heading1' },
-                        { model: 'heading2', view: 'h2', title: '헤더2', class: 'ck-heading_heading2' },
-                        { model: 'heading3', view: 'h3', title: '헤더3', class: 'ck-heading_heading3' },
-                        { model: 'paragraph', title: '본문', class: 'ck-heading_paragraph' },
-                    ]
-                },
-                }
-            }
+                editor={ CustomEditor }
+                // onReady={(editor) => {
+                //     editor.ui
+                //     .getEditableElement()
+                //     .parentElement.insertBefore(
+                //     editor.ui.view.toolbar.element,
+                //     editor.ui.getEditableElement()
+                //     );
+                // }}
+                // config={editorConfiguration}
+                // config={{
+                //     // plugins:[
+                //     //     Heading
+                //     // ],
+                //     toolbar:[
+                //         "heading"
+                //     ]
+                // }}
+                {...props}
             />
-      </div>
+        </div>
     );
 }
 
