@@ -86,6 +86,7 @@ const editorConfiguration  = {
     mediaEmbed: {
         previewsInData: true
     },
+    shouldNotGroupWhenFull: false,
     plugins: [
         Alignment,
         Autoformat,
