@@ -7,6 +7,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Builder
 @NoArgsConstructor
@@ -22,4 +23,7 @@ public class Category {
 
     @Column(nullable = false)
     private String name;
+
+    @Column(nullable = true)
+    private Timestamp createData;
 }
