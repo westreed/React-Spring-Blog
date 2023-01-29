@@ -31,3 +31,54 @@ a:hover {
 .ck-content p {
     margin-bottom: 0;
 }
+
+.brand {
+    height: inherit;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-size: 20px;
+}
+
+.useButton {
+    padding:0px;
+    padding-left: 8px;
+    padding-right: 8px;
+    height: 100%;
+    color: rgba(0, 0, 0, 0.55);
+}
+
+.useButton:hover {
+    color: #3273dc;
+    background-color: #fafafa;
+}
+
+.noEffect {
+    background: none;
+    border: none;
+}
+
+.modal-dialog.modal-s2 {
+    min-width: 20%;
+}
+
+.outline {
+    border: 1px solid #7286D3;
+    border-radius: 10px;
+    padding: 7px;
+}
+
+.outline:focus-within {
+    border: 3px solid #7286D3;
+    padding: 5px;
+}
+
+.outline input {
+    border: none;
+}
+
+.close {
+    position: relative;
+    top: -15px;
+    font-size: 30px;
+    color: #cf4337;
+}
