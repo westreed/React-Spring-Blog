@@ -1,17 +1,23 @@
 import { Container, Nav, Navbar } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
-const Navbars = () => {
+const Navbars = (props) => {
+
     return (
-        <Navbar className='shadow-sm p-2 mb-4 bg-body rounded'>
-            <Container style={{paddingLeft:"30px", paddingRight:"30px"}}>
-                <Navbar.Brand href='/'>:AiM</Navbar.Brand>
-                <Nav className="me-auto">
-                    <Nav.Link href='/'>Home</Nav.Link>
-                    <Nav.Link href='/categories'>Categories</Nav.Link>
+        <Navbar className='shadow-sm mb-4 bg-body rounded' style={{padding:0}}>
+            <Container
+                style={{
+                    paddingLeft:"30px",paddingRight:"30px"
+                }}
+            >   
+                <Nav style={{height:"50px", lineHeight:"50px", justifyContent:"flex-start"}}>
+                    <a className='brand' href="/">:AiM</a>
+                    <Link className='useButton' to='/'>Home</Link>
+                    <Link className='useButton' to='/categories'>Categories</Link>
                 </Nav>
-                <Navbar.Collapse className="justify-content-end">
-                    <Nav.Link>로그인</Nav.Link>
-                </Navbar.Collapse>
+                <Nav style={{height:"50px", lineHeight:"50px", justifyContent:"flex-end"}}>
+                    <button className="noEffect useButton" onClick={props.onShow}>로그인</button>
+                </Nav>
             </Container>
         </Navbar>
     );
