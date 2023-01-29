@@ -8,7 +8,7 @@ const Home = (props) => {
     const [content, setContent] = useState('');
     
     return (
-        <div className="blogCard" style={{width:"100%"}}>
+        <div className="blogCard shadow-sm bg-body rounded" style={{width:"100%"}}>
             <Editor
                 data={content}
                 onChange={(event, editor) => {
