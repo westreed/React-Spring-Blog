@@ -28,14 +28,4 @@ public class SpringConfig {
     public UserService userService(){
         return new UserService(userRepository());
     }
-
-    //    @Bean
-//    public MemberService memberService(){
-//        return new MemberService(memberRepository());
-//    }
-//
-//    @Bean
-//    public MemberRepository memberRepository(){
-//        return new MemoryMemberRepository();
-//    }
 }

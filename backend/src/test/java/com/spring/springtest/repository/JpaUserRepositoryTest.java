@@ -6,6 +6,7 @@ import com.spring.springtest.domain.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
@@ -19,9 +20,8 @@ class JpaUserRepositoryTest {
     @Test
     public void 회원가입(){
         // given
-
-        // when
         userService.join("갈대", "1234", "westreed1@naver.com");
+        // when
 
         // then
         Optional<User> result = userRepository.findByEmail("westreed1@naver.com");
