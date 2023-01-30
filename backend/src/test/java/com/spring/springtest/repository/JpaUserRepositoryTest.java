@@ -33,4 +33,14 @@ class JpaUserRepositoryTest {
         }
         else throw new IllegalStateException("회원가입에 실패했습니다.");
     }
+
+    @Test
+    public void 로그인(){
+        // given
+        userService.join("Test", "1234", "test@naver.com");
+        // when
+        boolean res = userService.login("test@naver.com", "1234");
+        // then
+        System.out.println("로그인 " + res);
+    }
 }
