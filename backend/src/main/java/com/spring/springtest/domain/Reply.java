@@ -1,7 +1,7 @@
 package com.spring.springtest.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,17 +10,17 @@ import org.hibernate.annotations.DynamicInsert;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Builder
+
+@Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @DynamicInsert
 @Entity
 public class Reply {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-//    private Long replyId;
+    @Column(nullable = true)
+    private Long replyId;
 
     @Lob
     private String content; // CKEditor5
@@ -38,4 +38,12 @@ public class Reply {
 
     @CreationTimestamp
     private Timestamp createData; // 순서보장용
+
+    @Builder
+    public Reply(Long replyId, String content, Board board, User user){
+        this.replyId = replyId;
+        this.content = content;
+        this.board = board;
+        this.user = user;
+    }
 }

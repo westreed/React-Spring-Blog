@@ -1,8 +1,7 @@
 package com.spring.springtest.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -14,9 +13,8 @@ import java.util.List;
 
 // https://velog.io/@deannn/Spring-Boot-Blog-Project-DB-%ED%85%8C%EC%9D%B4%EB%B8%94-%EB%A7%8C%EB%93%A4%EA%B8%B0
 
-@Builder
+@Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @DynamicInsert
 @Entity
 public class Board {
@@ -46,4 +44,11 @@ public class Board {
     @CreationTimestamp
     private Timestamp createData;
 
+    @Builder
+    public Board(String title, String content, User user, Category category){
+        this.title = title;
+        this.content = content;
+        this.user = user;
+        this.category = category;
+    }
 }

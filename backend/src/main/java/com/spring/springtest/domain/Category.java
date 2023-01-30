@@ -1,7 +1,7 @@
 package com.spring.springtest.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
@@ -9,9 +9,8 @@ import org.hibernate.annotations.DynamicInsert;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Builder
+@Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @DynamicInsert
 @Entity
 public class Category {
@@ -26,4 +25,9 @@ public class Category {
 
     @Column(nullable = true)
     private Timestamp createData;
+
+    @Builder
+    public Category(String name){
+        this.name = name;
+    }
 }
