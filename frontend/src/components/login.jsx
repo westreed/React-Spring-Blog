@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { RSAKey } from 'jsencrypt/lib/lib/jsbn/rsa';
 import { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
@@ -13,16 +14,33 @@ const Login = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPW, setShowPW] = useState(false);
+    const [publicKey, setPublicKey] = useState({'modulus':null, 'exponent':null});
 
     useEffect(() => {
         console.log("입력값" + email + password);
     }, [email, password]);
 
+    useEffect(() => {
+        axios.get('api/key')
+        .then(res => {
+            setPublicKey({
+                'modulus':res.data['modulus'],
+                'exponent':res.data['exponent']
+            })
+        })
+        .catch(error => console.log("key 받아오기 실패", error))
+    }, [])
+
     const loginUser = () => {
+        if (publicKey == null) return false;
+        const rsa = new RSAKey();
+        rsa.setPublic(publicKey['modulus'], publicKey['exponent']);
+        
         const data = {
-            "email" : email,
-            "password" : password
-        }
+            "email" : rsa.encrypt(email),
+            "password" : rsa.encrypt(password)
+        };
+
         axios.post("/api/login", data)
         .then(res => console.log("로그인 성공! " + res.data))
         .catch(error => console.log("로그인 실패! " + error))
