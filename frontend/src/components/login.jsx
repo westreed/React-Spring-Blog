@@ -14,11 +14,8 @@ const Login = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPW, setShowPW] = useState(false);
+    const [pwType, setPwType] = useState('password');
     const [publicKey, setPublicKey] = useState({'modulus':null, 'exponent':null});
-
-    useEffect(() => {
-        console.log("입력값" + email + password);
-    }, [email, password]);
 
     useEffect(() => {
         axios.get('api/key')
@@ -41,13 +38,20 @@ const Login = (props) => {
             "password" : rsa.encrypt(password)
         };
 
+        console.log(data)
+
         axios.post("/api/login", data)
         .then(res => console.log("로그인 성공! " + res.data))
         .catch(error => console.log("로그인 실패! " + error))
+
+        let session = window.sessionStorage;
+        console.log(session.getItem('userInfo'));
     }
 
     const togglePW = () => {
         setShowPW(!showPW);
+        if(showPW){setPwType('password');}
+        else{setPwType('text');}
     }
 
     return (
@@ -74,13 +78,15 @@ const Login = (props) => {
                     <Form.Group className="mb-3 outline" controlId="Form2"
                     >
                         <Form.Label>비밀번호</Form.Label>
-                        <Form.Control
-                            className="shadow-none"
-                            type="password"
-                            placeholder="********"
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <button className="noEffect" onClick={togglePW}><img src={showPW ? viewImg : hideImg} width="24px" height="24px" /></button>
+                        <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+                            <Form.Control
+                                className="shadow-none"
+                                type={pwType}
+                                placeholder="********"
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                            <a style={{margin:"auto", paddingRight:"12px"}} onClick={togglePW}><img src={showPW ? viewImg : hideImg} width="20px" height="20px" /></a>
+                        </div>
                     </Form.Group>
                     <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
                         <Form.Check type='checkbox' label='로그인 유지'/>

@@ -39,8 +39,8 @@ class JpaUserRepositoryTest {
         // given
         userService.join("Test", "1234", "test@naver.com");
         // when
-        boolean res = userService.login("test@naver.com", "1234");
+        User user = userService.login("test@naver.com", "1234");
         // then
-        System.out.println("로그인 " + res);
+        System.out.println("로그인 " + user);
     }
 }

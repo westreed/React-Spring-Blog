@@ -1,10 +1,10 @@
 package com.spring.springtest.user.controller;
 
+import com.spring.springtest.domain.User;
 import com.spring.springtest.uility.RSAUtil;
 import com.spring.springtest.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,8 +16,8 @@ import java.security.PrivateKey;
 @RestController
 public class UserController {
 
-    private UserService userService;
-    private RSAUtil rsaUtil;
+    private final UserService userService;
+    private final RSAUtil rsaUtil;
 
     @Autowired
     public UserController(UserService userService, RSAUtil rsaUtil) {
@@ -28,11 +28,11 @@ public class UserController {
     @PostMapping("/api/join")
     public String joinAccount(@RequestBody UserForm userForm, HttpSession session){
         // 개인키 취득
-        PrivateKey key = (PrivateKey) session.getAttribute("RSAprivateKey");
+        PrivateKey key = (PrivateKey) session.getAttribute("RSAPrivateKey");
         if (key == null) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "비정상 적인 접근 입니다.");
         }
-        session.removeAttribute("RSAprivateKey");
+        session.removeAttribute("RSAPrivateKey");
 
         try {
             String username = rsaUtil.getDecryptText(key, userForm.getUsername());
@@ -50,20 +50,23 @@ public class UserController {
     }
 
     @PostMapping("/api/login")
-    public Boolean loginAccount(@RequestBody UserLoginForm userLoginForm, HttpSession session){
+    public String loginAccount(@RequestBody UserLoginForm userLoginForm, HttpSession session){
         // 개인키 취득
-        PrivateKey key = (PrivateKey) session.getAttribute("RSAprivateKey");
+        PrivateKey key = (PrivateKey) session.getAttribute("RSAPrivateKey");
         if (key == null) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "비정상 적인 접근 입니다.");
         }
-        session.removeAttribute("RSAprivateKey");
+        session.removeAttribute("RSAPrivateKey");
 
         try {
             String email = rsaUtil.getDecryptText(key, userLoginForm.getEmail());
             String password = rsaUtil.getDecryptText(key, userLoginForm.getPassword());
             System.out.println("email : " + email);
             System.out.println("password : " + password);
-            return userService.login(email, password);
+            User user = userService.login(email, password);
+            session.setAttribute("userInfo", user);
+            System.out.println("세션id : " + session.getId() + " 내용 : " + session.getAttribute("userInfo"));
+            return session.getId();
         }
         catch (IllegalStateException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());

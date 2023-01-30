@@ -5,12 +5,12 @@ import com.spring.springtest.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Objects;
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 public class UserService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
     @Autowired PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -18,7 +18,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Long join(String username, String password, String email){
+    public void join(String username, String password, String email){
 
         if (username == null || password == null || email == null){
             throw new IllegalArgumentException("데이터를 전부 기입해야 합니다.");
@@ -37,10 +37,9 @@ public class UserService {
             .build();
 
         userRepository.save(user);
-        return user.getId();
     }
 
-    public boolean login(String email, String password){
+    public User login(String email, String password){
         Optional<User> checkUser = userRepository.findByEmail(email);
         if (checkUser.isPresent()){
             User loginUser = checkUser.get();
@@ -48,10 +47,15 @@ public class UserService {
             System.out.println("요청 : " + password);
             System.out.println("데이터 : " + loginUser.getPassword());
 
-            return passwordEncoder.matches(password, loginUser.getPassword());
+            if(passwordEncoder.matches(password, loginUser.getPassword())){
+                return loginUser;
+            }
+            throw new IllegalStateException("비밀번호가 일치하지 않습니다.");
         }
-        else{
-            throw new IllegalStateException("가입되지 않은 이메일입니다.");
-        }
+        throw new IllegalStateException("가입되지 않은 이메일입니다.");
+    }
+
+    public void logout(HttpSession session){
+        session.invalidate();
     }
 }
