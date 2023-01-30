@@ -16,15 +16,15 @@ public class RSAController {
     @GetMapping("/api/key")
     public RSAForm getRSAKEY(HttpSession session){
         // RSA 키 생성
-        PrivateKey key = (PrivateKey) session.getAttribute("RSAprivateKey");
+        PrivateKey key = (PrivateKey) session.getAttribute("RSAPrivateKey");
         if (key != null) { // 기존 키 파기
-            session.removeAttribute("RSAprivateKey");
+            session.removeAttribute("RSAPrivateKey");
             System.out.println("세션 파기됨");
         }
         RSA rsa = rsaUtil.createRSA();
         RSAForm rsaForm = new RSAForm(rsa.getModulus(), rsa.getExponent());
         System.out.println("rsa생성 : " + rsaForm.getModulus());
-        session.setAttribute("RSAprivateKey", rsa.getPrivateKey());
+        session.setAttribute("RSAPrivateKey", rsa.getPrivateKey());
         return rsaForm;
     }
 

@@ -1,8 +1,8 @@
 package com.spring.springtest.config;
 
-import com.spring.springtest.user.service.UserService;
-import com.spring.springtest.user.repository.JpaUserRepository;
-import com.spring.springtest.user.repository.UserRepository;
+import com.spring.springtest.member.service.MemberService;
+import com.spring.springtest.member.repository.JpaMemberRepository;
+import com.spring.springtest.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,12 +20,12 @@ public class SpringConfig {
     }
 
     @Bean
-    public UserRepository userRepository(){
-        return new JpaUserRepository(entityManager);
+    public MemberRepository userRepository(){
+        return new JpaMemberRepository(entityManager);
     }
 
     @Bean
-    public UserService userService(){
-        return new UserService(userRepository());
+    public MemberService userService(){
+        return new MemberService(userRepository());
     }
 }

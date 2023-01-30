@@ -1,9 +1,9 @@
-package com.spring.springtest.user.controller;
+package com.spring.springtest.member.controller;
 
 import lombok.Getter;
 
 @Getter
-public class UserLoginForm {
+public class MemberLoginForm {
     private String password;
     private String email;
 }

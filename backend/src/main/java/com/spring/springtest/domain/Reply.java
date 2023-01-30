@@ -31,7 +31,7 @@ public class Reply {
 
     @ManyToOne
     @JoinColumn(name = "userId")
-    private User user; // ManyToOne
+    private Member member; // ManyToOne
 
     @ColumnDefault("0")
     private int likes;
@@ -40,10 +40,10 @@ public class Reply {
     private Timestamp createData; // 순서보장용
 
     @Builder
-    public Reply(Long replyId, String content, Board board, User user){
+    public Reply(Long replyId, String content, Board board, Member member){
         this.replyId = replyId;
         this.content = content;
         this.board = board;
-        this.user = user;
+        this.member = member;
     }
 }

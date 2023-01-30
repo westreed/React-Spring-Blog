@@ -1,6 +1,6 @@
-package com.spring.springtest.user.repository;
+package com.spring.springtest.member.repository;
 
-import com.spring.springtest.domain.User;
+import com.spring.springtest.domain.Member;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -8,30 +8,30 @@ import java.util.List;
 import java.util.Optional;
 
 @Transactional
-public class JpaUserRepository implements UserRepository {
+public class JpaMemberRepository implements MemberRepository {
 
     private final EntityManager entityManager;
 
-    public JpaUserRepository(EntityManager entityManager) {
+    public JpaMemberRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
     @Override
-    public User save(User user) {
-        entityManager.persist(user);
-        return user;
+    public Member save(Member member) {
+        entityManager.persist(member);
+        return member;
     }
 
     @Override
-    public Optional<User> findById(Long id) {
+    public Optional<Member> findById(Long id) {
         // PK 값인 id로 조회하기 때문에 find 메소드로 찾을 수 있음
-        User user = entityManager.find(User.class, id);
-        return Optional.ofNullable(user);
+        Member member = entityManager.find(Member.class, id);
+        return Optional.ofNullable(member);
     }
 
     @Override
-    public Optional<User> findByName(String name) {
-        List<User> result = entityManager.createQuery("select u from User u where u.username = :name", User.class)
+    public Optional<Member> findByName(String name) {
+        List<Member> result = entityManager.createQuery("select u from User u where u.username = :name", Member.class)
                 .setParameter("name", name)
                 .getResultList();
 
@@ -39,32 +39,32 @@ public class JpaUserRepository implements UserRepository {
     }
 
     @Override
-    public List<User> findAll() {
-        return entityManager.createQuery("select u from User u", User.class)
+    public List<Member> findAll() {
+        return entityManager.createQuery("select u from User u", Member.class)
                 .getResultList();
     }
 
     @Override
-    public User delete(User user) {
-        if (entityManager.contains(user)) {
-            entityManager.remove(user);
+    public Member delete(Member member) {
+        if (entityManager.contains(member)) {
+            entityManager.remove(member);
         }
         else{
-            entityManager.remove(entityManager.merge(user));
+            entityManager.remove(entityManager.merge(member));
         }
-        return user;
+        return member;
     }
 
     @Override
-    public Optional<User> deleteById(Long id) {
-        Optional<User> user = findById(id);
+    public Optional<Member> deleteById(Long id) {
+        Optional<Member> user = findById(id);
         user.ifPresent(this::delete);
         return user;
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
-        List<User> result = entityManager.createQuery("select u from User u where u.email = :email", User.class)
+    public Optional<Member> findByEmail(String email) {
+        List<Member> result = entityManager.createQuery("select u from User u where u.email = :email", Member.class)
                 .setParameter("email", email)
                 .getResultList();
 

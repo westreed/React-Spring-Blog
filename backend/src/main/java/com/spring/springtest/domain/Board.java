@@ -32,7 +32,7 @@ public class Board {
 
     @ManyToOne
     @JoinColumn(name = "userId")
-    private User user;
+    private Member member;
 
     @ManyToOne
     @JoinColumn(name = "categoryId")
@@ -45,10 +45,10 @@ public class Board {
     private Timestamp createData;
 
     @Builder
-    public Board(String title, String content, User user, Category category){
+    public Board(String title, String content, Member member, Category category){
         this.title = title;
         this.content = content;
-        this.user = user;
+        this.member = member;
         this.category = category;
     }
 }

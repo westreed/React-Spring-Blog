@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @DynamicInsert
 @Entity
-public class User {
+public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,7 +36,7 @@ public class User {
     private Timestamp createData;
 
     @Builder
-    public User (String username, String password, String email){
+    public Member(String username, String password, String email){
         this.username = username;
         this.password = password;
         this.email = email;

@@ -1,21 +1,21 @@
-package com.spring.springtest.user.service;
+package com.spring.springtest.member.service;
 
-import com.spring.springtest.domain.User;
-import com.spring.springtest.user.repository.UserRepository;
+import com.spring.springtest.domain.Member;
+import com.spring.springtest.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
-public class UserService {
+public class MemberService {
 
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
     @Autowired PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
     }
 
     public void join(String username, String password, String email){
@@ -24,31 +24,31 @@ public class UserService {
             throw new IllegalArgumentException("데이터를 전부 기입해야 합니다.");
         }
 
-        Optional<User> checkUser = userRepository.findByEmail(email);
+        Optional<Member> checkUser = memberRepository.findByEmail(email);
         if (checkUser.isPresent()){
             throw new IllegalStateException("이미 회원가입된 이메일입니다.");
         }
 
         String encodePassword = passwordEncoder.encode(password);
-        User user = User.builder()
+        Member member = Member.builder()
             .username(username)
             .password(encodePassword)
             .email(email)
             .build();
 
-        userRepository.save(user);
+        memberRepository.save(member);
     }
 
-    public User login(String email, String password){
-        Optional<User> checkUser = userRepository.findByEmail(email);
+    public Member login(String email, String password){
+        Optional<Member> checkUser = memberRepository.findByEmail(email);
         if (checkUser.isPresent()){
-            User loginUser = checkUser.get();
+            Member loginMember = checkUser.get();
 
             System.out.println("요청 : " + password);
-            System.out.println("데이터 : " + loginUser.getPassword());
+            System.out.println("데이터 : " + loginMember.getPassword());
 
-            if(passwordEncoder.matches(password, loginUser.getPassword())){
-                return loginUser;
+            if(passwordEncoder.matches(password, loginMember.getPassword())){
+                return loginMember;
             }
             throw new IllegalStateException("비밀번호가 일치하지 않습니다.");
         }

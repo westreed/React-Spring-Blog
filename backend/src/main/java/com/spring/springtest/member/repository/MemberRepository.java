@@ -1,16 +1,16 @@
-package com.spring.springtest.user.repository;
+package com.spring.springtest.member.repository;
 
-import com.spring.springtest.domain.User;
+import com.spring.springtest.domain.Member;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface UserRepository {
-    User save(User user);
-    Optional<User> findById(Long id);
-    Optional<User> findByName(String name);
-    List<User> findAll();
-    User delete(User user);
-    Optional<User> deleteById(Long id);
-    Optional<User> findByEmail(String email);
+public interface MemberRepository {
+    Member save(Member member);
+    Optional<Member> findById(Long id);
+    Optional<Member> findByName(String name);
+    List<Member> findAll();
+    Member delete(Member member);
+    Optional<Member> deleteById(Long id);
+    Optional<Member> findByEmail(String email);
 }
