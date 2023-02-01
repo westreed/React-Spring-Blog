@@ -40,9 +40,9 @@ public class MemberService {
     }
 
     public Member login(String email, String password){
-        Optional<Member> checkUser = memberRepository.findByEmail(email);
-        if (checkUser.isPresent()){
-            Member loginMember = checkUser.get();
+        Optional<Member> checkMember = memberRepository.findByEmail(email);
+        if (checkMember.isPresent()){
+            Member loginMember = checkMember.get();
 
             System.out.println("요청 : " + password);
             System.out.println("데이터 : " + loginMember.getPassword());

@@ -64,9 +64,7 @@ public class MemberController {
             System.out.println("email : " + email);
             System.out.println("password : " + password);
             Member member = memberService.login(email, password);
-            session.setAttribute("userInfo", member);
-            System.out.println("세션id : " + session.getId() + " 내용 : " + session.getAttribute("userInfo"));
-            return session.getId();
+            return member.getUsername();
         }
         catch (IllegalStateException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
