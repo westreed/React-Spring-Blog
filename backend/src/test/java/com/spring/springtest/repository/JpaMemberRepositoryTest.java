@@ -6,6 +6,7 @@ import com.spring.springtest.domain.Member;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
@@ -21,11 +22,11 @@ class JpaMemberRepositoryTest {
     @Test
     public void 회원가입(){
         // given
-        memberService.join("갈대", "1234", "westreed1@naver.com");
+        memberService.join("갈대", "1234", "westreed@naver.com");
         // when
 
         // then
-        Optional<Member> result = memberRepository.findByEmail("westreed1@naver.com");
+        Optional<Member> result = memberRepository.findByEmail("westreed@naver.com");
         if(result.isPresent()){
             Member res = result.get();
             System.out.println("결과 이름:" + res.getUsername());
