@@ -43,9 +43,6 @@ const Login = (props) => {
         axios.post("/api/login", data)
         .then(res => console.log("로그인 성공! " + res.data))
         .catch(error => console.log("로그인 실패! " + error))
-
-        let session = window.sessionStorage;
-        console.log(session.getItem('userInfo'));
     }
 
     const togglePW = () => {
