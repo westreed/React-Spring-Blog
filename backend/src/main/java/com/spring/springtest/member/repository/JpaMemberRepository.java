@@ -31,7 +31,7 @@ public class JpaMemberRepository implements MemberRepository {
 
     @Override
     public Optional<Member> findByName(String name) {
-        List<Member> result = entityManager.createQuery("select u from User u where u.username = :name", Member.class)
+        List<Member> result = entityManager.createQuery("select m from Member m where m.username = :name", Member.class)
                 .setParameter("name", name)
                 .getResultList();
 
@@ -40,7 +40,7 @@ public class JpaMemberRepository implements MemberRepository {
 
     @Override
     public List<Member> findAll() {
-        return entityManager.createQuery("select u from User u", Member.class)
+        return entityManager.createQuery("select m from Member m", Member.class)
                 .getResultList();
     }
 
@@ -64,7 +64,7 @@ public class JpaMemberRepository implements MemberRepository {
 
     @Override
     public Optional<Member> findByEmail(String email) {
-        List<Member> result = entityManager.createQuery("select u from User u where u.email = :email", Member.class)
+        List<Member> result = entityManager.createQuery("select m from Member m where m.email = :email", Member.class)
                 .setParameter("email", email)
                 .getResultList();
 
