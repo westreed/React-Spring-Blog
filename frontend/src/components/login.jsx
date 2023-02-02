@@ -63,8 +63,9 @@ const Login = (props) => {
                     alert("없는 이메일이거나 잘못된 비밀번호입니다.");
                     break;
                 
-                case 403:
-                    getRsaKey();
+                // case 403:
+                //     getRsaKey();
+                //     break;
             
                 default:
                     alert("서버에 문제가 발생했습니다.");
