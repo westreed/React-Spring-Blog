@@ -1,18 +1,35 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { setMember } from '../store/member';
+import { setModal } from '../store/modal';
 
 const Navbars = (props) => {
-    const [username, setUsername] = useState(null);
-    const [useremail, setUseremail] = useState(null);
+    const userdata = useSelector((state) => state.member.data);
+    const dispatch = useDispatch();
+    console.log(userdata);
 
     useEffect(() => {
-        const res = JSON.parse(sessionStorage.getItem("userInfo"));
-        if (res){
-            setUsername(res.name);
-            setUseremail(res.email);
-        }
+        axios.get('/api/session')
+        .then(res => {
+            if(userdata == null) dispatch(setMember(res.data));
+        })
+        .catch(error => {
+            console.log(error);
+            if(userdata != null) dispatch(setMember(null));
+        })
     })
+
+    const logout = () => {
+        axios.get('/api/logout')
+        .then(res => {
+            dispatch(setMember(null));
+            props.update();
+        })
+        .catch(error => console.log(error))
+    }
 
     return (
         <Navbar className='shadow-sm mb-4 bg-body rounded' style={{padding:0}}>
@@ -27,10 +44,10 @@ const Navbars = (props) => {
                     <Link className='useButton' to='/categories'>Categories</Link>
                 </Nav>
                 <Nav style={{height:"50px", lineHeight:"50px", justifyContent:"flex-end"}}>
-                    {useremail != null ? <p style={{marginRight:"10px"}}>{username}님</p> : null}
-                    {useremail != null ?
-                    <button className="noEffect useButton">로그아웃</button> :
-                    <button className="noEffect useButton" onClick={props.onShow}>로그인</button>
+                    {userdata != null ? <p style={{marginRight:"10px"}}>{userdata.username}님</p> : null}
+                    {userdata != null ?
+                    <button className="noEffect useButton" onClick={logout}>로그아웃</button> :
+                    <button className="noEffect useButton" onClick={() => dispatch(setModal(true))}>로그인</button>
                     }
                 </Nav>
             </Container>

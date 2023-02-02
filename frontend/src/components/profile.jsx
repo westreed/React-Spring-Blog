@@ -1,12 +1,6 @@
-import { useEffect } from "react";
-
-
 
 const Profile = () => {
-
-    useEffect(() => {
-        console.log("프로필 갱신됨");
-    })
+    console.log('Profile');
 
     return (
         <div className="blogCard text-center shadow-sm bg-body rounded">

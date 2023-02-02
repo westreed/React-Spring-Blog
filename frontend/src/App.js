@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import Navbars from './pages/navbars';
@@ -9,18 +9,15 @@ import Footer from './pages/footer';
 import Login from './components/login';
 
 const App = () => {
-    const [loginModal, setLoginModal] = useState(false);
+    const [, updateState] = useState();
+    const forceUpdate = useCallback(() => updateState({}), []);
+    console.log('App');
 
     return (
         <div className="App">
             <BrowserRouter>
-                {loginModal ?
-                    <Login
-                        show={loginModal}
-                        onHide={() => setLoginModal(false)}
-                    /> : null
-                }
-                <Navbars onShow={() => setLoginModal(true)}/>
+                <Login update={forceUpdate}/>
+                <Navbars update={forceUpdate}/>
                 <Container>
                     <div style={{display:"flex", flexDirection:"row"}}>
                         <Widget/>
