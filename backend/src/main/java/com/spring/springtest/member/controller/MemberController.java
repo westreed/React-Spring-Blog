@@ -1,5 +1,6 @@
 package com.spring.springtest.member.controller;
 
+import com.spring.springtest.domain.Auth;
 import com.spring.springtest.domain.Member;
 import com.spring.springtest.uility.RSAUtil;
 import com.spring.springtest.member.service.MemberService;
@@ -32,13 +33,13 @@ public class MemberController {
         if (key == null) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "비정상 적인 접근 입니다.");
         }
-        session.removeAttribute("RSAPrivateKey");
 
         try {
             String username = rsaUtil.getDecryptText(key, memberForm.getUsername());
             String email = rsaUtil.getDecryptText(key, memberForm.getEmail());
             String password = rsaUtil.getDecryptText(key, memberForm.getPassword());
             memberService.join(username, email, password);
+            session.removeAttribute("RSAPrivateKey");
             return "redirect:/";
         }
         catch (IllegalStateException e){
@@ -50,13 +51,13 @@ public class MemberController {
     }
 
     @PostMapping("/api/login")
-    public String loginAccount(@RequestBody MemberLoginForm memberLoginForm, HttpSession session){
+    public Member loginAccount(@RequestBody MemberLoginForm memberLoginForm, HttpSession session){
         // 개인키 취득
         PrivateKey key = (PrivateKey) session.getAttribute("RSAPrivateKey");
         if (key == null) {
+            System.out.println("세션에 비밀키가 없습니다.");
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "비정상 적인 접근 입니다.");
         }
-        session.removeAttribute("RSAPrivateKey");
 
         try {
             String email = rsaUtil.getDecryptText(key, memberLoginForm.getEmail());
@@ -64,7 +65,8 @@ public class MemberController {
             System.out.println("email : " + email);
             System.out.println("password : " + password);
             Member member = memberService.login(email, password);
-            return member.getUsername();
+            session.removeAttribute("RSAPrivateKey");
+            return member;
         }
         catch (IllegalStateException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
