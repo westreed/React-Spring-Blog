@@ -17,32 +17,60 @@ const Login = (props) => {
     const [pwType, setPwType] = useState('password');
     const [publicKey, setPublicKey] = useState({'modulus':null, 'exponent':null});
 
-    useEffect(() => {
+    function getRsaKey(){
         axios.get('api/key')
         .then(res => {
             setPublicKey({
                 'modulus':res.data['modulus'],
                 'exponent':res.data['exponent']
-            })
+            });
         })
         .catch(error => console.log("key 받아오기 실패", error))
+    }
+
+    useEffect(() => {
+        getRsaKey();
     }, [])
 
     const loginUser = () => {
-        if (publicKey == null) return false;
+        if (email === '' || password === ''){
+            alert("이메일과 비밀번호를 입력해주세요.");
+            return false;
+        }
+
+        if (publicKey['modulus'] == null) {
+            getRsaKey();
+            alert("서버에 오류가 발생했습니다.");
+            return false;
+        }
+
         const rsa = new RSAKey();
         rsa.setPublic(publicKey['modulus'], publicKey['exponent']);
-        
-        const data = {
+
+        axios.post("/api/login", {
             "email" : rsa.encrypt(email),
             "password" : rsa.encrypt(password)
-        };
-
-        console.log(data)
-
-        axios.post("/api/login", data)
-        .then(res => console.log("로그인 성공! " + res.data))
-        .catch(error => console.log("로그인 실패! " + error))
+        })
+        .then(res => {
+            console.log("로그인 성공! " + res.data);
+            props.onHide();
+            sessionStorage.setItem("userInfo", JSON.stringify({"email":email, "name":res.data.username, "role":res.data.role}));
+        })
+        .catch(error => {
+            console.log(error.response);
+            switch (error.response.status) {
+                case 404:
+                    alert("없는 이메일이거나 잘못된 비밀번호입니다.");
+                    break;
+                
+                case 403:
+                    getRsaKey();
+            
+                default:
+                    alert("서버에 문제가 발생했습니다.");
+                    break;
+            }
+        })
     }
 
     const togglePW = () => {
@@ -82,7 +110,7 @@ const Login = (props) => {
                                 placeholder="********"
                                 onChange={(e) => setPassword(e.target.value)}
                             />
-                            <a style={{margin:"auto", paddingRight:"12px"}} onClick={togglePW}><img src={showPW ? viewImg : hideImg} width="20px" height="20px" /></a>
+                            <div style={{margin:"auto", paddingRight:"12px"}} onClick={togglePW}><img src={showPW ? viewImg : hideImg} width="20px" height="20px" alt="" /></div>
                         </div>
                     </Form.Group>
                     <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
