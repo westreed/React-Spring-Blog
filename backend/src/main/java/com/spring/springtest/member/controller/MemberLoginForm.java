@@ -6,4 +6,5 @@ import lombok.Getter;
 public class MemberLoginForm {
     private String password;
     private String email;
+    private Boolean keep;
 }

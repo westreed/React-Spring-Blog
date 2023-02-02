@@ -54,8 +54,4 @@ public class MemberService {
         }
         throw new IllegalStateException("가입되지 않은 이메일입니다.");
     }
-
-    public void logout(HttpSession session){
-        session.invalidate();
-    }
 }

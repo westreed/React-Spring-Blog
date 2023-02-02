@@ -23,7 +23,6 @@ public class RSAController {
         }
         RSA rsa = rsaUtil.createRSA();
         RSAForm rsaForm = new RSAForm(rsa.getModulus(), rsa.getExponent());
-        System.out.println("rsa생성 : " + rsaForm.getModulus());
         session.setAttribute("RSAPrivateKey", rsa.getPrivateKey());
         return rsaForm;
     }
