@@ -7,15 +7,21 @@ import Home from './pages/home';
 // import Category from './components/category';
 import Footer from './pages/footer';
 import Login from './components/login';
+import Settings from './pages/settings';
+import Session from './utils/session';
 
 const App = () => {
     const [, updateState] = useState();
-    const forceUpdate = useCallback(() => updateState({}), []);
+    const forceUpdate = useCallback(() => {
+        updateState({});
+        console.log("forceUpdate");
+    }, []);
     console.log('App');
 
     return (
         <div className="App">
             <BrowserRouter>
+                <Session/>
                 <Login update={forceUpdate}/>
                 <Navbars update={forceUpdate}/>
                 <Container>
@@ -23,6 +29,7 @@ const App = () => {
                         <Widget/>
                         <Routes>
                             <Route exact path='/' element={<Home/>}></Route>
+                            <Route exact path='/settings' element={<Settings/>}></Route>
                         </Routes>
                     </div>
                 </Container>

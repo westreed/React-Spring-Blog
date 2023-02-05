@@ -1,6 +1,9 @@
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
     console.log('Profile');
+    const userdata = useSelector((state) => state.member.data);
 
     return (
         <div className="blogCard text-center shadow-sm bg-body rounded">
@@ -10,6 +13,11 @@ const Profile = () => {
                 <p className="mb-0">이것저것 개발하는게</p>
                 <p>재밌는 개발자이야기</p>
             </div>
+            {userdata != null ?
+                <div>
+                    {userdata.role === 'admin' ? <Link to='/settings'>관리</Link> : null}
+                </div>
+            : null}
         </div>
     );
 }

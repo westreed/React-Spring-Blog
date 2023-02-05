@@ -11,17 +11,6 @@ const Navbars = (props) => {
     const dispatch = useDispatch();
     console.log(userdata);
 
-    useEffect(() => {
-        axios.get('/api/session')
-        .then(res => {
-            if(userdata == null) dispatch(setMember(res.data));
-        })
-        .catch(error => {
-            console.log(error);
-            if(userdata != null) dispatch(setMember(null));
-        })
-    })
-
     const logout = () => {
         axios.get('/api/logout')
         .then(res => {

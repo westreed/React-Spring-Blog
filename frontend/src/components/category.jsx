@@ -14,6 +14,7 @@ const Categories = () => {
     return (
         <div className="blogCard shadow-sm bg-body rounded">
             <p>카테고리</p>
+            {categories.map((content, idx) => <div>{content}</div>)}
         </div>
     );
 }
