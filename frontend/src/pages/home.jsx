@@ -7,7 +7,7 @@ const Home = (props) => {
     
     return (
         <div className="blogCard shadow-sm bg-body rounded" style={{width:"100%"}}>
-            
+            ImHome
         </div>
     );
 }

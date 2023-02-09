@@ -54,6 +54,8 @@ const Login = (props) => {
             "keep" : keepLogin
         })
         .then(res => {
+            setEmail('');
+            setPassword('');
             dispatch(setModal(false))
             props.update();
         })
