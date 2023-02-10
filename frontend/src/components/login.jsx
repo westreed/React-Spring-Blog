@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import hideImg from '../images/hide.png';
 import viewImg from '../images/view.png';
 import { setModal } from '../store/modal';
+import API from '../utils/api';
 
 
 const Login = (props) => {
@@ -21,27 +22,15 @@ const Login = (props) => {
     const [pwType,      setPwType   ] = useState('password');
     const [keepLogin,   setKeepLogin] = useState(false);
 
-    const getRsaKey = async() => {
-        try{
-            const res = await axios.get('api/key');
-            console.log("key 받아옴", res.data);
-            return {
-                modulus: res.data.modulus,
-                exponent: res.data.exponent,
-            }
-        }
-        catch(error){console.log("key 받아오기 실패", error)}
-    }
-
     const loginUser = async() => {
-        const data = await getRsaKey();
+        const data = await API.getRsakey();
         if (email === '' || password === ''){
             alert("이메일과 비밀번호를 입력해주세요.");
             return false;
         }
 
         if (data.modulus == null) {
-            alert("서버에 오류가 발생했습니다.");
+            alert("서버에 문제가 발생했습니다.");
             return false;
         }
 

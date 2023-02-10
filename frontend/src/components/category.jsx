@@ -1,15 +1,22 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import API from "../utils/api";
 
 
 const Categories = () => {
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-        axios.get('/api/categories')
-        .then(res => setCategories(res.data))
-        .catch(error => console.log(error))
-    }, []);
+        const fetchData = async() => {
+            const res = await API.getCategories();
+            if (res === false){
+                setCategories([]);
+            }
+            else{
+                setCategories(res);
+            }
+        }
+        fetchData();
+    }, [])
 
     return (
         <div className="blogCard shadow-sm bg-body rounded">

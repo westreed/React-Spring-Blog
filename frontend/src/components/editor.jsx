@@ -314,14 +314,6 @@ const Editor = (props) => {
                 //     );
                 // }}
                 config={editorConfiguration}
-                // config={{
-                //     // plugins:[
-                //     //     Heading
-                //     // ],
-                //     toolbar:[
-                //         "heading"
-                //     ]
-                // }}
                 {...props}
             />
         </div>
