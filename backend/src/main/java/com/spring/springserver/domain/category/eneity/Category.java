@@ -17,7 +17,7 @@ public class Category {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ColumnDefault("0")
+    @Column(nullable = false)
     private int layer; // Category sort
 
     @Column(nullable = false)
