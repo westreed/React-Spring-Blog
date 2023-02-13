@@ -38,7 +38,7 @@ public class MemberController {
             String password = rsaUtil.getDecryptText(key, patchRequest.getPassword());
             memberService.join(username, email, password);
             session.removeAttribute("RSAPrivateKey");
-            return "redirect:/";
+            return "success";
         }
         catch (IllegalStateException e){
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
@@ -91,7 +91,7 @@ public class MemberController {
             System.out.println("세션 로그인 기록 없음");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "로그인된 기록이 없습니다.");
         }
-        System.out.println("세션 " + session.getMaxInactiveInterval());
+//        System.out.println("세션 " + session.getMaxInactiveInterval());
 //        session.setMaxInactiveInterval(60*30); // 세션 시간 갱신
         return (MemberDto.AuthInfo) session.getAttribute("auth");
     }
