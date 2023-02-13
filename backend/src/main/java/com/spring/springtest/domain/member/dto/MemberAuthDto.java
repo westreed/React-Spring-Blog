@@ -1,15 +1,14 @@
-package com.spring.springtest.member.controller;
+package com.spring.springtest.domain.member.dto;
 
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class MemberAuthForm {
+public class MemberAuthDto {
     private String username;
     private String email;
     private String role;
 
-    public MemberAuthForm(String username, String email, String role){
+    public MemberAuthDto(String username, String email, String role){
         this.username = username;
         this.email = email;
         this.role = role;

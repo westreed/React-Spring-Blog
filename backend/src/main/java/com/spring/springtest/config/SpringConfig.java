@@ -1,8 +1,8 @@
 package com.spring.springtest.config;
 
-import com.spring.springtest.member.service.MemberService;
-import com.spring.springtest.member.repository.JpaMemberRepository;
-import com.spring.springtest.member.repository.MemberRepository;
+import com.spring.springtest.domain.member.service.MemberService;
+import com.spring.springtest.domain.member.repository.JpaMemberRepository;
+import com.spring.springtest.domain.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

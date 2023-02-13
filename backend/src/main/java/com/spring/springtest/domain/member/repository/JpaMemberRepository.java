@@ -1,6 +1,6 @@
-package com.spring.springtest.member.repository;
+package com.spring.springtest.domain.member.repository;
 
-import com.spring.springtest.domain.Member;
+import com.spring.springtest.domain.member.eneity.Member;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;

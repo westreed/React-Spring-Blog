@@ -1,5 +1,8 @@
-package com.spring.springtest.domain;
+package com.spring.springtest.domain.board.eneity;
 
+import com.spring.springtest.domain.category.eneity.Category;
+import com.spring.springtest.domain.reply.eneity.Reply;
+import com.spring.springtest.domain.member.eneity.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

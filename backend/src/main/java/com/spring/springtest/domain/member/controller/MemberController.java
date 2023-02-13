@@ -1,8 +1,11 @@
-package com.spring.springtest.member.controller;
+package com.spring.springtest.domain.member.controller;
 
-import com.spring.springtest.domain.Member;
+import com.spring.springtest.domain.member.service.MemberService;
+import com.spring.springtest.domain.member.eneity.Member;
+import com.spring.springtest.domain.member.dto.MemberAuthDto;
+import com.spring.springtest.domain.member.dto.MemberDto;
+import com.spring.springtest.domain.member.dto.MemberLoginDto;
 import com.spring.springtest.uility.RSAUtil;
-import com.spring.springtest.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +27,7 @@ public class MemberController {
     }
 
     @PostMapping("/api/join")
-    public String joinAccount(@RequestBody MemberForm memberForm, HttpSession session){
+    public String joinAccount(@RequestBody MemberDto memberDto, HttpSession session){
         // 개인키 취득
         PrivateKey key = (PrivateKey) session.getAttribute("RSAPrivateKey");
         if (key == null) {
@@ -32,9 +35,9 @@ public class MemberController {
         }
 
         try {
-            String username = rsaUtil.getDecryptText(key, memberForm.getUsername());
-            String email = rsaUtil.getDecryptText(key, memberForm.getEmail());
-            String password = rsaUtil.getDecryptText(key, memberForm.getPassword());
+            String username = rsaUtil.getDecryptText(key, memberDto.getUsername());
+            String email = rsaUtil.getDecryptText(key, memberDto.getEmail());
+            String password = rsaUtil.getDecryptText(key, memberDto.getPassword());
             memberService.join(username, email, password);
             session.removeAttribute("RSAPrivateKey");
             return "redirect:/";
@@ -48,7 +51,7 @@ public class MemberController {
     }
 
     @PostMapping("/api/login")
-    public MemberAuthForm loginAccount(@RequestBody MemberLoginForm memberLoginForm, HttpSession session){
+    public MemberAuthDto loginAccount(@RequestBody MemberLoginDto memberLoginDto, HttpSession session){
         // 개인키 취득
         PrivateKey key = (PrivateKey) session.getAttribute("RSAPrivateKey");
         if (key == null) {
@@ -57,12 +60,12 @@ public class MemberController {
         }
 
         try {
-            String email = rsaUtil.getDecryptText(key, memberLoginForm.getEmail());
-            String password = rsaUtil.getDecryptText(key, memberLoginForm.getPassword());
+            String email = rsaUtil.getDecryptText(key, memberLoginDto.getEmail());
+            String password = rsaUtil.getDecryptText(key, memberLoginDto.getPassword());
             Member member = memberService.login(email, password);
             session.removeAttribute("RSAPrivateKey");
 
-            MemberAuthForm auth = new MemberAuthForm(
+            MemberAuthDto auth = new MemberAuthDto(
                     member.getUsername(),
                     member.getEmail(),
                     member.getRole()
@@ -71,7 +74,7 @@ public class MemberController {
             // 로그인 세션 생성
             session.setAttribute("auth", auth);
             session.setAttribute("isAuthenticated", true);
-            if(memberLoginForm.getKeep()){
+            if(memberLoginDto.getKeep()){
                 System.out.println("로그인 상태 유지 체크됨");
             }
             return auth;
@@ -85,14 +88,14 @@ public class MemberController {
     }
 
     @GetMapping("/api/session")
-    public MemberAuthForm getSession(@SessionAttribute(name="isAuthenticated", required = false) boolean isAuth, HttpSession session){
+    public MemberAuthDto getSession(@SessionAttribute(name="isAuthenticated", required = false) boolean isAuth, HttpSession session){
         if (!isAuth){
             System.out.println("세션 로그인 기록 없음");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "로그인된 기록이 없습니다.");
         }
         System.out.println("세션 " + session.getMaxInactiveInterval());
 //        session.setMaxInactiveInterval(60*30); // 세션 시간 갱신
-        return (MemberAuthForm) session.getAttribute("auth");
+        return (MemberAuthDto) session.getAttribute("auth");
     }
 
     @GetMapping("/api/logout")

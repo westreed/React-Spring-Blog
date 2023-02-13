@@ -1,9 +1,9 @@
-package com.spring.springtest.member.controller;
+package com.spring.springtest.domain.member.dto;
 
 import lombok.Getter;
 
 @Getter
-public class MemberLoginForm {
+public class MemberLoginDto {
     private String password;
     private String email;
     private Boolean keep;

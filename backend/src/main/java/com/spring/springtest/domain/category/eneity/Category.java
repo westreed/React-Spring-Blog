@@ -1,4 +1,4 @@
-package com.spring.springtest.domain;
+package com.spring.springtest.domain.category.eneity;
 
 import lombok.Builder;
 import lombok.Getter;

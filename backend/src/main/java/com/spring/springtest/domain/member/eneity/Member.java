@@ -1,4 +1,4 @@
-package com.spring.springtest.domain;
+package com.spring.springtest.domain.member.eneity;
 
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;

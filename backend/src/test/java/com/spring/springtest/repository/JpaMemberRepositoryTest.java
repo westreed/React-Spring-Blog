@@ -1,12 +1,11 @@
 package com.spring.springtest.repository;
 
-import com.spring.springtest.member.repository.MemberRepository;
-import com.spring.springtest.member.service.MemberService;
-import com.spring.springtest.domain.Member;
+import com.spring.springtest.domain.member.repository.MemberRepository;
+import com.spring.springtest.domain.member.service.MemberService;
+import com.spring.springtest.domain.member.eneity.Member;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
