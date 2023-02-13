@@ -1,10 +1,11 @@
 import { Container, Nav, Navbar } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { setModal } from '../store/modal';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Navbars = (props) => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const member = useSelector((state) => state.member.data)
 
@@ -12,6 +13,7 @@ const Navbars = (props) => {
         axios.get('/api/logout')
         .then(res => {
             props.update();
+            navigate('/');
         })
         .catch(error => console.log(error))
     }
