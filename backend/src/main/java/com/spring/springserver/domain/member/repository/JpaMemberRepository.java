@@ -1,6 +1,6 @@
 package com.spring.springserver.domain.member.repository;
 
-import com.spring.springserver.domain.member.eneity.Member;
+import com.spring.springserver.domain.member.entity.Member;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;

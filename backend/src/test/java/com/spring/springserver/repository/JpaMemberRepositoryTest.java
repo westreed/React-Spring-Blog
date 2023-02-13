@@ -2,7 +2,7 @@ package com.spring.springserver.repository;
 
 import com.spring.springserver.domain.member.repository.MemberRepository;
 import com.spring.springserver.domain.member.service.MemberService;
-import com.spring.springserver.domain.member.eneity.Member;
+import com.spring.springserver.domain.member.entity.Member;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

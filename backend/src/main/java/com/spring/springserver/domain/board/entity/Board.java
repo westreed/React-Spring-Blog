@@ -1,8 +1,8 @@
-package com.spring.springserver.domain.board.eneity;
+package com.spring.springserver.domain.board.entity;
 
-import com.spring.springserver.domain.category.eneity.Category;
-import com.spring.springserver.domain.reply.eneity.Reply;
-import com.spring.springserver.domain.member.eneity.Member;
+import com.spring.springserver.domain.category.entity.Category;
+import com.spring.springserver.domain.reply.entity.Reply;
+import com.spring.springserver.domain.member.entity.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

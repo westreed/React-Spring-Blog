@@ -1,6 +1,6 @@
 package com.spring.springserver.domain.member.repository;
 
-import com.spring.springserver.domain.member.eneity.Member;
+import com.spring.springserver.domain.member.entity.Member;
 
 import java.util.List;
 import java.util.Optional;

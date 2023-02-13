@@ -1,6 +1,6 @@
 package com.spring.springserver.domain.member.service;
 
-import com.spring.springserver.domain.member.eneity.Member;
+import com.spring.springserver.domain.member.entity.Member;
 import com.spring.springserver.domain.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
