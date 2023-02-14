@@ -9,13 +9,15 @@ import { Link } from 'react-router-dom';
 
 import hideImg from '../images/hide.png';
 import viewImg from '../images/view.png';
+import { setMember } from '../store/member';
 import { setModal } from '../store/modal';
 import API from '../utils/api';
 
 
-const Login = (props) => {
+const Login = () => {
     const showModal = useSelector((state) => state.modal.data);
     const dispatch = useDispatch();
+
     const [email,       setEmail    ] = useState('');
     const [password,    setPassword ] = useState('');
     const [viewPW,      setViewPW   ] = useState(false);
@@ -45,8 +47,9 @@ const Login = (props) => {
         .then(res => {
             setEmail('');
             setPassword('');
-            dispatch(setModal(false))
-            props.update();
+            console.log("login", res.data);
+            dispatch(setModal(false));
+            dispatch(setMember(res.data));
         })
         .catch(error => {
             switch (error.response.status) {

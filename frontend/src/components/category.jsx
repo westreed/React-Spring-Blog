@@ -1,27 +1,26 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCategory } from "../store/category";
 import API from "../utils/api";
+import Functions from "../utils/functions";
 
 
 const Categories = () => {
-    const [categories, setCategories] = useState([]);
+    const categories = useSelector((state) => state.categories.data)
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const fetchData = async() => {
             const res = await API.getCategories();
             if (res === false){
-                setCategories([]);
+                dispatch(setCategory([]));
             }
             else{
-                res.sort(function(a,b){
-                    const A = a.layer;
-                    const B = b.layer;
-                    if (A < B) return -1;
-                    return 1;
-                });
-                setCategories(res);
+                dispatch(setCategory(Functions.categorySort(res)));
             }
         }
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

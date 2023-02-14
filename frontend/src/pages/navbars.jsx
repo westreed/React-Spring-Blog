@@ -3,8 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { setModal } from '../store/modal';
 import { useDispatch, useSelector } from 'react-redux';
+import { setMember } from '../store/member';
 
-const Navbars = (props) => {
+const Navbars = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const member = useSelector((state) => state.member.data)
@@ -12,7 +13,7 @@ const Navbars = (props) => {
     const logout = () => {
         axios.get('/api/logout')
         .then(res => {
-            props.update();
+            dispatch(setMember(null));
             navigate('/');
         })
         .catch(error => console.log(error))

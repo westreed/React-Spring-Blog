@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import Forbidden from './components/forbidden';
 
 
-const Routing = (props) => {
+const Routing = () => {
     const member = useSelector((state) => state.member.data);
 
     const isAdmin = (member) => {
@@ -22,8 +22,8 @@ const Routing = (props) => {
 
     return (
         <BrowserRouter>
-            <Login update={props.update}/>
-            <Navbars update={props.update}/>
+            <Login/>
+            <Navbars/>
             <Container>
                 <div style={{display:"flex", flexDirection:"row"}}>
                     <Widget/>
