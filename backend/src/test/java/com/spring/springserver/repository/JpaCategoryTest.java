@@ -5,6 +5,7 @@ import com.spring.springserver.domain.category.repository.CategoryRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class JpaCategoryTest {
     CategoryRepository categoryRepository;
 
     @Test
+    @Commit
     public void 카테고리추가(){
         // given
         List<Category> categories = new ArrayList<Category>();
