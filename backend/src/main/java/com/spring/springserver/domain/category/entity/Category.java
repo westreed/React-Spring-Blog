@@ -1,13 +1,17 @@
 package com.spring.springserver.domain.category.entity;
 
+import com.spring.springserver.domain.board.entity.Board;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
+@Setter
 @Getter
 @NoArgsConstructor
 @DynamicInsert
@@ -17,16 +21,20 @@ public class Category {
     private Long id;
 
     @Column(nullable = false)
-    private int layer; // Category sort
+    private int layer;
 
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = true)
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private Board board;
+
+    @CreationTimestamp
     private Timestamp createData;
 
     @Builder
-    public Category(String name){
+    public Category(int layer, String name){
+        this.layer = layer;
         this.name = name;
     }
 }

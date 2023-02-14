@@ -19,6 +19,7 @@ public class Member {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
     @Column(nullable = false, length = 30)
     private String username;
 
@@ -29,6 +30,7 @@ public class Member {
     @Column(nullable = false, length = 100)
     private String email;
 
+    @Setter
     @ColumnDefault("'user'")
     private String role;
 
