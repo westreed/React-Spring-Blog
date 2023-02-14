@@ -10,6 +10,7 @@ import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Setter
 @Getter
@@ -27,7 +28,7 @@ public class Category {
     private String name;
 
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private Board board;
+    private List<Board> board;
 
     @CreationTimestamp
     private Timestamp createData;

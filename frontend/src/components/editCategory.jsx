@@ -28,7 +28,6 @@ const Editing = (props) => {
                 <button>위</button>
                 <button>아래</button>
             </div>
-            <button>수정하기</button>
         </div>
     );
 }
@@ -56,6 +55,14 @@ const EditCategory = () => {
         setEditName(content);
     }
 
+    const Commit = (e) => {
+        const data = [];
+        for (let index = 0; index < categories.length; index++) {
+            data.push({layer:index, name:categories[index]});
+        }
+        console.log(data);
+    }
+
     useEffect(() => {getCategories(setCategories)}, [])
     return (
         <div>
@@ -74,6 +81,7 @@ const EditCategory = () => {
                     : null}
                 </div>
             </div>
+            <button onClick={Commit}>수정하기</button>
         </div>
     );
 }
