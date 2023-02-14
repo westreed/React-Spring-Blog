@@ -22,7 +22,7 @@ public class MemberDto {
 
     @Getter
     @AllArgsConstructor
-    public static class AuthInfo {
+    public static class Auth {
         @NotBlank
         private String username;
         @Email

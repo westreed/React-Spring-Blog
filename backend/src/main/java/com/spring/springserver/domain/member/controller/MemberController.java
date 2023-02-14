@@ -49,7 +49,7 @@ public class MemberController {
     }
 
     @PostMapping("/api/login")
-    public MemberDto.AuthInfo loginAccount(@RequestBody MemberDto.Login loginRequest, HttpSession session){
+    public MemberDto.Auth loginAccount(@RequestBody MemberDto.Login loginRequest, HttpSession session){
         // 개인키 취득
         PrivateKey key = (PrivateKey) session.getAttribute("RSAPrivateKey");
         if (key == null) {
@@ -63,7 +63,7 @@ public class MemberController {
             Member member = memberService.login(email, password);
             session.removeAttribute("RSAPrivateKey");
 
-            MemberDto.AuthInfo auth = new MemberDto.AuthInfo(
+            MemberDto.Auth auth = new MemberDto.Auth(
                     member.getUsername(),
                     member.getEmail(),
                     member.getRole()
@@ -86,14 +86,14 @@ public class MemberController {
     }
 
     @GetMapping("/api/session")
-    public MemberDto.AuthInfo getSession(@SessionAttribute(name="isAuthenticated", required = false) boolean isAuth, HttpSession session){
+    public MemberDto.Auth getSession(@SessionAttribute(name="isAuthenticated", required = false) boolean isAuth, HttpSession session){
         if (!isAuth){
             System.out.println("세션 로그인 기록 없음");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "로그인된 기록이 없습니다.");
         }
 //        System.out.println("세션 " + session.getMaxInactiveInterval());
 //        session.setMaxInactiveInterval(60*30); // 세션 시간 갱신
-        return (MemberDto.AuthInfo) session.getAttribute("auth");
+        return (MemberDto.Auth) session.getAttribute("auth");
     }
 
     @GetMapping("/api/logout")
