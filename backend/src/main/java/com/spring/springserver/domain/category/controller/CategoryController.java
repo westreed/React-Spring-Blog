@@ -1,6 +1,7 @@
 package com.spring.springserver.domain.category.controller;
 
 import com.spring.springserver.domain.category.dto.CategoryDto;
+import com.spring.springserver.domain.category.mapper.CategoryMapper;
 import com.spring.springserver.domain.category.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +31,8 @@ public class CategoryController {
     @GetMapping("/api/categories")
     public List<CategoryDto.Data> getCategories(){
         // TODO: https://huisam.tistory.com/entry/mapStruct 맵핑 작업 하기
-        List<CategoryDto.Data> categories = categoryRepository.findAll();
+
+        CategoryMapper mapper = CategoryMapper.INSTANCE;
+        return mapper.entityToDto(categoryRepository.findAll());
     }
 }
