@@ -34,7 +34,8 @@ public class Category {
     private Timestamp createData;
 
     @Builder
-    public Category(int layer, String name){
+    public Category(Long id, int layer, String name){
+        this.id = id;
         this.layer = layer;
         this.name = name;
     }

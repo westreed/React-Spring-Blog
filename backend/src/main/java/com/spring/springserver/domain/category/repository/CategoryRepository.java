@@ -11,7 +11,6 @@ public interface CategoryRepository {
     Optional<Category> findById(Long id);
     List<Category> findAll();
     Optional<Category> update(Category category);
-    void updateAll(List<Category> categories);
     void delete(Category category);
     void deleteAll();
 }

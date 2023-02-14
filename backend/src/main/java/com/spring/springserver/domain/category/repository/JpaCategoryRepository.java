@@ -42,6 +42,14 @@ public class JpaCategoryRepository implements CategoryRepository {
 
     @Override
     public Optional<Category> update(Category category) {
+        if(category.getId() == null){
+            Category newCategory = Category.builder()
+                    .layer(category.getLayer())
+                    .name(category.getName())
+                    .build();
+            this.save(newCategory);
+            return Optional.empty();
+        }
         Optional<Category> res = this.findById(category.getId());
         if(res.isPresent()){
             Category prevCategory = res.get();
@@ -51,13 +59,6 @@ public class JpaCategoryRepository implements CategoryRepository {
             return Optional.of(prevCategory);
         }
         return Optional.empty();
-    }
-
-    @Override
-    public void updateAll(List<Category> categories) {
-        for (Category category : categories){
-            this.update(category);
-        }
     }
 
     @Override

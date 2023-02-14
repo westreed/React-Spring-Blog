@@ -2,6 +2,7 @@ package com.spring.springserver.config;
 
 import com.spring.springserver.domain.category.repository.CategoryRepository;
 import com.spring.springserver.domain.category.repository.JpaCategoryRepository;
+import com.spring.springserver.domain.category.service.CategoryService;
 import com.spring.springserver.domain.member.service.MemberService;
 import com.spring.springserver.domain.member.repository.JpaMemberRepository;
 import com.spring.springserver.domain.member.repository.MemberRepository;
@@ -27,12 +28,17 @@ public class SpringConfig {
     }
 
     @Bean
-    public MemberService userService(){
+    public MemberService memberService(){
         return new MemberService(memberRepository());
     }
 
     @Bean
     public CategoryRepository categoryRepository(){
         return new JpaCategoryRepository(entityManager);
+    }
+
+    @Bean
+    public CategoryService categoryService() {
+        return new CategoryService(categoryRepository());
     }
 }
