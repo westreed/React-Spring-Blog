@@ -21,6 +21,16 @@ const API = {
             return false;
         }
     },
+    postCategories: async(data) => {
+        try{
+            const res = await axios.post('/api/categories', data);
+            return res.data;
+        }
+        catch(error){
+            console.log(error);
+            return false;
+        }
+    },
     getRsakey: async() => {
         try {
             const res = await axios.get('/api/key');
