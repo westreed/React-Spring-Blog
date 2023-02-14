@@ -45,14 +45,13 @@ public class JpaMemberRepository implements MemberRepository {
     }
 
     @Override
-    public Member delete(Member member) {
+    public void delete(Member member) {
         if (entityManager.contains(member)) {
             entityManager.remove(member);
         }
         else{
             entityManager.remove(entityManager.merge(member));
         }
-        return member;
     }
 
     @Override
