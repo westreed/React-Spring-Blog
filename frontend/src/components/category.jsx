@@ -12,6 +12,12 @@ const Categories = () => {
                 setCategories([]);
             }
             else{
+                res.sort(function(a,b){
+                    const A = a.layer;
+                    const B = b.layer;
+                    if (A < B) return -1;
+                    return 1;
+                });
                 setCategories(res);
             }
         }
@@ -21,7 +27,7 @@ const Categories = () => {
     return (
         <div className="blogCard shadow-sm bg-body rounded">
             <p>카테고리</p>
-            {categories.map((content, idx) => <div>{content}</div>)}
+            {categories.map((data, idx) => <div key={data.layer}>{data.name}</div>)}
         </div>
     );
 }
