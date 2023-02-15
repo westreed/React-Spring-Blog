@@ -9,7 +9,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-02-14T14:58:06+0900",
+    date = "2023-02-15T14:15:03+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.17 (Amazon.com Inc.)"
 )
 public class CategoryMapperImpl implements CategoryMapper {
@@ -35,6 +35,7 @@ public class CategoryMapperImpl implements CategoryMapper {
 
         DataBuilder data = Data.builder();
 
+        data.id( category.getId() );
         data.layer( category.getLayer() );
         data.name( category.getName() );
 

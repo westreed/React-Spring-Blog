@@ -23,7 +23,10 @@ public class JpaCategoryTest {
         // given
         List<Category> categories = new ArrayList<Category>();
         for (int i=0; i<5; i++){
-            Category category = new Category(i, Integer.toString(i) + "번 카테고리");
+            Category category = Category.builder()
+                    .layer(i)
+                    .name(Integer.toString(i) + "번 카테고리")
+                    .build();
             categories.add(category);
         }
 
