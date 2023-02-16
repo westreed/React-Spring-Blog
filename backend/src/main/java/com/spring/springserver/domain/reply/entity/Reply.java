@@ -32,7 +32,7 @@ public class Reply {
     private Board board; // ManyToOne
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "memberId")
     private Member member; // ManyToOne
 
     @ColumnDefault("0")
