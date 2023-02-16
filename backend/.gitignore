@@ -64,3 +64,5 @@ yarn-debug.log*
 yarn-error.log*
 
 *.properties
+
+/src/com/spring/springserver/domain/category/mapper/
