@@ -4,22 +4,33 @@ import API from "../utils/api";
 import { useDispatch } from "react-redux";
 import { setCategory } from "../store/category";
 
-const getCategories = async(setCategories) => {
+const getCategories = async(setCategories, dispatch) => {
     const res = await API.getCategories();
-    if (res === false){setCategories([]);}
-    else{setCategories(Functions.categorySort(res));}
+    let categories = [];
+    if(res !== false){
+        Functions.categorySort(res);
+        // dispatch로 인해, List 내부의 객체들도 새롭게 할당해서 넣어야
+        // 읽기전용 데이터를 피해갈 수 있음.
+        res.forEach(data => {
+            let newItem = Object.assign({}, data);
+            categories.push(newItem);
+        })
+    }
+    setCategories(categories);
+    dispatch(setCategory(res));
 }
 
 const Editing = (props) => {
     const [idx, setIdx] = props.idx;
     const [categories, setCategories] = props.list;
-    // const [name, setName] = props.edit;
 
     const MoveUp = (e) => {
         if(categories[idx].layer > 0){
             const pos = categories[idx].layer;
             const _categories = categories;
-            _categories.forEach(data => {if(data.layer === pos-1) data.layer += 1;})
+            _categories.forEach(data => {
+                if(data.layer === pos-1) data.layer += 1;
+            })
             _categories[idx].layer -= 1;
             setIdx(idx-1);
             setCategories(Functions.categorySort(_categories));
@@ -112,7 +123,11 @@ const EditCategory = () => {
         }
     }
 
-    useEffect(() => {getCategories(setCategories)}, [])
+    useEffect(() => {
+        getCategories(setCategories, dispatch);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     return (
         <div>
             <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
@@ -120,13 +135,13 @@ const EditCategory = () => {
                     <h3>카테고리</h3>
                     {categories.map((res, idx) => 
                         <button
-                            className="noEffect"
-                            style={{display:"block"}}
+                            className="noEffect useButton"
+                            style={{display:"block", maxHeight:"24px"}}
                             key={res.layer}
                             onClick={() => selectCategory(res.layer)}
                         >{idx+1}. {res.name}</button>
                     )}
-                    <input ref={inputRef}/>
+                    <input ref={inputRef} maxLength={10}/>
                     <button onClick={addCategory}>추가</button>
                 </div>
                 <div style={{flex:"70%", border:"1px solid #7286D3"}}>
