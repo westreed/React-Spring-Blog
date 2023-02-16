@@ -12,6 +12,7 @@ import java.util.List;
 public interface BoardMapper {
     BoardMapper INSTANCE = Mappers.getMapper(BoardMapper.class);
 
+    @Mapping(target = "content", ignore = true)
     List<BoardDto.Search> entityToDtoSearch(List<Board> entity);
 
 }

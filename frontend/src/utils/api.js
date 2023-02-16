@@ -43,6 +43,16 @@ const API = {
             console.log(error);
             return false;
         }
+    },
+    getCategoryPosts: async(data) => {
+        try {
+            const res = await axios.get('/api/posts', {params:data});
+            return res.data;
+        }
+        catch(error){
+            console.log(error);
+            return false;
+        }
     }
 }
 

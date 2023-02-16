@@ -1,7 +1,8 @@
 package com.spring.springserver.domain.board.repository;
 
+import com.spring.springserver.domain.board.dto.BoardDto;
 import com.spring.springserver.domain.board.entity.Board;
-import com.spring.springserver.domain.category.entity.Category;
+import com.spring.springserver.domain.board.mapper.BoardMapper;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -24,9 +25,23 @@ public class JpaBoardRepository implements BoardRepository {
     }
 
     @Override
-    public List<Board> findAll() {
-        return entityManager.createQuery("select b from Board b", Board.class)
+    public BoardDto.Result findAll(BoardDto.RequestData req) {
+        Long totalCount = entityManager.createQuery("select count(b) from Board b", Long.class)
+                .getSingleResult();
+        int totalPages = (int) (totalCount / req.getPageSize()) + ((totalCount % req.getPageSize()) > 0 ? 1 : 0);
+        List<Board> boards = entityManager.createQuery("select b from Board b", Board.class)
+                .setFirstResult(req.getPage() * req.getPageSize())
+                .setMaxResults(req.getPageSize())
                 .getResultList();
+
+        BoardMapper mapper = BoardMapper.INSTANCE;
+        return BoardDto.Result.builder()
+                .totalPages(totalPages)
+                .totalCount(totalCount)
+                .pageNumber(req.getPage())
+                .pageSize(req.getPageSize())
+                .boards(mapper.entityToDtoSearch(boards))
+                .build();
     }
 
     @Override
@@ -36,17 +51,47 @@ public class JpaBoardRepository implements BoardRepository {
     }
 
     @Override
-    public List<Board> findByCategoryId(Long categoryId) {
-        return entityManager.createQuery("select b from Board b where b.category.id = :categoryId", Board.class)
-                .setParameter("categoryId", categoryId)
+    public BoardDto.Result findByCategoryId(BoardDto.RequestData req) {
+        Long totalCount = entityManager.createQuery("select count(b) from Board b where b.category.id = :id", Long.class)
+                .setParameter("id", req.getId())
+                .getSingleResult();
+        int totalPages = (int) (totalCount / req.getPageSize()) + ((totalCount % req.getPageSize()) > 0 ? 1 : 0);
+        List<Board> boards = entityManager.createQuery("select b from Board b where b.category.id = :id order by b.createData desc", Board.class)
+                .setParameter("id", req.getId())
+                .setFirstResult(req.getPage() * req.getPageSize())
+                .setMaxResults(req.getPageSize())
                 .getResultList();
+
+        BoardMapper mapper = BoardMapper.INSTANCE;
+        return BoardDto.Result.builder()
+                .totalPages(totalPages)
+                .totalCount(totalCount)
+                .pageNumber(req.getPage())
+                .pageSize(req.getPageSize())
+                .boards(mapper.entityToDtoSearch(boards))
+                .build();
     }
 
     @Override
-    public List<Board> findByMemberId(Long memberId) {
-        return entityManager.createQuery("select b from Board b where b.memberId = :memberId", Board.class)
-                .setParameter("memberId", memberId)
+    public BoardDto.Result findByMemberId(BoardDto.RequestData req) {
+        Long totalCount = entityManager.createQuery("select count(b) from Board b where b.member.id = :id", Long.class)
+                .setParameter("id", req.getId())
+                .getSingleResult();
+        int totalPages = (int) (totalCount / req.getPageSize()) + ((totalCount % req.getPageSize()) > 0 ? 1 : 0);
+        List<Board> boards = entityManager.createQuery("select b from Board b where b.member.id = :id", Board.class)
+                .setParameter("id", req.getId())
+                .setFirstResult(req.getPage() * req.getPageSize())
+                .setMaxResults(req.getPageSize())
                 .getResultList();
+
+        BoardMapper mapper = BoardMapper.INSTANCE;
+        return BoardDto.Result.builder()
+                .totalPages(totalPages)
+                .totalCount(totalCount)
+                .pageNumber(req.getPage())
+                .pageSize(req.getPageSize())
+                .boards(mapper.entityToDtoSearch(boards))
+                .build();
     }
 
     @Override

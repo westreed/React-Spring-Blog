@@ -8,6 +8,7 @@ import Login from './components/login';
 import Settings from './pages/settings';
 import { useSelector } from 'react-redux';
 import Forbidden from './components/forbidden';
+import Categories from './pages/categories';
 
 
 const Routing = () => {
@@ -30,6 +31,8 @@ const Routing = () => {
                     <Routes>
                         <Route exact path='/' element={<Home/>} />
                         <Route exact path='/settings' element={isAdmin(member) ?<Settings/> : <Forbidden/>}/>
+                        <Route exact path='/category/:categoryId' element={<Categories/>}/>
+                        <Route exact path='/category' element={<Categories/>}/>
                     </Routes>
                 </div>
             </Container>

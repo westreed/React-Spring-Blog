@@ -2,6 +2,8 @@ package com.spring.springserver.domain.member.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -38,5 +40,18 @@ public class MemberDto {
         @Email
         private String email;
         private Boolean keep;
+    }
+
+    @Setter
+    @Getter
+    @NoArgsConstructor
+    public static class Search {
+        private String email;
+        private String username;
+
+        public Search (String email, String username){
+            this.email = email;
+            this.username = username;
+        }
     }
 }
