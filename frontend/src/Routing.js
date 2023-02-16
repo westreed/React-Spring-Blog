@@ -25,7 +25,7 @@ const Routing = () => {
             <Login/>
             <Navbars/>
             <Container>
-                <div style={{display:"flex", flexDirection:"row"}}>
+                <div className="Container" style={{display:"flex", flex:1}}>
                     <Widget/>
                     <Routes>
                         <Route exact path='/' element={<Home/>} />

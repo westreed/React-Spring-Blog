@@ -24,9 +24,17 @@ const Categories = () => {
     }, [])
 
     return (
-        <div className="blogCard shadow-sm bg-body rounded">
-            <p>카테고리</p>
-            {categories.map((data, idx) => <div key={data.layer}>{data.name}</div>)}
+        <div className="category blogCard shadow-sm bg-body rounded">
+            <div style={{fontSize:"1.2em", marginBottom:"7px"}}>카테고리</div>
+            {categories.map((data, idx) =>
+                <button
+                    className="noEffect useButton"
+                    style={{display:"block", height:"1.8em", width:"100%", textAlign:"left", fontSize:"0.9em"}}
+                    key={data.layer}
+                >
+                    {data.name}
+                </button>
+            )}
         </div>
     );
 }

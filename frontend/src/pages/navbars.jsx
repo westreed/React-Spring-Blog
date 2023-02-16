@@ -30,6 +30,7 @@ const Navbars = () => {
                     <Link className='brand' to="/">:AiM</Link>
                     <Link className='useButton' to='/'>Home</Link>
                     <Link className='useButton' to='/categories'>Categories</Link>
+                    <Link className='useButton' to='/tags'>Tags</Link>
                 </Nav>
                 <Nav style={{height:"50px", lineHeight:"50px", justifyContent:"flex-end"}}>
                     {member != null ? <p style={{marginRight:"10px"}}>{member.username}님</p> : null}

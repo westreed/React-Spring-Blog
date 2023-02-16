@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom/client';
 import "./styles/common.css";
 import "./styles/editorStyle.css";
 import "./styles/font.css";
+import "./styles/mobile.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import reportWebVitals from './reportWebVitals';
 import App from './App';

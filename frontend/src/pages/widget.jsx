@@ -4,7 +4,7 @@ import Profile from "../components/profile";
 
 const Widget = () => {
     return (
-        <div>
+        <div className="widget" style={{display:"flex", flexDirection:"column"}}>
             <Profile/>
             <Category/>
         </div>
