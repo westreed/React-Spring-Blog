@@ -1,5 +1,8 @@
 package com.spring.springserver.config;
 
+import com.spring.springserver.domain.board.repository.BoardRepository;
+import com.spring.springserver.domain.board.repository.JpaBoardRepository;
+import com.spring.springserver.domain.board.service.BoardService;
 import com.spring.springserver.domain.category.repository.CategoryRepository;
 import com.spring.springserver.domain.category.repository.JpaCategoryRepository;
 import com.spring.springserver.domain.category.service.CategoryService;
@@ -40,5 +43,15 @@ public class SpringConfig {
     @Bean
     public CategoryService categoryService() {
         return new CategoryService(categoryRepository());
+    }
+
+    @Bean
+    public BoardRepository boardRepository() {
+        return new JpaBoardRepository(entityManager);
+    }
+
+    @Bean
+    public BoardService boardService() {
+        return new BoardService(boardRepository(), categoryRepository());
     }
 }
