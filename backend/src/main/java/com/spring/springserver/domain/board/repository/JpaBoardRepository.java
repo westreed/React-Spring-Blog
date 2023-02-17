@@ -29,13 +29,14 @@ public class JpaBoardRepository implements BoardRepository {
         Long totalCount = entityManager.createQuery("select count(b) from Board b", Long.class)
                 .getSingleResult();
         int totalPages = (int) (totalCount / req.getPageSize()) + ((totalCount % req.getPageSize()) > 0 ? 1 : 0);
-        List<Board> boards = entityManager.createQuery("select b from Board b", Board.class)
+        List<Board> boards = entityManager.createQuery("select b from Board b order by b.createData desc", Board.class)
                 .setFirstResult(req.getPage() * req.getPageSize())
                 .setMaxResults(req.getPageSize())
                 .getResultList();
 
         BoardMapper mapper = BoardMapper.INSTANCE;
         return BoardDto.Result.builder()
+                .id(req.getId())
                 .totalPages(totalPages)
                 .totalCount(totalCount)
                 .pageNumber(req.getPage())
@@ -64,6 +65,8 @@ public class JpaBoardRepository implements BoardRepository {
 
         BoardMapper mapper = BoardMapper.INSTANCE;
         return BoardDto.Result.builder()
+                .id(req.getId())
+                .id(req.getId())
                 .totalPages(totalPages)
                 .totalCount(totalCount)
                 .pageNumber(req.getPage())
@@ -78,7 +81,7 @@ public class JpaBoardRepository implements BoardRepository {
                 .setParameter("id", req.getId())
                 .getSingleResult();
         int totalPages = (int) (totalCount / req.getPageSize()) + ((totalCount % req.getPageSize()) > 0 ? 1 : 0);
-        List<Board> boards = entityManager.createQuery("select b from Board b where b.member.id = :id", Board.class)
+        List<Board> boards = entityManager.createQuery("select b from Board b where b.member.id = :id order by b.createData desc", Board.class)
                 .setParameter("id", req.getId())
                 .setFirstResult(req.getPage() * req.getPageSize())
                 .setMaxResults(req.getPageSize())
@@ -92,6 +95,15 @@ public class JpaBoardRepository implements BoardRepository {
                 .pageSize(req.getPageSize())
                 .boards(mapper.entityToDtoSearch(boards))
                 .build();
+    }
+
+    @Override
+    public Optional<Board> findOneByCategoryId(Long id) {
+        List<Board> result = entityManager.createQuery("select b from Board b where b.category.id = :id", Board.class)
+                .setParameter("id", id)
+                .getResultList();
+
+        return result.stream().findAny();
     }
 
     @Override

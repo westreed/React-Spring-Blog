@@ -12,5 +12,6 @@ public interface BoardRepository {
     Optional<Board> findById(Long id);
     BoardDto.Result findByCategoryId(BoardDto.RequestData req);
     BoardDto.Result findByMemberId(BoardDto.RequestData req);
+    Optional<Board> findOneByCategoryId(Long id);
     void delete(Board board);
 }
