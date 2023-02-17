@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/reactblog?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+    username: root
+    password: Tpgns753951!!
+  jpa:
+    show-sql: 'true' # show SQL
+    hibernate:
+      ddl-auto: update # DDL (create/update/create-drop/validate/none)
+    properties:
+      hibernate:
+        format_sql: 'true'
+  jackson:
+    time-zone: Asia/Seoul
+
+server:
+  error:
+    include-message=always: always
+
+hibernate:
+  jdbc:
+    time_zone: Asia/Seoul
