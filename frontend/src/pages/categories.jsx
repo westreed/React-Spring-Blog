@@ -7,7 +7,7 @@ import { setPageSize } from "../store/pageSize";
 import { setPosts } from "../store/posts";
 import API from "../utils/api";
 
-const pageSizeList = [5, 10, 15, 20, 30, 50];
+const pageSizeList = [1, 5, 10, 15, 20, 30, 50];
 
 const Categories = () => {
     const navigate = useNavigate();
@@ -17,10 +17,11 @@ const Categories = () => {
     const pageSize = useSelector((state) => state.pageSize.data)
     const categoryId = params?.categoryId;
     const nowMoment = moment();
+    const pageElement = [];
 
-    const changePageSize = async(value) => {
+    const changePageSize = async(page, value) => {
         const req = {
-            "page":0,
+            "page":page,
             "pageSize":value,
             "id":posts.id
         };
@@ -34,6 +35,21 @@ const Categories = () => {
             dispatch(setPosts(null));
         }
         dispatch(setPageSize(value));
+    }
+
+    const currentPage = Math.floor(posts?.pageNumber/10);
+    const currentEndPage = (currentPage+1)*10;
+    const currentLastPage = currentEndPage > posts?.totalPages ? posts?.totalPages : currentEndPage;
+    for(let i=currentPage*10; i<currentLastPage; i++){
+        if(i == posts?.pageNumber){
+            pageElement.push(<button key={i} className="noEffect pick page" onClick={() => changePageSize(i, pageSize)}>{i+1}</button>);
+        }
+        else{
+            pageElement.push(<button key={i} className="noEffect page" onClick={() => changePageSize(i, pageSize)}>{i+1}</button>);
+        }
+    }
+    if(currentEndPage < posts?.totalPages){
+        pageElement.push(<button className="noEffect page">다음</button>);
     }
 
     const formmatedDate = (date) => {
@@ -53,10 +69,7 @@ const Categories = () => {
     return (
         <div className="blogCard shadow-sm bg-body rounded" style={{width:"100%"}}>
             <div style={{marginBottom:"10px", fontSize:"1.4em", fontWeight:"bold"}}>
-                {categoryId == null ?
-                    <div>전체글보기</div> :
-                    <div>{posts?.name}</div>
-                }
+                {categoryId == null ? <div>전체글보기</div> : <div>{posts?.name}</div>}
             </div>
             <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
                 <div style={{display:"flex", flexDirection:"row", fontSize:"0.9em", marginBottom:"14px"}}>
@@ -64,25 +77,25 @@ const Categories = () => {
                     <div>개의 게시글</div>
                 </div>
                 <Dropdown>
-                    <Dropdown.Toggle
-                        variant="primary"
-                        size="sm"
-                        id="dropdown-basic"
-                    >
+                    <Dropdown.Toggle variant="primary" size="sm" id="dropdown-basic">
                         {pageSize}개씩
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                         {pageSizeList.map((res, idx) => 
                             <Dropdown.Item
                                 key={idx}
-                                onClick={() => changePageSize(res)}
-                            >{res}개씩</Dropdown.Item>
+                                onClick={() => changePageSize(0, res)}
+                            >
+                                {res}개씩
+                            </Dropdown.Item>
                         )}
                     </Dropdown.Menu>
                 </Dropdown>
             </div>
             <div style={{border:"1px solid #7286D3", height:"1px"}}/>
+            {/* 게시글 리스트 */}
             <div style={{marginTop:"4px", fontSize:"0.9em"}}>
+                {/* 게시글 헤더 */}
                 <div>
                     <div className="truncate" style={{display:"flex", flexDirection:"row", fontWeight:"bold"}}>   
                         <div style={{flex:"0.1"}}></div>
@@ -93,6 +106,7 @@ const Categories = () => {
                     </div>
                 </div>
                 <hr style={{marginTop:"8px", marginBottom:"8px"}}/>
+                {/* 게시글 내용 */}
                 {posts?.boards.map((res, idx) => 
                     <div key={idx}>
                         <div style={{display:"flex", flexDirection:"row"}}>   
@@ -107,6 +121,12 @@ const Categories = () => {
                         <hr style={{marginTop:"8px", marginBottom:"8px"}}/>
                     </div>
                 )}
+            </div>
+            {/* 하단 페이지 */}
+            <div style={{marginTop:"20px"}}>
+                <div style={{flex:1, display:"flex", flexDirection:"row", justifyContent:"center"}}>
+                    {pageElement}
+                </div>
             </div>
         </div>
     );

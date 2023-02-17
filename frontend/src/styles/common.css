@@ -83,3 +83,15 @@ a:hover {
     font-size: 30px;
     color: #cf4337;
 }
+
+.page {
+    padding-left: 7px;
+    padding-right: 7px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.pick {
+    background-color: #0b5ed7;
+    color: white;
+}
