@@ -7,14 +7,10 @@ import javax.annotation.PostConstruct;
 import java.util.TimeZone;
 
 @SpringBootApplication
-public class SpringTestApplication {
+public class SpringServerApplication {
 
-	@PostConstruct
-	void started() {
-		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
-	}
 	public static void main(String[] args) {
-		SpringApplication.run(SpringTestApplication.class, args);
+		SpringApplication.run(SpringServerApplication.class, args);
 	}
 
 }
