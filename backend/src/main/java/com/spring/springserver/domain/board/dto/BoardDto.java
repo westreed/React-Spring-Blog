@@ -56,6 +56,7 @@ public class BoardDto {
     @Getter
     @NoArgsConstructor
     public static class Result {
+        private Long id;
         private int pageNumber;
         private int pageSize;
         private int totalPages;
@@ -63,7 +64,8 @@ public class BoardDto {
         private List<Search> boards;
 
         @Builder
-        public Result (int pageNumber, int pageSize, int totalPages, Long totalCount, List<Search> boards){
+        public Result (Long id, int pageNumber, int pageSize, int totalPages, Long totalCount, List<Search> boards){
+            this.id = id;
             this.pageNumber = pageNumber;
             this.pageSize = pageSize;
             this.totalPages = totalPages;
