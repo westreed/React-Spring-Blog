@@ -18,13 +18,13 @@ public class BoardController {
     }
 
     @GetMapping("/api/posts")
-    public BoardDto.Result getCategoryPost(@RequestParam int page, @RequestParam int pageSize, @RequestParam(required = false) Long id){
+    public BoardDto.Result getCategoryPost(@RequestParam int page, @RequestParam int pageSize, @RequestParam Long id){
         BoardDto.RequestData req = BoardDto.RequestData.builder()
                 .page(page)
                 .pageSize(pageSize)
                 .id(id)
                 .build();
-        if(id != null){return boardService.getPostCategory(req);}
+        if(id > 0){return boardService.getPostCategory(req);}
         return boardService.getPostAll(req);
     }
 
