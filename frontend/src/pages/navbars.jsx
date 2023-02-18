@@ -23,7 +23,7 @@ const Navbars = () => {
         <Navbar className='shadow-sm mb-4 bg-body rounded' style={{padding:0}}>
             <Container
                 style={{
-                    paddingLeft:"30px",paddingRight:"30px"
+                    maxWidth:"1150px"
                 }}
             >   
                 <Nav style={{height:"50px", lineHeight:"50px", justifyContent:"flex-start"}}>

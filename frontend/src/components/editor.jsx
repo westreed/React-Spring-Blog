@@ -59,6 +59,7 @@ import Title from '@ckeditor/ckeditor5-heading/src/title.js';
 import TodoList from '@ckeditor/ckeditor5-list/src/todolist';
 import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline.js';
 import WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount.js';
+import FileRepository from "@ckeditor/ckeditor5-upload/src/filerepository";
 import '@ckeditor/ckeditor5-build-classic/build/translations/ko';
 import '@ckeditor/ckeditor5-heading/build/translations/ko';
 import '@ckeditor/ckeditor5-basic-styles/build/translations/ko';
@@ -79,243 +80,293 @@ import '@ckeditor/ckeditor5-block-quote/build/translations/ko';
 import '@ckeditor/ckeditor5-alignment/build/translations/ko';
 import '@ckeditor/ckeditor5-find-and-replace/build/translations/ko';
 import '@ckeditor/ckeditor5-style/build/translations/ko';
+import Viewer from "./view";
+import { useState } from "react";
+import axios from "axios";
 
 const editorConfiguration  = {
-    language: "ko",
-    placeholder : "본문 내용을 입력해주세요.",
-    mediaEmbed: {
-        previewsInData: true
-    },
-    shouldNotGroupWhenFull: false,
-    plugins: [
-        Alignment,
-        Autoformat,
-        AutoImage,
-        AutoLink,
-        BlockQuote,
-        Bold,
-        Code,
-        CodeBlock,
-        Essentials,
-        FindAndReplace,
-        FontBackgroundColor,
-        FontColor,
-        FontFamily,
-        FontSize,
-        GeneralHtmlSupport,
-        Heading,
-        Highlight,
-        HorizontalLine,
-        HtmlEmbed,
-        Image,
-        ImageCaption,
-        ImageInsert,
-        ImageResize,
-        ImageStyle,
-        ImageToolbar,
-        ImageUpload,
-        Indent,
-        IndentBlock,
-        Italic,
-        Link,
-        LinkImage,
-        List,
-        ListProperties,
-        MediaEmbed,
-        MediaEmbedToolbar,
-        Mention,
-        PageBreak,
-        Paragraph,
-        SourceEditing,
-        SpecialCharacters,
-        SpecialCharactersArrows,
-        SpecialCharactersCurrency,
-        SpecialCharactersEssentials,
-        SpecialCharactersMathematical,
-        Strikethrough,
-        Style,
-        Subscript,
-        Superscript,
-        Table,
-        TableCaption,
-        TableCellProperties,
-        TableColumnResize,
-        TableProperties,
-        TableToolbar,
-        TextTransformation,
-        Title,
-        TodoList,
-        Underline,
-        WordCount
-    ],
-    toolbar: {
-        items: [
-			'heading',
-			'|',
-			'bold',
-			'italic',
-			'underline',
-			'strikethrough',
-			'fontFamily',
-			'fontSize',
-			'fontColor',
-			'fontBackgroundColor',
-			'|',
-			'bulletedList',
-			'numberedList',
-			'todoList',
-			'|',
-			'outdent',
-			'indent',
-			'|',
-			'findAndReplace',
-			'undo',
-			'redo',
-			'-',
-			'style',
-			'|',
-			'alignment',
-			'|',
-			'horizontalLine',
-			'blockQuote',
-			'code',
-			'codeBlock',
-			'|',
-			'subscript',
-			'superscript',
-			'specialCharacters',
-			'|',
-			'link',
-			'imageUpload',
-			'insertTable',
-			'mediaEmbed',
-			'|',
-			'htmlEmbed',
-			'pageBreak',
-			'sourceEditing'
-		],
-		shouldNotGroupWhenFull: true
-    },
-    heading: {
-        options: [
-            {
-                model: "paragraph",
-                view: "p",
-                title: "본문",
-                class: "ck-heading_paragraph",
-            },
-            {
-                model: "heading1",
-                view: "h1",
-                title: "헤더1",
-                class: "ck-heading_heading1",
-            },
-            {
-                model: "heading2",
-                view: "h2",
-                title: "헤더2",
-                class: "ck-heading_heading2",
-            },
-            {
-                model: "heading3",
-                view: "h3",
-                title: "헤더3",
-                class: "ck-heading_heading3",
-            },
-        ],
-    },
-    fontSize: {
-        options: [
-            14,
-            15,
-            16,
-            17,
-            18,
-            19,
-            20,
-            21,
-            22,
-            23,
-            24,
-            25,
-            26,
-            27,
-            28,
-            29,
-            30,
-        ],
-    },
-    alignment: {
-        options: ["justify", "left", "center", "right"],
-    },
-    table: {
-        contentToolbar: [
-			'tableColumn',
-			'tableRow',
-			'mergeTableCells',
-			'tableCellProperties',
-			'tableProperties'
-		],
-    },
-    image: {
-        resizeUnit: "px",
-        toolbar: [
-            "imageStyle:alignLeft",
-            "imageStyle:full",
-            "imageStyle:alignRight",
-            "|",
-            "imageTextAlternative",
-            'toggleImageCaption',
-            'linkImage'
-        ],
-        styles: ["full", "alignLeft", "alignRight"],
-        type: ["JPEG", "JPG", "GIF", "PNG"],
-    },
-    typing: {
-        transformations: {
-            remove: [
-                "enDash",
-                "emDash",
-                "oneHalf",
-                "oneThird",
-                "twoThirds",
-                "oneForth",
-                "threeQuarters",
-            ],
-        },
-    },
-    style: {
-        definitions: [
-            {
-                name: 'Side quote',
-                element: 'blockquote',
-                classes: [ 'side-quote' ]
-            },
-            {
-                name: 'Spoiler',
-                element: 'span',
-                classes: [ 'spoiler' ]
-            },
-        ]
-    }
+
 };
 
-const Editor = (props) => {
+const Editor = () => {
+    // const [flag, setFlag] = useState(false);
+    const [content, setContent] = useState('');
+    const imgLink = "http://localhost:8080/images/";
+
+    const customUploadAdapter = (loader) => {
+        return {
+            upload(){
+                return new Promise ((resolve, reject) => {
+                    const data = new FormData();
+                     loader.file.then( (file) => {
+                            data.append("name", file.name);
+                            data.append("file", file);
+
+                            axios.post('/api/upload', data)
+                                .then((res) => {
+                                    // if(!flag){
+                                    //     setFlag(true);
+                                    //     setImage(res.data.filename);
+                                    // }
+                                    resolve({
+                                        default: `${imgLink}/${res.data.filename}`
+                                    });
+                                })
+                                .catch((err)=>reject(err));
+                        })
+                })
+            }
+        }
+    }
+
+    function uploadPlugin (editor){
+        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+            return customUploadAdapter(loader);
+        }
+    }
+
     return (
-        <div className="editorContainer">
-            <CKEditor
-                editor={ ClassicEditor }
-                // onReady={(editor) => {
-                //     editor.ui
-                //     .getEditableElement()
-                //     .parentElement.insertBefore(
-                //     editor.ui.view.toolbar.element,
-                //     editor.ui.getEditableElement()
-                //     );
-                // }}
-                config={editorConfiguration}
-                {...props}
-            />
+        <div className="blogCard shadow-sm bg-body rounded" style={{width:"100%"}}>
+            <div className="editorContainer">
+                <CKEditor
+                    editor={ ClassicEditor }
+                    // onReady={(editor) => {
+                    //     editor.ui
+                    //     .getEditableElement()
+                    //     .parentElement.insertBefore(
+                    //     editor.ui.view.toolbar.element,
+                    //     editor.ui.getEditableElement()
+                    //     );
+                    // }}
+                    config={{
+                        language: "ko",
+                        placeholder : "본문 내용을 입력해주세요.",
+                        mediaEmbed: {
+                            previewsInData: true
+                        },
+                        shouldNotGroupWhenFull: false,
+                        plugins: [
+                            Alignment,
+                            Autoformat,
+                            AutoImage,
+                            AutoLink,
+                            BlockQuote,
+                            Bold,
+                            Code,
+                            CodeBlock,
+                            Essentials,
+                            FindAndReplace,
+                            FontBackgroundColor,
+                            FontColor,
+                            FontFamily,
+                            FontSize,
+                            GeneralHtmlSupport,
+                            Heading,
+                            Highlight,
+                            HorizontalLine,
+                            HtmlEmbed,
+                            Image,
+                            ImageCaption,
+                            ImageInsert,
+                            ImageResize,
+                            ImageStyle,
+                            ImageToolbar,
+                            ImageUpload,
+                            Indent,
+                            IndentBlock,
+                            Italic,
+                            Link,
+                            LinkImage,
+                            List,
+                            ListProperties,
+                            MediaEmbed,
+                            MediaEmbedToolbar,
+                            Mention,
+                            PageBreak,
+                            Paragraph,
+                            SourceEditing,
+                            SpecialCharacters,
+                            SpecialCharactersArrows,
+                            SpecialCharactersCurrency,
+                            SpecialCharactersEssentials,
+                            SpecialCharactersMathematical,
+                            Strikethrough,
+                            Style,
+                            Subscript,
+                            Superscript,
+                            Table,
+                            TableCaption,
+                            TableCellProperties,
+                            TableColumnResize,
+                            TableProperties,
+                            TableToolbar,
+                            TextTransformation,
+                            Title,
+                            TodoList,
+                            Underline,
+                            WordCount,
+                            FileRepository
+                        ],
+                        toolbar: {
+                            items: [
+                                'heading',
+                                '|',
+                                'bold',
+                                'italic',
+                                'underline',
+                                'strikethrough',
+                                'fontFamily',
+                                'fontSize',
+                                'fontColor',
+                                'fontBackgroundColor',
+                                '|',
+                                'bulletedList',
+                                'numberedList',
+                                'todoList',
+                                '|',
+                                'outdent',
+                                'indent',
+                                '|',
+                                'findAndReplace',
+                                'undo',
+                                'redo',
+                                '-',
+                                'style',
+                                '|',
+                                'alignment',
+                                '|',
+                                'horizontalLine',
+                                'blockQuote',
+                                'code',
+                                'codeBlock',
+                                '|',
+                                'subscript',
+                                'superscript',
+                                'specialCharacters',
+                                '|',
+                                'link',
+                                'imageUpload',
+                                'insertTable',
+                                'mediaEmbed',
+                                '|',
+                                'htmlEmbed',
+                                'pageBreak',
+                                'sourceEditing'
+                            ],
+                            shouldNotGroupWhenFull: true
+                        },
+                        heading: {
+                            options: [
+                                {
+                                    model: "paragraph",
+                                    view: "p",
+                                    title: "본문",
+                                    class: "ck-heading_paragraph",
+                                },
+                                {
+                                    model: "heading1",
+                                    view: "h1",
+                                    title: "헤더1",
+                                    class: "ck-heading_heading1",
+                                },
+                                {
+                                    model: "heading2",
+                                    view: "h2",
+                                    title: "헤더2",
+                                    class: "ck-heading_heading2",
+                                },
+                                {
+                                    model: "heading3",
+                                    view: "h3",
+                                    title: "헤더3",
+                                    class: "ck-heading_heading3",
+                                },
+                            ],
+                        },
+                        fontSize: {
+                            options: [
+                                14,
+                                15,
+                                16,
+                                17,
+                                18,
+                                19,
+                                20,
+                                21,
+                                22,
+                                23,
+                                24,
+                                25,
+                                26,
+                                27,
+                                28,
+                                29,
+                                30,
+                            ],
+                        },
+                        alignment: {
+                            options: ["justify", "left", "center", "right"],
+                        },
+                        table: {
+                            contentToolbar: [
+                                'tableColumn',
+                                'tableRow',
+                                'mergeTableCells',
+                                'tableCellProperties',
+                                'tableProperties'
+                            ],
+                        },
+                        image: {
+                            resizeUnit: "px",
+                            toolbar: [
+                                "imageStyle:alignLeft",
+                                "imageStyle:full",
+                                "imageStyle:alignRight",
+                                "|",
+                                "imageTextAlternative",
+                                'toggleImageCaption',
+                                'linkImage'
+                            ],
+                            styles: ["full", "alignLeft", "alignRight"],
+                            type: ["JPEG", "JPG", "GIF", "PNG"],
+                        },
+                        typing: {
+                            transformations: {
+                                remove: [
+                                    "enDash",
+                                    "emDash",
+                                    "oneHalf",
+                                    "oneThird",
+                                    "twoThirds",
+                                    "oneForth",
+                                    "threeQuarters",
+                                ],
+                            },
+                        },
+                        style: {
+                            definitions: [
+                                {
+                                    name: 'Side quote',
+                                    element: 'blockquote',
+                                    classes: [ 'side-quote' ]
+                                },
+                                {
+                                    name: 'Spoiler',
+                                    element: 'span',
+                                    classes: [ 'spoiler' ]
+                                },
+                            ]
+                        },
+                        extraPlugins: [uploadPlugin]
+                    }}
+                    onChange={(event, editor) => {
+                        const data = editor.getData();
+                        setContent(data);
+                        console.log({ event, editor, data });
+                    }}
+                />
+            </div>
+            <Viewer content={content}/>
         </div>
     );
 }

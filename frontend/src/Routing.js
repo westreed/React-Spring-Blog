@@ -1,5 +1,4 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import { Container } from 'react-bootstrap';
 import Navbars from './pages/navbars';
 import Widget from './pages/widget';
 import Home from './pages/home';
@@ -8,7 +7,8 @@ import Login from './components/login';
 import Settings from './pages/settings';
 import { useSelector } from 'react-redux';
 import Forbidden from './components/forbidden';
-import Categories from './pages/categories';
+import PostList from './pages/postList';
+import Editor from './components/editor';
 
 
 const Routing = () => {
@@ -25,17 +25,17 @@ const Routing = () => {
         <BrowserRouter>
             <Login/>
             <Navbars/>
-            <Container>
+            <div className="session">
                 <div className="Container" style={{display:"flex", flex:1}}>
                     <Widget/>
                     <Routes>
                         <Route exact path='/' element={<Home/>} />
                         <Route exact path='/settings' element={isAdmin(member) ?<Settings/> : <Forbidden/>}/>
-                        <Route exact path='/category/:categoryId' element={<Categories/>}/>
-                        <Route exact path='/category' element={<Categories/>}/>
+                        <Route exact path='/category' element={<PostList/>}/>
+                        <Route exact path='/editor' element={<Editor/>}/>
                     </Routes>
                 </div>
-            </Container>
+            </div>
             <Footer/>
         </BrowserRouter>
     );

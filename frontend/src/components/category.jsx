@@ -38,7 +38,7 @@ const Categories = () => {
         if (res !== false){
             res.name = data.name;
             dispatch(setPosts(res));
-            navigate(`/category/${data.id}`)
+            navigate(`/category`);
             console.log("포스트:",res);
         }
         else{
