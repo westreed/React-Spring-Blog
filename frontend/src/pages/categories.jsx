@@ -40,6 +40,9 @@ const Categories = () => {
     const currentPage = Math.floor(posts?.pageNumber/10);
     const currentEndPage = (currentPage+1)*10;
     const currentLastPage = currentEndPage > posts?.totalPages ? posts?.totalPages : currentEndPage;
+    if(currentPage > 0){
+        pageElement.push(<button className="noEffect page" onClick={() => changePageSize((currentPage-1)*10, pageSize)}>이전</button>);
+    }
     for(let i=currentPage*10; i<currentLastPage; i++){
         if(i == posts?.pageNumber){
             pageElement.push(<button key={i} className="noEffect pick page" onClick={() => changePageSize(i, pageSize)}>{i+1}</button>);
@@ -49,7 +52,7 @@ const Categories = () => {
         }
     }
     if(currentEndPage < posts?.totalPages){
-        pageElement.push(<button className="noEffect page">다음</button>);
+        pageElement.push(<button className="noEffect page" onClick={() => changePageSize((currentPage+1)*10, pageSize)}>다음</button>);
     }
 
     const formmatedDate = (date) => {
