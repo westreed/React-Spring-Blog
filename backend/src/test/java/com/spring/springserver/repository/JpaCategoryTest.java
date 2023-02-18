@@ -17,8 +17,6 @@ public class JpaCategoryTest {
     @Autowired
     CategoryRepository categoryRepository;
 
-    @Test
-    @Commit
     public void 카테고리추가(){
         // given
         List<Category> categories = new ArrayList<Category>();
@@ -37,7 +35,6 @@ public class JpaCategoryTest {
         // then
     }
 
-    @Test
     public void 카테고리삭제(){
         // given
         // when

@@ -9,6 +9,8 @@ import com.spring.springserver.domain.category.service.CategoryService;
 import com.spring.springserver.domain.member.service.MemberService;
 import com.spring.springserver.domain.member.repository.JpaMemberRepository;
 import com.spring.springserver.domain.member.repository.MemberRepository;
+import com.spring.springserver.uility.file.FileRepository;
+import com.spring.springserver.uility.file.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,5 +55,15 @@ public class SpringConfig {
     @Bean
     public BoardService boardService() {
         return new BoardService(boardRepository(), categoryRepository());
+    }
+
+    @Bean
+    public FileRepository fileRepository() {
+        return new FileRepository(entityManager);
+    }
+
+    @Bean
+    public FileService fileService() {
+        return new FileService(fileRepository());
     }
 }

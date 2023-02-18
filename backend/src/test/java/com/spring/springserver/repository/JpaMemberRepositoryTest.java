@@ -20,10 +20,9 @@ class JpaMemberRepositoryTest {
     MemberService memberService;
 
     @Test
-    @Commit
     public void 회원가입(){
         // given
-        memberService.join("갈대", "1234", "westreed@naver.com");
+        memberService.join("test", "1234", "test@naver.com");
         // when
 
         // then
