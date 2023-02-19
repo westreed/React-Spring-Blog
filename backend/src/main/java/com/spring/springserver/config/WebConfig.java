@@ -14,10 +14,11 @@ public class WebConfig implements WebMvcConfigurer {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
+                        .allowedOrigins("http://westreedserver.kro.kr:3000")
                         .allowedOriginPatterns("*") //
                         .allowedHeaders("*")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS" , "PATCH")
-                .allowCredentials(true);
+                        .allowCredentials(true);
             }
         };
     }
