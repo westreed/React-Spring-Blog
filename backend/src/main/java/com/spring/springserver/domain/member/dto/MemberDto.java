@@ -22,6 +22,7 @@ public class MemberDto {
         private String email;
     }
 
+    @Setter
     @Getter
     @AllArgsConstructor
     public static class Auth {
@@ -46,11 +47,9 @@ public class MemberDto {
     @Getter
     @NoArgsConstructor
     public static class Search {
-        private String email;
         private String username;
 
-        public Search (String email, String username){
-            this.email = email;
+        public Search (String username){
             this.username = username;
         }
     }

@@ -17,11 +17,14 @@ public class MemberController {
 
     private final MemberService memberService;
     private final RSAUtil rsaUtil;
+    private final MemberDto.Auth nullAuth;
 
     @Autowired
     public MemberController(MemberService memberService, RSAUtil rsaUtil) {
         this.memberService = memberService;
         this.rsaUtil = rsaUtil;
+
+        this.nullAuth = new MemberDto.Auth(null, null, null);
     }
 
     @PostMapping("/api/join")
@@ -89,7 +92,8 @@ public class MemberController {
     public MemberDto.Auth getSession(@SessionAttribute(name="isAuthenticated", required = false) boolean isAuth, HttpSession session){
         if (!isAuth){
             System.out.println("세션 로그인 기록 없음");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "로그인된 기록이 없습니다.");
+            return this.nullAuth;
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "로그인된 기록이 없습니다.");
         }
 //        System.out.println("세션 " + session.getMaxInactiveInterval());
 //        session.setMaxInactiveInterval(60*30); // 세션 시간 갱신
