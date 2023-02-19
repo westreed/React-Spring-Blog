@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: dev
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/reactblog?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
@@ -21,3 +23,21 @@ server:
 hibernate:
   jdbc:
     time_zone: Asia/Seoul
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+variable:
+  url: http://localhost:8080
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+variable:
+  url: http://westreedserver.kro.kr:8080
