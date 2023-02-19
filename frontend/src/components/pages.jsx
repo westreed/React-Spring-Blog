@@ -1,5 +1,5 @@
 import moment from "moment/moment";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +19,7 @@ const bottomPageList = (posts, pageSize, changePageSize) => {
         pageElement.push(<button className="noEffect page shadow-sm" onClick={() => changePageSize((currentPage-1)*split, pageSize, posts?.id)}>〈 이전</button>);
     }
     for(let i=currentPage*split; i<currentLastPage; i++){
-        if(i == posts?.pageNumber){
+        if(i === posts?.pageNumber){
             pageElement.push(<button key={i} className="noEffect pick page shadow-sm" onClick={() => changePageSize(i, pageSize, posts?.id)}>{i+1}</button>);
         }
         else{
@@ -49,7 +49,6 @@ const Pages = () => {
         if (res !== false){
             res.name = posts.name;
             dispatch(setPosts(res));
-            console.log("포스트:",res);
         }
         else{
             dispatch(setPosts(null));
@@ -68,7 +67,6 @@ const Pages = () => {
     }
 
     useEffect(() => {
-        console.log(posts);
         if(posts == null) navigate("/");
     }, [])
 

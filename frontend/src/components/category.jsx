@@ -21,7 +21,6 @@ const Categories = () => {
             }
             else{
                 dispatch(setCategory(Functions.categorySort(res)));
-                console.log(res);
             }
         }
         fetchData();
@@ -39,7 +38,6 @@ const Categories = () => {
             res.name = data.name;
             dispatch(setPosts(res));
             navigate(`/category`);
-            console.log("포스트:",res);
         }
         else{
             dispatch(setPosts(null));

@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Profile = () => {
-    console.log('Profile');
     const member = useSelector((state) => state.member.data);
 
     return (

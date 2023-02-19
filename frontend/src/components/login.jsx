@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { RSAKey } from 'jsencrypt/lib/lib/jsbn/rsa';
 import { useState } from 'react';
 import { Form } from 'react-bootstrap';
@@ -38,21 +37,20 @@ const Login = () => {
 
         const rsa = new RSAKey();
         rsa.setPublic(data.modulus, data.exponent);
-
-        axios.post("/api/login", {
+        
+        const res = await API.login({
             "email" : rsa.encrypt(email),
             "password" : rsa.encrypt(password),
             "keep" : keepLogin
-        })
-        .then(res => {
+        });
+        if (!res.error){
             setEmail('');
             setPassword('');
-            console.log("login", res.data);
             dispatch(setModal(false));
             dispatch(setMember(res.data));
-        })
-        .catch(error => {
-            switch (error.response.status) {
+        }
+        else{
+            switch (res.data.response.status) {
                 case 404:
                     alert("없는 이메일이거나 잘못된 비밀번호입니다.");
                     break;
@@ -65,7 +63,7 @@ const Login = () => {
                     alert("서버에 문제가 발생했습니다.");
                     break;
             }
-        })
+        }
     }
 
     const togglePW = () => {
