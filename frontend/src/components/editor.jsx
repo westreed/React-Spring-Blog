@@ -91,7 +91,7 @@ const editorConfiguration  = {
 const Editor = () => {
     // const [flag, setFlag] = useState(false);
     const [content, setContent] = useState('');
-    const imgLink = "http://localhost:8080/images/";
+    const imgLink = "http://localhost:8080/uploads";
 
     const customUploadAdapter = (loader) => {
         return {
@@ -108,8 +108,9 @@ const Editor = () => {
                                     //     setFlag(true);
                                     //     setImage(res.data.filename);
                                     // }
+                                    console.log(res);
                                     resolve({
-                                        default: `${imgLink}/${res.data.filename}`
+                                        default: res.data
                                     });
                                 })
                                 .catch((err)=>reject(err));
