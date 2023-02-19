@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const apiLink = "http://westreedserver.kro.kr:8080";
+axios.defaults.withCredentials = true;
+const apiLink = process.env.REACT_APP_API_ENDPOINT;
 const API = {
     getSession: async() => {
         try{
@@ -39,6 +40,26 @@ const API = {
                 modulus: res.data.modulus,
                 exponent: res.data.exponent,
             }
+        }
+        catch(error){
+            console.log(error);
+            return false;
+        }
+    },
+    login: async(data) => {
+        try {
+            const res = await axios.post(`${apiLink}/api/login`, data);
+            return {error:false, data:res.data};
+        }
+        catch(error){
+            console.log(error);
+            return {error:true, data:error};
+        }
+    },
+    logout: async() => {
+        try {
+            await axios.get(`${apiLink}/api/logout`);
+            return true;
         }
         catch(error){
             console.log(error);
