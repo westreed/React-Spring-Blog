@@ -7,12 +7,11 @@ import API from './utils/api';
 
 const App = () => {
     const dispatch = useDispatch();
-    console.log('App');
     
     useEffect(() => {
         const fetchData = async() => {
             const res = await API.getSession();
-            if (res === false){
+            if (res === false || res.role === null){
                 dispatch(setMember(null));
             }
             else{
