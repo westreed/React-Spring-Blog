@@ -75,6 +75,16 @@ const API = {
             console.log(error);
             return false;
         }
+    },
+    getPost: async(data) => {
+        try {
+            const res = await axios.get(`${apiLink}/api/post`, {params:data});
+            return res.data;
+        }
+        catch(error){
+            console.log(error);
+            return false;
+        }
     }
 }
 
