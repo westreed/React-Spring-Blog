@@ -73,6 +73,7 @@ const Pages = () => {
 
     useEffect(() => {
         if(posts == null) navigate("/");
+        // eslint-disable-next-line
     }, [])
 
     return (
@@ -118,7 +119,7 @@ const Pages = () => {
                             <div>{res.view.toLocaleString()}조회</div>
                         </div>
                         <div style={{display:"flex", flexDirection:"row", fontSize:"1.4em", alignItems:"center", justifyContent:"space-between"}}>
-                            <div>{res.title}</div>
+                            <button className="noEffect p-0">{res.title}</button>
                         </div>
                     </div>
                 )}
