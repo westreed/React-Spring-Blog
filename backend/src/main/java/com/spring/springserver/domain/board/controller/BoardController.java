@@ -27,7 +27,8 @@ public class BoardController {
         return boardService.getPostAll(req);
     }
 
-//    @GetMapping("/api/posts")
-//    public List<BoardDto.Search> getPostAll(){
-//    }
+    @GetMapping("/api/post")
+    public BoardDto.Post getPost(@RequestParam Long id){
+        return boardService.getPost(id);
+    }
 }

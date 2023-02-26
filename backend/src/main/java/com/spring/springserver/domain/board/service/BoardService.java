@@ -1,9 +1,12 @@
 package com.spring.springserver.domain.board.service;
 
 import com.spring.springserver.domain.board.dto.BoardDto;
+import com.spring.springserver.domain.board.entity.Board;
 import com.spring.springserver.domain.board.repository.BoardRepository;
+import com.spring.springserver.domain.category.dto.CategoryDto;
 import com.spring.springserver.domain.category.entity.Category;
 import com.spring.springserver.domain.category.repository.CategoryRepository;
+import com.spring.springserver.domain.member.dto.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
@@ -29,5 +32,24 @@ public class BoardService {
 
     public BoardDto.Result getPostAll(BoardDto.RequestData req){
         return boardRepository.findAll(req);
+    }
+    
+    public BoardDto.Post getPost(Long id){
+        Optional<Board> res = boardRepository.findById(id);
+        if(res.isPresent()){
+            Board board = res.get();
+            CategoryDto.Search category = new CategoryDto.Search(board.getCategory().getId(), board.getCategory().getName());
+            MemberDto.Search member = new MemberDto.Search(board.getMember().getUsername());
+            return BoardDto.Post.builder()
+                    .id(board.getId())
+                    .title(board.getTitle())
+                    .content(board.getContent())
+                    .category(category)
+                    .member(member)
+                    .view(board.getView())
+                    .createData(board.getCreateData())
+                    .build();
+        }
+        throw new IllegalArgumentException("해당 게시글은 존재하지 않습니다.");
     }
 }

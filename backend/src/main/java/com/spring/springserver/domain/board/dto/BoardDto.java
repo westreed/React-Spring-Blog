@@ -1,9 +1,8 @@
 package com.spring.springserver.domain.board.dto;
 
 import com.spring.springserver.domain.category.dto.CategoryDto;
-import com.spring.springserver.domain.category.entity.Category;
 import com.spring.springserver.domain.member.dto.MemberDto;
-import com.spring.springserver.domain.member.entity.Member;
+import com.spring.springserver.domain.reply.entity.Reply;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -71,6 +70,30 @@ public class BoardDto {
             this.totalPages = totalPages;
             this.totalCount = totalCount;
             this.boards = boards;
+        }
+    }
+
+    @Getter
+    @NoArgsConstructor
+    public static class Post {
+        private Long id;
+        private String title;
+        private String content;
+        private int view;
+        private MemberDto.Search member;
+        private CategoryDto.Search category;
+//        private List<Reply> reply;
+        private Timestamp createData;
+
+        @Builder
+        public Post (Long id, String title, String content, int view, MemberDto.Search member, CategoryDto.Search category, Timestamp createData){
+            this.id = id;
+            this.title = title;
+            this.content = content;
+            this.view = view;
+            this.member = member;
+            this.category = category;
+            this.createData = createData;
         }
     }
 }
