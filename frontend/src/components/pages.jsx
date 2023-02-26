@@ -9,25 +9,25 @@ import API from "../utils/api";
 
 const pageSizeList = [1, 5, 10, 15, 20, 30, 50];
 
-const bottomPageList = (posts, pageSize, changePageSize) => {
+const bottomPageList = (posts, pageSize, changeData) => {
     const pageElement = [];
     const split = window.innerWidth > 768 ? 10 : 5;
     const currentPage = Math.floor(posts?.pageNumber/split);
     const currentEndPage = (currentPage+1)*split;
     const currentLastPage = currentEndPage > posts?.totalPages ? posts?.totalPages : currentEndPage;
     if(currentPage > 0){
-        pageElement.push(<button className="noEffect page shadow-sm" onClick={() => changePageSize((currentPage-1)*split, pageSize, posts?.id)}>〈 이전</button>);
+        pageElement.push(<button className="noEffect page shadow-sm" onClick={() => changeData((currentPage-1)*split, pageSize, posts?.id, posts?.name)}>〈 이전</button>);
     }
     for(let i=currentPage*split; i<currentLastPage; i++){
         if(i === posts?.pageNumber){
-            pageElement.push(<button key={i} className="noEffect pick page shadow-sm" onClick={() => changePageSize(i, pageSize, posts?.id)}>{i+1}</button>);
+            pageElement.push(<button key={i} className="noEffect pick page shadow-sm" onClick={() => changeData(i, pageSize, posts?.id, posts?.name)}>{i+1}</button>);
         }
         else{
-            pageElement.push(<button key={i} className="noEffect page shadow-sm" onClick={() => changePageSize(i, pageSize, posts?.id)}>{i+1}</button>);
+            pageElement.push(<button key={i} className="noEffect page shadow-sm" onClick={() => changeData(i, pageSize, posts?.id, posts?.name)}>{i+1}</button>);
         }
     }
     if(currentEndPage < posts?.totalPages){
-        pageElement.push(<button className="noEffect page shadow-sm" onClick={() => changePageSize((currentPage+1)*split, pageSize, posts?.id)}>다음 〉</button>);
+        pageElement.push(<button className="noEffect page shadow-sm" onClick={() => changeData((currentPage+1)*split, pageSize, posts?.id, posts?.name)}>다음 〉</button>);
     }
     return pageElement;
 }
@@ -39,7 +39,7 @@ const Pages = () => {
     const pageSize = useSelector((state) => state.pageSize.data);
     const nowMoment = moment();
 
-    const changePageSize = async(page, size, id) => {
+    const changeData = async(page, size, id, name) => {
         const req = {
             "page":page,
             "pageSize":size,
@@ -47,7 +47,7 @@ const Pages = () => {
         };
         const res = await API.getCategoryPosts(req);
         if (res !== false){
-            res.name = posts.name;
+            res.name = name;
             dispatch(setPosts(res));
         }
         else{
@@ -56,7 +56,12 @@ const Pages = () => {
         dispatch(setPageSize(size));
     }
 
-    const pageElement = bottomPageList(posts, pageSize, changePageSize);
+    const clickCategory = async(id, name) => {
+        await changeData(0, pageSize, id, name);
+        navigate(`/category`);
+    }
+
+    const pageElement = bottomPageList(posts, pageSize, changeData);
 
     const formmatedDate = (date) => {
         const formmatDate = moment(date);
@@ -92,7 +97,7 @@ const Pages = () => {
                                 {pageSizeList.map((res, idx) => 
                                     <Dropdown.Item
                                         key={idx}
-                                        onClick={() => changePageSize(0, res, posts?.id)}
+                                        onClick={() => changeData(0, res, posts?.id, posts?.name)}
                                     >
                                         {res}개씩
                                     </Dropdown.Item>
@@ -109,7 +114,7 @@ const Pages = () => {
                         <div style={{display:"flex", flexDirection:"row", color:"grey", fontSize:"0.8em"}}>
                             <div style={{marginRight:"0.5em"}}>{formmatedDate(res.createData)}</div>
                             <div>카테고리｜</div>
-                            <div style={{marginRight:"0.5em"}}>{res.category.name}</div>
+                            <button className="noEffect useButton" style={{marginRight:"0.5em"}} onClick={() => clickCategory(res.category.id, res.category.name)}>{res.category.name}</button>
                             <div>{res.view.toLocaleString()}조회</div>
                         </div>
                         <div style={{display:"flex", flexDirection:"row", fontSize:"1.4em", alignItems:"center", justifyContent:"space-between"}}>
