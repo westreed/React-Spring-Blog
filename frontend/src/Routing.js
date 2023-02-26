@@ -25,7 +25,7 @@ const Routing = () => {
         <BrowserRouter>
             <Login/>
             <Navbars/>
-            <div className="session">
+            <div className="session mb-5">
                 <div className="Container" style={{display:"flex", flex:1}}>
                     <Widget/>
                     <Routes>
