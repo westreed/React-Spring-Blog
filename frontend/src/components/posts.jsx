@@ -1,18 +1,41 @@
+import moment from "moment";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { setPosting } from "../store/posting";
+import { setPosts } from "../store/posts";
 import API from "../utils/api";
-
+import { ReactComponent as Menu } from "../assets/dot-menu-more-svgrepo-com.svg";
+import { ReactComponent as Heart1 } from "../assets/heart1-svgrepo-com.svg";
+import { ReactComponent as Heart2 } from "../assets/heart2-svgrepo-com.svg";
+import { ReactComponent as Comment } from "../assets/comment-dots-svgrepo-com.svg";
 
 const Posts = () => {
+    const navigate = useNavigate();
     const params = useParams();
-    const posting = useSelector((state) => state.posting.data)
+    const pageSize = useSelector((state) => state.pageSize.data);
+    const posting = useSelector((state) => state.posting.data);
     const dispatch = useDispatch();
 
     const fetchData = async() => {
         const res = await API.getPost({id:params.id});
         dispatch(setPosting(res));
+    }
+
+    const formmatedDate = (date) => {
+        return moment(date).format("YYYY.MM.DD. HH:mm");
+    }
+
+    const selectCategory = async(id, name) => {
+        const req = {
+            "page":0,
+            "pageSize":pageSize,
+            "id":id
+        };
+        const res = await API.getCategoryPosts(req);
+        if (res !== null) res.name = name;
+        dispatch(setPosts(res));
+        if (res !== null) navigate(`/category`);
     }
 
     useEffect(() => {
@@ -24,7 +47,60 @@ const Posts = () => {
         <div>
             {/* Header */}
             <div>
-                <div>{posting?.title}</div>
+                {/* Category */}
+                <div style={{display:"flex", flexDirection:"row", color:"gray", fontSize:"0.9em"}}>
+                    <div>카테고리｜</div>
+                    <button className="noEffect p-0" style={{color:"gray", marginRight:"0.5em"}} onClick={() => selectCategory(posting?.category.id, posting?.category.name)}>{posting?.category.name}</button>
+                </div>
+                {/* Title */}
+                <div style={{fontSize:"1.6em"}}>{posting?.title}</div>
+                {/* Info */}
+                <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", marginTop:"0.5em"}}>
+                    <div style={{display:"flex", flexDirection:"row", fontSize:"0.9em"}}>
+                        <div style={{marginRight:"1.0em"}}>{posting?.member.username}</div>
+                        <div style={{color:"grey"}}>{formmatedDate(posting?.createData)}</div>
+                        <div style={{marginLeft:"1.0em", color:"grey"}}>조회 {posting?.view.toLocaleString()}</div>
+                    </div>
+                    <div style={{display:"flex", flexDirection:"row"}}>
+                        <Menu fill="#3273dc" width="20px" height="20px"/>
+                    </div>
+                </div>
+                <hr style={{marginTop:"8px", marginBottom:"2em"}}/>
+            </div>
+            {/* Content */}
+            <div
+                className="content"
+                dangerouslySetInnerHTML={{ __html: posting?.content }}
+                style={{minHeight:"50px"}}
+            ></div>
+            {/* Footer */}
+            <div style={{marginTop:"1em"}}>
+                <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+                    <div style={{display:"flex", flexDirection:"row"}}>
+                        {/* Like */}
+                        <button className="noEffect useButton2" style={{display:"flex", flexDirection:"row", border:"1px solid gray", alignItems:"center", fontSize:"0.9em", padding:"4px"}}>
+                            <Heart1 width="1.4em" height="1.4em" stroke="#E90064"/>
+                            <div style={{marginLeft:"4px", marginRight:"4px"}}>좋아요</div>
+                            <div>0</div>
+                        </button>
+                        {/* Reply */}
+                        <button className="noEffect useButton2" style={{display:"flex", flexDirection:"row", border:"1px solid gray", alignItems:"center", fontSize:"0.9em", padding:"4px", marginLeft:"10px"}}>
+                            <Comment width="1.4em" height="1.4em" fill="#3273dc"/>
+                            <div style={{marginLeft:"4px", marginRight:"4px"}}>댓글</div>
+                            <div>0</div>
+                        </button>
+                    </div>
+                    <div style={{display:"flex", flexDirection:"row"}}>
+                        {/* Edit */}
+                        <button className="noEffect useButton2" style={{border:"1px solid gray", alignItems:"center", fontSize:"0.9em", padding:"4px"}}>
+                            <div>수정</div>
+                        </button>
+                        {/* Delete */}
+                        <button className="noEffect useButton2" style={{border:"1px solid gray", borderLeft:"0px", alignItems:"center", fontSize:"0.9em", padding:"4px"}}>
+                            <div>삭제</div>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     );
