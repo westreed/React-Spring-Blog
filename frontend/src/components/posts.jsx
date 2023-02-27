@@ -78,13 +78,13 @@ const Posts = () => {
                 <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
                     <div style={{display:"flex", flexDirection:"row"}}>
                         {/* Like */}
-                        <button className="noEffect useButton2" style={{display:"flex", flexDirection:"row", border:"1px solid gray", alignItems:"center", fontSize:"0.9em", padding:"4px"}}>
+                        <button className="noEffect useButton2" style={{display:"flex", flexDirection:"row", border:"1px solid #c3c3c3", alignItems:"center", fontSize:"0.9em", padding:"4px"}}>
                             <Heart1 width="1.4em" height="1.4em" stroke="#E90064"/>
                             <div style={{marginLeft:"4px", marginRight:"4px"}}>좋아요</div>
                             <div>0</div>
                         </button>
                         {/* Reply */}
-                        <button className="noEffect useButton2" style={{display:"flex", flexDirection:"row", border:"1px solid gray", alignItems:"center", fontSize:"0.9em", padding:"4px", marginLeft:"10px"}}>
+                        <button className="noEffect useButton2" style={{display:"flex", flexDirection:"row", border:"1px solid #c3c3c3", alignItems:"center", fontSize:"0.9em", padding:"4px", marginLeft:"10px"}}>
                             <Comment width="1.4em" height="1.4em" fill="#3273dc"/>
                             <div style={{marginLeft:"4px", marginRight:"4px"}}>댓글</div>
                             <div>0</div>
@@ -92,11 +92,11 @@ const Posts = () => {
                     </div>
                     <div style={{display:"flex", flexDirection:"row"}}>
                         {/* Edit */}
-                        <button className="noEffect useButton2" style={{border:"1px solid gray", alignItems:"center", fontSize:"0.9em", padding:"4px"}}>
+                        <button className="noEffect useButton2" style={{border:"1px solid #c3c3c3", alignItems:"center", fontSize:"0.9em", padding:"4px"}}>
                             <div>수정</div>
                         </button>
                         {/* Delete */}
-                        <button className="noEffect useButton2" style={{border:"1px solid gray", borderLeft:"0px", alignItems:"center", fontSize:"0.9em", padding:"4px"}}>
+                        <button className="noEffect useButton2" style={{border:"1px solid #c3c3c3", borderLeft:"0px", alignItems:"center", fontSize:"0.9em", padding:"4px"}}>
                             <div>삭제</div>
                         </button>
                     </div>
