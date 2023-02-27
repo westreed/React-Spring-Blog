@@ -24,18 +24,20 @@ const Routing = () => {
 
     return (
         <BrowserRouter>
-            <Login/>
-            <Navbars/>
-            <div className="session mb-5">
-                <div className="Container" style={{display:"flex", flex:1}}>
-                    <Widget/>
-                    <Routes>
-                        <Route exact path='/' element={<Home/>} />
-                        <Route exact path='/settings' element={isAdmin(member) ?<Settings/> : <Forbidden/>}/>
-                        <Route exact path='/category' element={<PostList/>}/>
-                        <Route exact path='/editor' element={<Editor/>}/>
-                        <Route exact path='/post/:id' element={<Post/>}/>
-                    </Routes>
+            <div className='wrapper'>
+                <Login/>
+                <Navbars/>
+                <div className="session mb-5">
+                    <div className="Container" style={{display:"flex", flex:1}}>
+                        <Widget/>
+                        <Routes>
+                            <Route exact path='/' element={<Home/>} />
+                            <Route exact path='/settings' element={isAdmin(member) ?<Settings/> : <Forbidden/>}/>
+                            <Route exact path='/category' element={<PostList/>}/>
+                            <Route exact path='/editor' element={<Editor/>}/>
+                            <Route exact path='/post/:id' element={<Post/>}/>
+                        </Routes>
+                    </div>
                 </div>
             </div>
             <Footer/>

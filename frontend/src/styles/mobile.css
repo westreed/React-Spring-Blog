@@ -46,10 +46,10 @@
     .category {
         order : 1;
     }
-  }
+}
   
-  @media only screen and (min-width: 769px) {
+@media only screen and (min-width: 769px) {
     .Container {
-      flex-direction: row;
+        flex-direction: row;
     }
-  }
+}
