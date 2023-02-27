@@ -10,7 +10,8 @@ const App = () => {
     
     useEffect(() => {
         const fetchData = async() => {
-            const res = await API.getSession();
+            let res = await API.getSession();
+            if (res.role === null){res = null;}
             dispatch(setMember(res));
         }
         fetchData();
