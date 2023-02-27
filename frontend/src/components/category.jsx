@@ -34,14 +34,9 @@ const Categories = () => {
             "id":data.id
         };
         const res = await API.getCategoryPosts(req);
-        if (res !== false){
-            res.name = data.name;
-            dispatch(setPosts(res));
-            navigate(`/category`);
-        }
-        else{
-            dispatch(setPosts(null));
-        }
+        if (res !== null) res.name = data.name;
+        dispatch(setPosts(res));
+        if (res === null) navigate(`/category`);
     }
 
     return (

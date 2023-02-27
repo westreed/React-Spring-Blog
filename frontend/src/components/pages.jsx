@@ -46,14 +46,9 @@ const Pages = () => {
             "id":id
         };
         const res = await API.getCategoryPosts(req);
-        if (res !== false){
-            res.name = name;
-            dispatch(setPosts(res));
-        }
-        else{
-            dispatch(setPosts(null));
-        }
-        dispatch(setPageSize(size));
+        if (res !== null) res.name = name;
+        dispatch(setPosts(res));
+        if(size !== pageSize) dispatch(setPageSize(size));
     }
 
     const clickCategory = async(id, name) => {

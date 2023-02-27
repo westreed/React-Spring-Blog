@@ -11,12 +11,7 @@ const App = () => {
     useEffect(() => {
         const fetchData = async() => {
             const res = await API.getSession();
-            if (res === false || res.role === null){
-                dispatch(setMember(null));
-            }
-            else{
-                dispatch(setMember(res));
-            }
+            dispatch(setMember(res));
         }
         fetchData();
     })

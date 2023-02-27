@@ -10,7 +10,7 @@ const API = {
         }
         catch(error){
             console.log(error);
-            return false;
+            return null;
         }
     },
     getCategories: async() => {
@@ -73,7 +73,7 @@ const API = {
         }
         catch(error){
             console.log(error);
-            return false;
+            return null;
         }
     },
     getPost: async(data) => {
@@ -83,7 +83,7 @@ const API = {
         }
         catch(error){
             console.log(error);
-            return false;
+            return null;
         }
     }
 }
