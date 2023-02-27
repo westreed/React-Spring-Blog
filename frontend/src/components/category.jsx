@@ -9,8 +9,8 @@ import Functions from "../utils/functions";
 
 const Categories = () => {
     const navigate = useNavigate();
-    const categories = useSelector((state) => state.category.data)
-    const pageSize = useSelector((state) => state.pageSize.data)
+    const categories = useSelector((state) => state.category.data);
+    const pageSize = useSelector((state) => state.pageSize.data);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -36,7 +36,7 @@ const Categories = () => {
         const res = await API.getCategoryPosts(req);
         if (res !== null) res.name = data.name;
         dispatch(setPosts(res));
-        if (res === null) navigate(`/category`);
+        if (res !== null) navigate(`/category`);
     }
 
     return (
