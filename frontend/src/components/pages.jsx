@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { setPageSize } from "../store/pageSize";
 import { setPosts } from "../store/posts";
 import API from "../utils/api";
+import Dog from "../images/christmas-dog.png";
 
 const pageSizeList = [1, 5, 10, 15, 20, 30, 50];
 
@@ -37,6 +38,7 @@ const Pages = () => {
     const dispatch = useDispatch();
     const posts = useSelector((state) => state.posts.data);
     const pageSize = useSelector((state) => state.pageSize.data);
+    const member = useSelector((state) => state.member.data);
     const nowMoment = moment();
 
     const changeData = async(page, size, id, name) => {
@@ -66,10 +68,53 @@ const Pages = () => {
         return formmatDate.format("YYYY.MM.DD.");
     }
 
+    const selectPost = (id) => {
+        navigate(`/post/${id}`);
+    }
+
     useEffect(() => {
         if(posts == null) navigate("/");
         // eslint-disable-next-line
     }, [])
+
+    const pageList = () => {
+        return (
+            <div>
+                <div>
+                {posts?.boards.map((res, idx) => 
+                    <div className="blogCard shadow-sm bg-body rounded" key={idx}>
+                        <div style={{display:"flex", flexDirection:"row", color:"grey", fontSize:"0.8em"}}>
+                            <div style={{marginRight:"0.5em"}}>{formmatedDate(res.createData)}</div>
+                            <div>카테고리｜</div>
+                            <button className="noEffect useButton" style={{marginRight:"0.5em"}} onClick={() => clickCategory(res.category.id, res.category.name)}>{res.category.name}</button>
+                            <div>조회 {res.view.toLocaleString()}</div>
+                        </div>
+                        <div style={{display:"flex", flexDirection:"row", fontSize:"1.4em", alignItems:"center", justifyContent:"space-between"}}>
+                            <button className="noEffect p-0" onClick={() => selectPost(res.id)}>{res.title}</button>
+                        </div>
+                    </div>
+                )}
+                </div>
+                {/* 하단 페이지 이동 */}
+                <div className="extraCard" style={{marginTop:"20px"}}>
+                    <div style={{flex:1, display:"flex", flexDirection:"row", justifyContent:"center", fontSize:"1em"}}>
+                        {pageElement}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    const noPost = () => {
+        return (
+            <div style={{display:"flex", flexDirection:"column", alignItems:"center", marginTop:"4em", marginBottom:"2em"}}>
+                <div style={{fontSize:"1.5em", color:"gray"}}>작성된 게시글이 없네요.</div>
+                <div style={{color:"gray"}}>X﹏X</div>
+                <img src={Dog} alt="게시글 없음" width="200em" height="200em"/>
+                {member?.role === 'admin' ? <button className="noEffect mt-3" style={{color:"gray"}}>{"게시글 작성하러 가기 >"}</button> : null}
+            </div>
+        );
+    }
 
     return (
         <div style={{width:"100%"}}>
@@ -104,27 +149,7 @@ const Pages = () => {
                 </div>
             </div>
             {/* 게시글 리스트 */}
-            <div>
-                {posts?.boards.map((res, idx) => 
-                    <div className="blogCard shadow-sm bg-body rounded" key={idx}>
-                        <div style={{display:"flex", flexDirection:"row", color:"grey", fontSize:"0.8em"}}>
-                            <div style={{marginRight:"0.5em"}}>{formmatedDate(res.createData)}</div>
-                            <div>카테고리｜</div>
-                            <button className="noEffect useButton" style={{marginRight:"0.5em"}} onClick={() => clickCategory(res.category.id, res.category.name)}>{res.category.name}</button>
-                            <div>{res.view.toLocaleString()}조회</div>
-                        </div>
-                        <div style={{display:"flex", flexDirection:"row", fontSize:"1.4em", alignItems:"center", justifyContent:"space-between"}}>
-                            <button className="noEffect p-0">{res.title}</button>
-                        </div>
-                    </div>
-                )}
-            </div>
-            {/* 하단 페이지 이동 */}
-            <div className="extraCard" style={{marginTop:"20px"}}>
-                <div style={{flex:1, display:"flex", flexDirection:"row", justifyContent:"center", fontSize:"1em"}}>
-                    {pageElement}
-                </div>
-            </div>
+            {posts?.boards.length > 0 ? pageList() : noPost()}
         </div>
     );
 }
