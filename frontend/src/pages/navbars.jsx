@@ -28,7 +28,7 @@ const Navbars = () => {
                 <Nav style={{height:"50px", lineHeight:"50px", justifyContent:"flex-start"}}>
                     <Link className='brand' to="/">:AiM</Link>
                     <Link className='useButton' to='/'>Home</Link>
-                    <Link className='useButton' to='/category'>Categories</Link>
+                    <Link className='useButton' to='/categories'>Categories</Link>
                     <Link className='useButton' to='/tags'>Tags</Link>
                 </Nav>
                 <Nav style={{height:"50px", lineHeight:"50px", justifyContent:"flex-end"}}>
