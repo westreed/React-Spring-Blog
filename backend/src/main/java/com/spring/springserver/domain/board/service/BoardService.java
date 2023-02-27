@@ -6,6 +6,7 @@ import com.spring.springserver.domain.board.repository.BoardRepository;
 import com.spring.springserver.domain.category.dto.CategoryDto;
 import com.spring.springserver.domain.category.entity.Category;
 import com.spring.springserver.domain.category.repository.CategoryRepository;
+import com.spring.springserver.domain.like.entity.Recommend;
 import com.spring.springserver.domain.member.dto.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -38,12 +39,17 @@ public class BoardService {
         Optional<Board> res = boardRepository.findById(id);
         if(res.isPresent()){
             Board board = res.get();
+//            System.out.println("Recommends");
+//            for (Recommend recommend : board.getRecommends()){
+//                System.out.println(recommend.getMember().toString() + " : " + recommend.getBoard().toString());
+//            }
             CategoryDto.Search category = new CategoryDto.Search(board.getCategory().getId(), board.getCategory().getName());
             MemberDto.Search member = new MemberDto.Search(board.getMember().getUsername());
             return BoardDto.Post.builder()
                     .id(board.getId())
                     .title(board.getTitle())
                     .content(board.getContent())
+//                    .recommends(board.getRecommends())
                     .category(category)
                     .member(member)
                     .view(board.getView())
@@ -51,5 +57,9 @@ public class BoardService {
                     .build();
         }
         throw new IllegalArgumentException("해당 게시글은 존재하지 않습니다.");
+    }
+
+    public void addViewCount(Long id){
+        boardRepository.updateViewCount(id);
     }
 }

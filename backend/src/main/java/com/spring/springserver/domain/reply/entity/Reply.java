@@ -35,9 +35,6 @@ public class Reply {
     @JoinColumn(name = "memberId")
     private Member member; // ManyToOne
 
-    @ColumnDefault("0")
-    private int likes;
-
     @CreationTimestamp
     private Timestamp createData; // 순서보장용
 

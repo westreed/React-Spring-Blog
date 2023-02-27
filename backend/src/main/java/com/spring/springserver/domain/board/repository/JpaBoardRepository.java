@@ -47,7 +47,9 @@ public class JpaBoardRepository implements BoardRepository {
 
     @Override
     public Optional<Board> findById(Long id) {
-        Board board = entityManager.find(Board.class, id);
+        Board board = entityManager.createQuery("select b from Board b where b.id = :id", Board.class)
+                .setParameter("id", id)
+                .getSingleResult();
         return Optional.ofNullable(board);
     }
 
@@ -114,5 +116,12 @@ public class JpaBoardRepository implements BoardRepository {
         else{
             entityManager.remove(entityManager.merge(board));
         }
+    }
+
+    @Override
+    public void updateViewCount(Long id) {
+        Board board = entityManager.find(Board.class, id);
+        board.setView(board.getView()+1);
+        entityManager.flush();
     }
 }

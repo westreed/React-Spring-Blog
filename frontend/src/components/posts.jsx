@@ -1,4 +1,5 @@
 import moment from "moment";
+import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -19,6 +20,15 @@ const Posts = () => {
 
     const fetchData = async() => {
         const res = await API.getPost({id:params.id});
+        const visit = Cookies.get(`postview${params.id}`);
+        if (res !== null && visit === undefined){
+            res.view += 1;
+            await API.addViewCount(params.id);
+            const now = new Date();
+            const expires = new Date(now.getTime() + 30*60*1000);
+            console.log("expire", expires);
+            Cookies.set(`postview${params.id}`, true, {expires});
+        }
         dispatch(setPosting(res));
     }
 
@@ -78,7 +88,7 @@ const Posts = () => {
                 <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
                     <div style={{display:"flex", flexDirection:"row"}}>
                         {/* Like */}
-                        <button className="noEffect useButton2" style={{display:"flex", flexDirection:"row", border:"1px solid #c3c3c3", alignItems:"center", fontSize:"0.9em", padding:"4px"}}>
+                        <button className="noEffect useButton2" style={{display:"flex", flexDirection:"row", border:"1px solid #c3c3c3", alignItems:"center", fontSize:"0.9em", padding:"4px"}} onClick={() => API.addLike(params?.id)}>
                             <Heart1 width="1.4em" height="1.4em" stroke="#E90064"/>
                             <div style={{marginLeft:"4px", marginRight:"4px"}}>좋아요</div>
                             <div>0</div>

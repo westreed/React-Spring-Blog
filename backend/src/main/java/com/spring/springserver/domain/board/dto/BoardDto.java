@@ -1,6 +1,7 @@
 package com.spring.springserver.domain.board.dto;
 
 import com.spring.springserver.domain.category.dto.CategoryDto;
+import com.spring.springserver.domain.like.entity.Recommend;
 import com.spring.springserver.domain.member.dto.MemberDto;
 import com.spring.springserver.domain.reply.entity.Reply;
 import lombok.Builder;
@@ -80,20 +81,33 @@ public class BoardDto {
         private String title;
         private String content;
         private int view;
+        private List<Recommend> recommends;
         private MemberDto.Search member;
         private CategoryDto.Search category;
 //        private List<Reply> reply;
         private Timestamp createData;
 
         @Builder
-        public Post (Long id, String title, String content, int view, MemberDto.Search member, CategoryDto.Search category, Timestamp createData){
+        public Post (Long id, String title, String content, int view, List<Recommend> recommends, MemberDto.Search member, CategoryDto.Search category, Timestamp createData){
             this.id = id;
             this.title = title;
             this.content = content;
             this.view = view;
+            this.recommends = recommends;
             this.member = member;
             this.category = category;
             this.createData = createData;
+        }
+    }
+
+    @Setter
+    @Getter
+    @NoArgsConstructor
+    public static class id {
+        private Long id;
+
+        public id(Long id){
+            this.id = id;
         }
     }
 }

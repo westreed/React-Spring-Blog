@@ -3,9 +3,7 @@ package com.spring.springserver.domain.board.controller;
 import com.spring.springserver.domain.board.dto.BoardDto;
 import com.spring.springserver.domain.board.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class BoardController {
@@ -30,5 +28,11 @@ public class BoardController {
     @GetMapping("/api/post")
     public BoardDto.Post getPost(@RequestParam Long id){
         return boardService.getPost(id);
+    }
+
+    @PutMapping("/api/post")
+    public String addView(@RequestBody BoardDto.id id){
+        boardService.addViewCount(id.getId());
+        return "success";
     }
 }

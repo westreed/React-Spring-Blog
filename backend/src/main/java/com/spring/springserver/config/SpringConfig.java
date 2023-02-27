@@ -6,6 +6,8 @@ import com.spring.springserver.domain.board.service.BoardService;
 import com.spring.springserver.domain.category.repository.CategoryRepository;
 import com.spring.springserver.domain.category.repository.JpaCategoryRepository;
 import com.spring.springserver.domain.category.service.CategoryService;
+import com.spring.springserver.domain.like.repository.RecommendRepository;
+import com.spring.springserver.domain.like.service.RecommendService;
 import com.spring.springserver.domain.member.service.MemberService;
 import com.spring.springserver.domain.member.repository.JpaMemberRepository;
 import com.spring.springserver.domain.member.repository.MemberRepository;
@@ -65,5 +67,10 @@ public class SpringConfig {
     @Bean
     public FileService fileService() {
         return new FileService(fileRepository());
+    }
+
+    @Bean
+    public RecommendService likeService() {
+        return new RecommendService();
     }
 }

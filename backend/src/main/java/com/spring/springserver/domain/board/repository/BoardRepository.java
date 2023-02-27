@@ -14,4 +14,5 @@ public interface BoardRepository {
     BoardDto.Result findByMemberId(BoardDto.RequestData req);
     Optional<Board> findOneByCategoryId(Long id);
     void delete(Board board);
+    void updateViewCount(Long id);
 }

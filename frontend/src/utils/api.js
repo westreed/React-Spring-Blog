@@ -85,6 +85,26 @@ const API = {
             console.log(error);
             return null;
         }
+    },
+    addViewCount: async(data) => {
+        try {
+            const res = await axios.put(`${apiLink}/api/post`, {id:data});
+            return res.data;
+        }
+        catch(error){
+            console.log(error);
+            return null;
+        }
+    },
+    addLike: async(data) => {
+        try {
+            const res = await axios.post(`${apiLink}/api/like/${data}`);
+            return res.data;
+        }
+        catch(error){
+            console.log(error);
+            return null;
+        }
     }
 }
 
