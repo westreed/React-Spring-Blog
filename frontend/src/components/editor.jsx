@@ -82,49 +82,46 @@ import '@ckeditor/ckeditor5-find-and-replace/build/translations/ko';
 import '@ckeditor/ckeditor5-style/build/translations/ko';
 import Viewer from "./view";
 import { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 
-const editorConfiguration  = {
-
-};
 
 const Editor = () => {
     // const [flag, setFlag] = useState(false);
     const [content, setContent] = useState('');
-    const imgLink = "http://localhost:8080/uploads";
+    // const imgLink = "http://localhost:8080/uploads";
 
-    const customUploadAdapter = (loader) => {
-        return {
-            upload(){
-                return new Promise ((resolve, reject) => {
-                    const data = new FormData();
-                     loader.file.then( (file) => {
-                            data.append("name", file.name);
-                            data.append("file", file);
+    // const customUploadAdapter = (loader) => {
+    //     return {
+    //         upload(){
+    //             return new Promise ((resolve, reject) => {
+    //                 const data = new FormData();
+    //                  loader.file.then( (file) => {
+    //                         data.append("name", file.name);
+    //                         data.append("file", file);
 
-                            axios.post('/api/upload', data)
-                                .then((res) => {
-                                    // if(!flag){
-                                    //     setFlag(true);
-                                    //     setImage(res.data.filename);
-                                    // }
-                                    console.log(res);
-                                    resolve({
-                                        default: res.data
-                                    });
-                                })
-                                .catch((err)=>reject(err));
-                        })
-                })
-            }
-        }
-    }
+    //                         axios.post('/api/upload', data)
+    //                             .then((res) => {
+    //                                 // if(!flag){
+    //                                 //     setFlag(true);
+    //                                 //     setImage(res.data.filename);
+    //                                 // }
+    //                                 console.log(res);
+    //                                 resolve({
+    //                                     default: res.data
+    //                                 });
+    //                             })
+    //                             .catch((err)=>reject(err));
+    //                     })
+    //             })
+    //         }
+    //     }
+    // }
 
-    function uploadPlugin (editor){
-        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-            return customUploadAdapter(loader);
-        }
-    }
+    // function uploadPlugin (editor){
+    //     editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+    //         return customUploadAdapter(loader);
+    //     }
+    // }
 
     return (
         <div className="blogCard shadow-sm bg-body rounded" style={{width:"100%"}}>
@@ -358,7 +355,7 @@ const Editor = () => {
                                 },
                             ]
                         },
-                        extraPlugins: [uploadPlugin]
+                        // extraPlugins: [uploadPlugin]
                     }}
                     onChange={(event, editor) => {
                         const data = editor.getData();
