@@ -105,6 +105,16 @@ const API = {
             console.log(error);
             return null;
         }
+    },
+    removeLike: async(data) => {
+        try {
+            const res = await axios.delete(`${apiLink}/api/like/${data}`);
+            return res.data;
+        }
+        catch(error){
+            console.log(error);
+            return null;
+        }
     }
 }
 

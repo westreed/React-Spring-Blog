@@ -1,11 +1,13 @@
-package com.spring.springserver.domain.like.service;
+package com.spring.springserver.domain.recommend.service;
 
-import com.spring.springserver.domain.like.repository.RecommendRepository;
+import com.spring.springserver.domain.recommend.entity.Recommend;
+import com.spring.springserver.domain.recommend.repository.RecommendRepository;
 import com.spring.springserver.domain.member.dto.MemberDto;
 import com.spring.springserver.domain.member.entity.Member;
 import com.spring.springserver.domain.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Optional;
 
 public class RecommendService {
@@ -32,5 +34,9 @@ public class RecommendService {
             throw new IllegalArgumentException("없는 유저입니다.");
         }
         return recommendRepository.removeLike(boardId, member.get().getId());
+    }
+
+    public List<Recommend> findBoardRecommend(Long id){
+        return recommendRepository.findAllByBoard(id);
     }
 }

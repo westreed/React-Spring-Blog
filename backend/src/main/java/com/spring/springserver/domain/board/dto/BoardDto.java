@@ -1,9 +1,9 @@
 package com.spring.springserver.domain.board.dto;
 
 import com.spring.springserver.domain.category.dto.CategoryDto;
-import com.spring.springserver.domain.like.entity.Recommend;
+import com.spring.springserver.domain.recommend.dto.RecommendDto;
+import com.spring.springserver.domain.recommend.entity.Recommend;
 import com.spring.springserver.domain.member.dto.MemberDto;
-import com.spring.springserver.domain.reply.entity.Reply;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -81,14 +81,16 @@ public class BoardDto {
         private String title;
         private String content;
         private int view;
-        private List<Recommend> recommends;
+        private List<RecommendDto.id> recommends;
         private MemberDto.Search member;
         private CategoryDto.Search category;
+        private boolean likeState;
+        private int likeCount;
 //        private List<Reply> reply;
         private Timestamp createData;
 
         @Builder
-        public Post (Long id, String title, String content, int view, List<Recommend> recommends, MemberDto.Search member, CategoryDto.Search category, Timestamp createData){
+        public Post (Long id, String title, String content, int view, List<RecommendDto.id> recommends, MemberDto.Search member, CategoryDto.Search category, boolean likeState, int likeCount, Timestamp createData){
             this.id = id;
             this.title = title;
             this.content = content;
@@ -96,6 +98,8 @@ public class BoardDto {
             this.recommends = recommends;
             this.member = member;
             this.category = category;
+            this.likeState = likeState;
+            this.likeCount = likeCount;
             this.createData = createData;
         }
     }

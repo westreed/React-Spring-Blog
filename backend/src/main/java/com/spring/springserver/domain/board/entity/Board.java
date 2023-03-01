@@ -1,9 +1,8 @@
 package com.spring.springserver.domain.board.entity;
 
 import com.spring.springserver.domain.category.entity.Category;
-import com.spring.springserver.domain.like.entity.Recommend;
-import com.spring.springserver.domain.reply.entity.Reply;
 import com.spring.springserver.domain.member.entity.Member;
+import com.spring.springserver.domain.reply.entity.Reply;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,15 +45,6 @@ public class Board {
 
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Reply> reply;
-
-    @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
-    private List<Recommend> recommends;
-
-    @Transient // 게시글을 클릭했을 때, 해당 유저가 좋아요를 눌렀는지 여부
-    private boolean likeState;
-
-    @Transient // 좋아요 갯수
-    private int likeCount;
 
     @CreationTimestamp
     private Timestamp createData;

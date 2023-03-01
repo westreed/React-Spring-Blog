@@ -1,6 +1,6 @@
-package com.spring.springserver.domain.like.controller;
+package com.spring.springserver.domain.recommend.controller;
 
-import com.spring.springserver.domain.like.service.RecommendService;
+import com.spring.springserver.domain.recommend.service.RecommendService;
 import com.spring.springserver.domain.member.dto.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

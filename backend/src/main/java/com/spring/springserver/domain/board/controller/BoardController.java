@@ -2,8 +2,11 @@ package com.spring.springserver.domain.board.controller;
 
 import com.spring.springserver.domain.board.dto.BoardDto;
 import com.spring.springserver.domain.board.service.BoardService;
+import com.spring.springserver.domain.member.dto.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 
 @RestController
 public class BoardController {
@@ -26,8 +29,8 @@ public class BoardController {
     }
 
     @GetMapping("/api/post")
-    public BoardDto.Post getPost(@RequestParam Long id){
-        return boardService.getPost(id);
+    public BoardDto.Post getPost(@RequestParam Long id, @SessionAttribute(name="auth", required = false) MemberDto.Auth auth){
+        return boardService.getPost(id, auth);
     }
 
     @PutMapping("/api/post")
