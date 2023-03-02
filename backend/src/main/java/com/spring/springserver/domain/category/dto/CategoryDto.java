@@ -1,6 +1,6 @@
 package com.spring.springserver.domain.category.dto;
 
-import lombok.Builder;
+import com.spring.springserver.domain.category.entity.Category;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,11 +15,10 @@ public class CategoryDto {
         private int layer;
         private String name;
 
-        @Builder
-        public Data(Long id, int layer, String name){
-            this.id = id;
-            this.layer = layer;
-            this.name = name;
+        public Data(Category category){
+            this.id = category.getId();
+            this.layer = category.getLayer();
+            this.name = category.getName();
         }
     }
 
@@ -30,9 +29,9 @@ public class CategoryDto {
         private Long id;
         private String name;
 
-        public Search(Long id, String name){
-            this.id = id;
-            this.name = name;
+        public Search(Category category){
+            this.id = category.getId();
+            this.name = category.getName();
         }
     }
 }

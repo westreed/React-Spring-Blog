@@ -38,9 +38,10 @@ public class Member {
     private Timestamp createData;
 
     @Builder
-    public Member(String username, String password, String email){
+    public Member(String username, String password, String email, String role){
         this.username = username;
         this.password = password;
         this.email = email;
+        this.role = role;
     }
 }

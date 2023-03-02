@@ -24,7 +24,7 @@ public class MemberController {
         this.memberService = memberService;
         this.rsaUtil = rsaUtil;
 
-        this.nullAuth = new MemberDto.Auth(null, null, null);
+        this.nullAuth = new MemberDto.Auth(Member.builder().username(null).email(null).role(null).build());
     }
 
     @PostMapping("/api/join")
@@ -66,11 +66,7 @@ public class MemberController {
             Member member = memberService.login(email, password);
             session.removeAttribute("RSAPrivateKey");
 
-            MemberDto.Auth auth = new MemberDto.Auth(
-                    member.getUsername(),
-                    member.getEmail(),
-                    member.getRole()
-            );
+            MemberDto.Auth auth = new MemberDto.Auth(member);
             
             // 로그인 세션 생성
             session.setAttribute("auth", auth);

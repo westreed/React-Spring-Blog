@@ -2,10 +2,10 @@ package com.spring.springserver.domain.board.repository;
 
 import com.spring.springserver.domain.board.dto.BoardDto;
 import com.spring.springserver.domain.board.entity.Board;
-import com.spring.springserver.domain.board.mapper.BoardMapper;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,14 +34,17 @@ public class JpaBoardRepository implements BoardRepository {
                 .setMaxResults(req.getPageSize())
                 .getResultList();
 
-        BoardMapper mapper = BoardMapper.INSTANCE;
+        List<BoardDto.Search> results = new ArrayList<>();
+        for(Board board : boards){
+            results.add(new BoardDto.Search(board));
+        }
         return BoardDto.Result.builder()
                 .id(req.getId())
                 .totalPages(totalPages)
                 .totalCount(totalCount)
                 .pageNumber(req.getPage())
                 .pageSize(req.getPageSize())
-                .boards(mapper.entityToDtoSearch(boards))
+                .boards(results)
                 .build();
     }
 
@@ -63,15 +66,17 @@ public class JpaBoardRepository implements BoardRepository {
                 .setMaxResults(req.getPageSize())
                 .getResultList();
 
-        BoardMapper mapper = BoardMapper.INSTANCE;
+        List<BoardDto.Search> results = new ArrayList<>();
+        for(Board board : boards){
+            results.add(new BoardDto.Search(board));
+        }
         return BoardDto.Result.builder()
-                .id(req.getId())
                 .id(req.getId())
                 .totalPages(totalPages)
                 .totalCount(totalCount)
                 .pageNumber(req.getPage())
                 .pageSize(req.getPageSize())
-                .boards(mapper.entityToDtoSearch(boards))
+                .boards(results)
                 .build();
     }
 
@@ -87,13 +92,16 @@ public class JpaBoardRepository implements BoardRepository {
                 .setMaxResults(req.getPageSize())
                 .getResultList();
 
-        BoardMapper mapper = BoardMapper.INSTANCE;
+        List<BoardDto.Search> results = new ArrayList<>();
+        for(Board board : boards){
+            results.add(new BoardDto.Search(board));
+        }
         return BoardDto.Result.builder()
                 .totalPages(totalPages)
                 .totalCount(totalCount)
                 .pageNumber(req.getPage())
                 .pageSize(req.getPageSize())
-                .boards(mapper.entityToDtoSearch(boards))
+                .boards(results)
                 .build();
     }
 
