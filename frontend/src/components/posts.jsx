@@ -1,6 +1,6 @@
 import moment from "moment";
 import Cookies from "js-cookie";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { setPosting } from "../store/posting";
@@ -10,7 +10,6 @@ import { ReactComponent as Menu } from "../assets/dot-menu-more-svgrepo-com.svg"
 import { ReactComponent as Heart1 } from "../assets/heart1-svgrepo-com.svg";
 import { ReactComponent as Heart2 } from "../assets/heart2-svgrepo-com.svg";
 import { ReactComponent as Comment } from "../assets/comment-dots-svgrepo-com.svg";
-import { useState } from "react";
 
 const Posts = () => {
     const navigate = useNavigate();
@@ -73,7 +72,7 @@ const Posts = () => {
     useEffect(() => {
         fetchData();
         // eslint-disable-next-line
-    }, [params.id])
+    }, [params.id, member])
 
     return (
         <div>

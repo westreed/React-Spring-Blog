@@ -8,8 +8,8 @@ import Settings from './pages/settings';
 import { useSelector } from 'react-redux';
 import Forbidden from './components/forbidden';
 import PostList from './pages/postList';
-import Editor from './components/editor';
 import Post from './pages/post';
+import Write from './pages/write';
 
 
 const Routing = () => {
@@ -34,7 +34,7 @@ const Routing = () => {
                             <Route exact path='/' element={<Home/>} />
                             <Route exact path='/settings' element={isAdmin(member) ?<Settings/> : <Forbidden/>}/>
                             <Route exact path='/category' element={<PostList/>}/>
-                            <Route exact path='/editor' element={<Editor/>}/>
+                            <Route exact path='/write' element={<Write/>}/>
                             <Route exact path='/post/:id' element={<Post/>}/>
                         </Routes>
                     </div>

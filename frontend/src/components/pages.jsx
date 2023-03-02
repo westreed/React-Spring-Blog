@@ -1,5 +1,5 @@
 import moment from "moment/moment";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -10,25 +10,31 @@ import Dog from "../images/christmas-dog.png";
 
 const pageSizeList = [1, 5, 10, 15, 20, 30, 50];
 
-const bottomPageList = (posts, pageSize, changeData) => {
+const bottomPageList = (posts, pageSize, changeData, scrollToRef) => {
     const pageElement = [];
     const split = window.innerWidth > 768 ? 10 : 5;
     const currentPage = Math.floor(posts?.pageNumber/split);
     const currentEndPage = (currentPage+1)*split;
     const currentLastPage = currentEndPage > posts?.totalPages ? posts?.totalPages : currentEndPage;
+
+    const buttonClick = async(page) => {
+        scrollToRef();
+        await changeData(page, pageSize, posts?.id, posts?.name);
+    }
+
     if(currentPage > 0){
-        pageElement.push(<button className="noEffect page shadow-sm" onClick={() => changeData((currentPage-1)*split, pageSize, posts?.id, posts?.name)}>〈 이전</button>);
+        pageElement.push(<button className="noEffect page shadow-sm" onClick={() => buttonClick((currentPage-1)*split)}>〈 이전</button>);
     }
     for(let i=currentPage*split; i<currentLastPage; i++){
         if(i === posts?.pageNumber){
-            pageElement.push(<button key={i} className="noEffect pick page shadow-sm" onClick={() => changeData(i, pageSize, posts?.id, posts?.name)}>{i+1}</button>);
+            pageElement.push(<button key={i} className="noEffect pick page shadow-sm" onClick={() => buttonClick(i)}>{i+1}</button>);
         }
         else{
-            pageElement.push(<button key={i} className="noEffect page shadow-sm" onClick={() => changeData(i, pageSize, posts?.id, posts?.name)}>{i+1}</button>);
+            pageElement.push(<button key={i} className="noEffect page shadow-sm" onClick={() => buttonClick(i)}>{i+1}</button>);
         }
     }
     if(currentEndPage < posts?.totalPages){
-        pageElement.push(<button className="noEffect page shadow-sm" onClick={() => changeData((currentPage+1)*split, pageSize, posts?.id, posts?.name)}>다음 〉</button>);
+        pageElement.push(<button className="noEffect page shadow-sm" onClick={() => buttonClick((currentPage+1)*split)}>다음 〉</button>);
     }
     return pageElement;
 }
@@ -40,6 +46,11 @@ const Pages = () => {
     const pageSize = useSelector((state) => state.pageSize.data);
     const member = useSelector((state) => state.member.data);
     const nowMoment = moment();
+    const headerRef = useRef(null);
+
+    const scrollToRef = () => {
+        headerRef.current.scrollIntoView({ behavior: 'smooth' });
+    };
 
     const changeData = async(page, size, id, name) => {
         const req = {
@@ -58,7 +69,7 @@ const Pages = () => {
         navigate(`/category`);
     }
 
-    const pageElement = bottomPageList(posts, pageSize, changeData);
+    const pageElement = bottomPageList(posts, pageSize, changeData, scrollToRef);
 
     const formmatedDate = (date) => {
         const formmatDate = moment(date);
@@ -117,7 +128,7 @@ const Pages = () => {
     }
 
     return (
-        <div style={{width:"100%"}}>
+        <div ref={headerRef} style={{width:"100%"}}>
             {/* 카테고리 헤더 */}
             <div className="blogCard shadow-sm bg-body rounded" style={{backgroundColor:"#f7f7f7"}}>
                 <div style={{marginBottom:"6px", fontSize:"1.4em", fontWeight:"bold"}}>

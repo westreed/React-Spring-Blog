@@ -5,6 +5,7 @@ import modal from "./modal";
 import pageSize from "./pageSize";
 import posting from "./posting";
 import posts from "./posts";
+import widgets from "./widgets";
 
 
 
@@ -15,6 +16,7 @@ export const store = configureStore({
         category: category.reducer,
         posts: posts.reducer,
         pageSize: pageSize.reducer,
-        posting: posting.reducer
+        posting: posting.reducer,
+        widgets: widgets.reducer
     }
 })

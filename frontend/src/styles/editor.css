@@ -1,0 +1,38 @@
+
+.ck.ck-editor__editable:not(.ck-editor__nested-editable) { min-height: 400px; max-height: 800px; }
+.ck-content {
+    font-size: 14px;
+    font-family: 'nanumgothic';
+}
+.ck-content p {
+    margin-bottom: 0;
+}
+
+.ck-content h1 {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+body {
+    --ck-focus-ring: none;
+}
+
+.Write {
+    display: flex;
+    width: 100vw;
+    /* margin-left: calc(-50vw + 50%); */
+}
+
+.editorContainer {
+    border: 3px solid #ccced1;
+    border-radius : 3px;
+}
+
+/* .editorContainer:focus-within {
+    border: 3px solid #7286D3;
+} */
+
+.ck-editor__main:focus-within {
+    border: 1px solid #ccced1;
+}

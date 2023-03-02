@@ -7,6 +7,7 @@
 3. 댓글 작성
 4. 댓글 보기
 5. 회원가입
+6. https://nakanara.tistory.com/230
 
 ## 참고자료
 
