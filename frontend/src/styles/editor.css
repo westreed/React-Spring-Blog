@@ -1,5 +1,5 @@
 
-.ck.ck-editor__editable:not(.ck-editor__nested-editable) { min-height: 400px; max-height: 800px; }
+.ck.ck-editor__editable:not(.ck-editor__nested-editable) { min-height: 1200px; max-height: 2000px; }
 .ck-content {
     font-size: 14px;
     font-family: 'nanumgothic';
@@ -15,24 +15,49 @@
 }
 
 body {
-    --ck-focus-ring: none;
+    --ck-focus-ring: 1px solid #ccced1;
+    --ck-inner-shadow: none;
 }
 
 .Write {
     display: flex;
     width: 100vw;
-    /* margin-left: calc(-50vw + 50%); */
+    margin-top: -24px;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
 }
 
-.editorContainer {
-    border: 3px solid #ccced1;
-    border-radius : 3px;
+.ck.ck-editor__top .ck-sticky-panel .ck-toolbar {
+    border-bottom-width: 1px !important;
 }
 
-/* .editorContainer:focus-within {
-    border: 3px solid #7286D3;
+.ck.ck-editor__editable {
+    border-top-width: 0 !important;
+}
+
+.ck-editor__main {
+    border-top-width: 0;
+}
+
+.ck.ck-button.ck-publish.ck-off.ck-button_with-text {
+    background-color: #7286D3;
+    color:white;
+    transition: background-color 0.5s;
+}
+
+.ck.ck-button.ck-publish.ck-off.ck-button_with-text:hover {
+    background-color: #92a0d5;
+    transition: background-color 0.5s;
+}
+
+.ck.ck-dropdown.ck-heading-dropdown .ck-dropdown__button .ck.ck-button__label {
+    width: 4em;
+}
+
+.ck.ck-dropdown .ck-button.ck-dropdown__button .ck.ck-button__label {
+    width: 4em;
+}
+
+/* .ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable){
+    box-shadow: none;
 } */
-
-.ck-editor__main:focus-within {
-    border: 1px solid #ccced1;
-}

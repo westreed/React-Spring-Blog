@@ -80,8 +80,8 @@ import '@ckeditor/ckeditor5-block-quote/build/translations/ko';
 import '@ckeditor/ckeditor5-alignment/build/translations/ko';
 import '@ckeditor/ckeditor5-find-and-replace/build/translations/ko';
 import '@ckeditor/ckeditor5-style/build/translations/ko';
-import Viewer from "./view";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Publish from "./publish";
 // import axios from "axios";
 
 const editorConfig = {
@@ -90,7 +90,6 @@ const editorConfig = {
     mediaEmbed: {
         previewsInData: true
     },
-    shouldNotGroupWhenFull: false,
     plugins: [
         Alignment,
         Autoformat,
@@ -151,8 +150,10 @@ const editorConfig = {
         TodoList,
         Underline,
         WordCount,
-        FileRepository
+        FileRepository,
+        Publish
     ],
+    extraPlugins: [],
     toolbar: {
         items: [
             'heading',
@@ -176,6 +177,7 @@ const editorConfig = {
             'findAndReplace',
             'undo',
             'redo',
+            'Publish',
             '-',
             'style',
             '|',
@@ -210,21 +212,15 @@ const editorConfig = {
                 class: "ck-heading_paragraph",
             },
             {
-                model: "heading1",
-                view: "h1",
-                title: "헤더1",
-                class: "ck-heading_heading1",
-            },
-            {
                 model: "heading2",
                 view: "h2",
-                title: "헤더2",
+                title: "헤더1",
                 class: "ck-heading_heading2",
             },
             {
                 model: "heading3",
                 view: "h3",
-                title: "헤더3",
+                title: "헤더2",
                 class: "ck-heading_heading3",
             },
         ],
@@ -344,20 +340,26 @@ const Editor = (props) => {
     //     }
     // }
     const config = props.types === 0 ? editorConfig : null;
-    // config[extraPlugins] = [uploadPlugin]
+    useEffect(() => {
+        if (window.innerWidth > 768){
+            config.toolbar.shouldNotGroupWhenFull = true;
+        }
+        else{
+            config.toolbar.shouldNotGroupWhenFull = false;
+            config.toolbar.items.unshift("Publish")
+            for (let i = 1; i < config.toolbar.items.length; i++) {
+                if (config.toolbar.items[i] === '|' || config.toolbar.items[i] === "Publish"){
+                    config.toolbar.items[i] = '';
+                }
+            }
+        }
+        // config["extraPlugins"] = [Publish];
+    }, [])
 
     return (
         <div className="editorContainer">
             <CKEditor
                 editor={ ClassicEditor }
-                // onReady={(editor) => {
-                //     editor.ui
-                //     .getEditableElement()
-                //     .parentElement.insertBefore(
-                //     editor.ui.view.toolbar.element,
-                //     editor.ui.getEditableElement()
-                //     );
-                // }}
                 config={{...config}}
                 onChange={(event, editor) => {
                     const data = editor.getData();

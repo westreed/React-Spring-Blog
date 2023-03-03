@@ -1,9 +1,6 @@
 import { useEffect } from "react";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Editor from "../components/editor";
 import Pages from "../components/pages";
-import Viewer from "../components/view";
 import { setPosts } from "../store/posts";
 import API from "../utils/api";
 

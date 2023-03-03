@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import Editor from "../components/editor";
+import Editor from "../components/editor/editor";
 import { setWidgets } from "../store/widgets";
 
 
@@ -17,7 +17,7 @@ const Write = () => {
 
     return (
         <div className="Write">
-            <div className="blogCard shadow-sm bg-body rounded" style={{width:"100%", height:"100%"}}>
+            <div style={{width:"100%", height:"100%"}}>
                 <Editor types={0} />
             </div>
         </div>
