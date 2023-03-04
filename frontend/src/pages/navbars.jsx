@@ -19,7 +19,7 @@ const Navbars = () => {
     }
 
     return (
-        <Navbar className='shadow-sm mb-4 bg-body rounded' style={{padding:0}}>
+        <Navbar className='shadow-sm mb-4 bg-body' style={{padding:0}}>
             <Container
                 style={{
                     maxWidth:"1150px"
