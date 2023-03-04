@@ -81,8 +81,17 @@ import '@ckeditor/ckeditor5-alignment/build/translations/ko';
 import '@ckeditor/ckeditor5-find-and-replace/build/translations/ko';
 import '@ckeditor/ckeditor5-style/build/translations/ko';
 import { useEffect, useState } from "react";
-import Publish from "./publish";
 // import axios from "axios";
+import { ReactComponent as Plane } from "../../assets/paper-plane-handmade-folded-shape-svgrepo-com.svg";
+import { Dropdown } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import API from "../../utils/api";
+import { setCategory } from "../../store/category";
+import Functions from "../../utils/functions";
+import { setWriting } from "../../store/writing";
+import { setPreviousModal } from "../../store/modal";
+import Previous from "./previous";
+import { useNavigate } from "react-router-dom";
 
 const editorConfig = {
     language: "ko",
@@ -150,8 +159,7 @@ const editorConfig = {
         TodoList,
         Underline,
         WordCount,
-        FileRepository,
-        Publish
+        FileRepository
     ],
     extraPlugins: [],
     toolbar: {
@@ -177,7 +185,6 @@ const editorConfig = {
             'findAndReplace',
             'undo',
             'redo',
-            'Publish',
             '-',
             'style',
             '|',
@@ -303,8 +310,13 @@ const editorConfig = {
 
 
 const Editor = (props) => {
-    // const [flag, setFlag] = useState(false);
-    const [content, setContent] = useState('');
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [categoryId, setCategoryId] = useState(props.category);
+    const [editorInstance, setEditorInstance] = useState(null);
+    const categories = useSelector((state) => state.category.data);
+    const writing = useSelector((state) => state.writing.data);
+    // const [content, setContent] = useState('');
     // const imgLink = "http://localhost:8080/uploads";
 
     // const customUploadAdapter = (loader) => {
@@ -339,6 +351,8 @@ const Editor = (props) => {
     //         return customUploadAdapter(loader);
     //     }
     // }
+    console.log("이전에 작성된 글 여부", writing);
+
     const config = props.types === 0 ? editorConfig : null;
     useEffect(() => {
         if (window.innerWidth > 768){
@@ -354,19 +368,94 @@ const Editor = (props) => {
             }
         }
         // config["extraPlugins"] = [Publish];
+        if (categoryId === 0 || categoryId === undefined) setCategoryId(1);
+        const fetchData = async() => {
+            let res = await API.getCategories();
+            if (res === false){ res = []; }
+            dispatch(setCategory(Functions.categorySort(res)));
+        }
+        fetchData();
+        
+        if(writing != null){
+            dispatch(setPreviousModal(true));
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    const selectCategory = (idx) => {
+        setCategoryId(idx+1);
+    }
+
+    const publish = async() => {
+        const user = await API.getSession();
+        console.log(user);
+        if (user.email == null){
+            alert("로그인을 먼저 해야합니다.");
+            return false;
+        }
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(writing, "text/html");
+        const title = doc.querySelector('h1').textContent;
+        const detail = writing.substring(writing.indexOf("</h1>")+5);
+        const data = {
+            title: title,
+            content: detail,
+            email: user.email,
+            category: categories[categoryId-1].id
+        }
+        console.log(data);
+        const res = await API.writePost(data);
+        if (res == null){
+            alert("게시글을 업로드하는데 실패했습니다.");
+            return false;
+        }
+        dispatch(setWriting(null));
+        alert("게시글을 업로드했습니다!");
+        navigate(`/`);
+    }
 
     return (
         <div className="editorContainer">
+            <div className="ck-top-tool" style={{display:"flex", flexDirection:"row", justifyContent:"space-between", fontSize:"0.85em", alignItems:"center"}}>
+                <div style={{display:"flex", flexDirection:"row"}}>
+                    <div style={{display:"flex", flexDirection:"row", alignItems:"center"}}>
+                        <label style={{fontWeight:"bold", marginRight:"7px"}}>카테고리</label>
+                        <Dropdown id="category">
+                            <Dropdown.Toggle style={{backgroundColor:"white", padding:"0.1em 0", color:"black", width:"200px", fontSize:"1em", borderColor:"#7286D3"}}>
+                                {categories[categoryId-1]?.name}
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                            {categories.map((data, idx) =>
+                                <Dropdown.Item
+                                    key={idx}
+                                    onClick={() => selectCategory(idx)}
+                                >
+                                    {data.name}
+                                </Dropdown.Item>
+                            )}
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </div>
+                </div>
+                <button className="noEffect ck-publish" onClick={publish}>
+                    <Plane width="1.3em" height="1.3em" fill="#ffffff" />
+                    <span> 발행</span>
+                </button>
+            </div>
             <CKEditor
                 editor={ ClassicEditor }
                 config={{...config}}
+                onReady={(editor) => {
+                    setEditorInstance(editor);
+                }}
                 onChange={(event, editor) => {
                     const data = editor.getData();
-                    setContent(data);
+                    dispatch(setWriting(data));
+                    // setContent(data);
                     console.log({ event, editor, data });
                 }}
             />
+            <Previous editor={editorInstance} />
         </div>
     );
 }

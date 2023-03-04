@@ -4,16 +4,15 @@ const initialState = {
     data: null
 }
 
-// 게시글 내용
-export const posting = createSlice({
-    name : 'posting',
+export const writing = createSlice({
+    name : 'writing',
     initialState,
     reducers : {
-        setPosting(state, action){
+        setWriting(state, action){
             state.data = action.payload;
         }
     }
 })
 
-export const { setPosting } = posting.actions;
-export default posting;
+export const { setWriting } = writing.actions;
+export default writing;

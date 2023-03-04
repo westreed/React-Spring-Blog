@@ -6,6 +6,7 @@ import com.spring.springserver.domain.board.repository.BoardRepository;
 import com.spring.springserver.domain.category.dto.CategoryDto;
 import com.spring.springserver.domain.category.entity.Category;
 import com.spring.springserver.domain.category.repository.CategoryRepository;
+import com.spring.springserver.domain.member.entity.Member;
 import com.spring.springserver.domain.member.repository.MemberRepository;
 import com.spring.springserver.domain.recommend.dto.RecommendDto;
 import com.spring.springserver.domain.recommend.entity.Recommend;
@@ -75,5 +76,26 @@ public class BoardService {
 
     public void addViewCount(Long id){
         boardRepository.updateViewCount(id);
+    }
+
+    public Board initPostByUser(BoardDto.Write write){
+        Optional<Member> member = memberRepository.findByEmail(write.getEmail());
+        if (member.isEmpty()){
+            throw new IllegalArgumentException("유저가 존재하지 않습니다.");
+        }
+        Optional<Category> category = categoryRepository.findById(write.getCategory());
+        if (category.isEmpty()){
+            throw new IllegalArgumentException("카테고리가 존재하지 않습니다.");
+        }
+        return Board.builder()
+                .title(write.getTitle())
+                .content(write.getContent())
+                .member(member.get())
+                .category(category.get())
+                .build();
+    }
+
+    public void uploadPost(Board board){
+        boardRepository.save(board);
     }
 }

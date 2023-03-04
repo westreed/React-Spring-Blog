@@ -1,6 +1,7 @@
 package com.spring.springserver.domain.board.controller;
 
 import com.spring.springserver.domain.board.dto.BoardDto;
+import com.spring.springserver.domain.board.entity.Board;
 import com.spring.springserver.domain.board.service.BoardService;
 import com.spring.springserver.domain.member.dto.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,13 @@ public class BoardController {
     @PutMapping("/api/post")
     public String addView(@RequestBody BoardDto.id id){
         boardService.addViewCount(id.getId());
+        return "success";
+    }
+
+    @PostMapping("/api/write")
+    public String writePost(@RequestBody BoardDto.Write write){
+        Board board = boardService.initPostByUser(write);
+        boardService.uploadPost(board);
         return "success";
     }
 }

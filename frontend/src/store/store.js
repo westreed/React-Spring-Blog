@@ -6,6 +6,7 @@ import pageSize from "./pageSize";
 import posting from "./posting";
 import posts from "./posts";
 import widgets from "./widgets";
+import writing from "./writing";
 
 
 
@@ -17,6 +18,7 @@ export const store = configureStore({
         posts: posts.reducer,
         pageSize: pageSize.reducer,
         posting: posting.reducer,
-        widgets: widgets.reducer
+        widgets: widgets.reducer,
+        writing: writing.reducer
     }
 })

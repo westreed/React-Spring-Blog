@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    data: false
+    data: false,
+    previous: false,
 }
 
 export const modal = createSlice({
@@ -10,9 +11,12 @@ export const modal = createSlice({
     reducers : {
         setModal(state, action){
             state.data = action.payload;
+        },
+        setPreviousModal(state, action){
+            state.previous = action.payload;
         }
     }
 })
 
-export const { setModal } = modal.actions;
+export const { setModal, setPreviousModal } = modal.actions;
 export default modal;

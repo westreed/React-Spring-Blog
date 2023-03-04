@@ -83,6 +83,10 @@ const Pages = () => {
         navigate(`/post/${id}`);
     }
 
+    const writePost = (id) => {
+        navigate(`/write`, {state:{id:id}});
+    }
+
     useEffect(() => {
         if(posts == null) navigate("/");
         // eslint-disable-next-line
@@ -122,7 +126,7 @@ const Pages = () => {
                 <div style={{fontSize:"1.5em", color:"gray"}}>작성된 게시글이 없네요.</div>
                 <div style={{color:"gray"}}>X﹏X</div>
                 <img src={Dog} alt="게시글 없음" width="200em" height="200em"/>
-                {member?.role === 'admin' ? <button className="noEffect mt-3" style={{color:"gray"}}>{"게시글 작성하러 가기 >"}</button> : null}
+                {member?.role === 'admin' ? <button className="noEffect mt-3" style={{color:"gray"}} onClick={() => writePost(posts?.id)}>{"게시글 작성하러 가기 >"}</button> : null}
             </div>
         );
     }
@@ -140,7 +144,7 @@ const Pages = () => {
                         <div>개의 게시글</div>
                     </div>
                     <div style={{display:"flex", flexDirection:"row"}}>
-                        <button className="noEffect" style={{backgroundColor:"#3273dc", borderRadius:"4px", marginRight:"5px", color:"white", fontSize:"14px"}}>글쓰기</button>
+                        <button className="noEffect" style={{backgroundColor:"#3273dc", borderRadius:"4px", marginRight:"5px", color:"white", fontSize:"14px"}} onClick={() => writePost(posts?.id)}>글쓰기</button>
                         <Dropdown>
                             <Dropdown.Toggle variant="primary" size="sm" id="dropdown-basic" style={{backgroundColor:"#3273dc"}}>
                                 {pageSize}개씩

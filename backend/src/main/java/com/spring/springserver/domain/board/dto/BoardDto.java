@@ -114,4 +114,22 @@ public class BoardDto {
             this.id = id;
         }
     }
+
+    @Setter
+    @Getter
+    @NoArgsConstructor
+    public static class Write {
+        private String title;
+        private String content;
+        private String email;
+        private Long category;
+
+        @Builder
+        public Write(String title, String content, String email, Long category){
+            this.title = title;
+            this.content = content;
+            this.email = email;
+            this.category = category;
+        }
+    }
 }

@@ -115,6 +115,16 @@ const API = {
             console.log(error);
             return null;
         }
+    },
+    writePost: async(data) => {
+        try{
+            const res = await axios.post(`${apiLink}/api/write`, data);
+            return res.data;
+        }
+        catch(error){
+            console.log(error);
+            return null;
+        }
     }
 }
 
