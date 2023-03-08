@@ -39,7 +39,6 @@ public class RecommendService {
     public List<RecommendDto.Request> findBoardRecommend(Long id){
         List<RecommendDto.Request> requests = new ArrayList<>();
         for(Recommend recommend : recommendRepository.findAllByBoard(id)){
-            System.out.println(recommend.getMember().getUsername());
             requests.add(RecommendDto.Request.builder()
                     .id(recommend.getId())
                     .member(recommend.getMember())
