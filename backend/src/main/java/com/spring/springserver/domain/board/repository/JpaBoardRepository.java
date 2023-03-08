@@ -60,16 +60,12 @@ public class JpaBoardRepository implements BoardRepository {
                 .setParameter("id", req.getId())
                 .getSingleResult();
         int totalPages = (int) (totalCount / req.getPageSize()) + ((totalCount % req.getPageSize()) > 0 ? 1 : 0);
-        List<Board> boards = entityManager.createQuery("select b from Board b where b.category.id = :id order by b.createData desc", Board.class)
+        List<BoardDto.Search> results = entityManager.createQuery("select new jpql.BoardDto.Search from Board b where b.category.id = :id order by b.createData desc", BoardDto.Search.class)
                 .setParameter("id", req.getId())
                 .setFirstResult(req.getPage() * req.getPageSize())
                 .setMaxResults(req.getPageSize())
                 .getResultList();
 
-        List<BoardDto.Search> results = new ArrayList<>();
-        for(Board board : boards){
-            results.add(new BoardDto.Search(board));
-        }
         return BoardDto.Result.builder()
                 .id(req.getId())
                 .totalPages(totalPages)
@@ -86,16 +82,12 @@ public class JpaBoardRepository implements BoardRepository {
                 .setParameter("id", req.getId())
                 .getSingleResult();
         int totalPages = (int) (totalCount / req.getPageSize()) + ((totalCount % req.getPageSize()) > 0 ? 1 : 0);
-        List<Board> boards = entityManager.createQuery("select b from Board b where b.member.id = :id order by b.createData desc", Board.class)
+        List<BoardDto.Search> results = entityManager.createQuery("select new jpql.BoardDto.Search from Board b where b.category.id = :id order by b.createData desc", BoardDto.Search.class)
                 .setParameter("id", req.getId())
                 .setFirstResult(req.getPage() * req.getPageSize())
                 .setMaxResults(req.getPageSize())
                 .getResultList();
 
-        List<BoardDto.Search> results = new ArrayList<>();
-        for(Board board : boards){
-            results.add(new BoardDto.Search(board));
-        }
         return BoardDto.Result.builder()
                 .totalPages(totalPages)
                 .totalCount(totalCount)
