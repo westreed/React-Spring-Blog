@@ -19,7 +19,7 @@ public class BoardController {
     }
 
     @GetMapping("/api/posts")
-    public BoardDto.Result getCategoryPost(@RequestParam int page, @RequestParam int pageSize, @RequestParam Long id){
+    public BoardDto.Result getCategoryPost(@RequestParam int page, @RequestParam int pageSize, @RequestParam Long id) throws IllegalAccessException {
         BoardDto.RequestData req = BoardDto.RequestData.builder()
                 .page(page)
                 .pageSize(pageSize)
@@ -30,7 +30,7 @@ public class BoardController {
     }
 
     @GetMapping("/api/post")
-    public BoardDto.Post getPost(@RequestParam Long id, @SessionAttribute(name="auth", required = false) MemberDto.Auth auth){
+    public BoardDto.Post getPost(@RequestParam Long id, @SessionAttribute(name="auth", required = false) MemberDto.Auth auth) throws IllegalAccessException {
         return boardService.getPost(id, auth);
     }
 
@@ -41,7 +41,7 @@ public class BoardController {
     }
 
     @PostMapping("/api/write")
-    public String writePost(@RequestBody BoardDto.Write write){
+    public String writePost(@RequestBody BoardDto.Write write) throws IllegalAccessException {
         Board board = boardService.initPostByUser(write);
         boardService.uploadPost(board);
         return "success";

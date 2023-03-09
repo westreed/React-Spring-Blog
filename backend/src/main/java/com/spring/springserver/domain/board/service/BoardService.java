@@ -6,12 +6,11 @@ import com.spring.springserver.domain.board.repository.BoardRepository;
 import com.spring.springserver.domain.category.dto.CategoryDto;
 import com.spring.springserver.domain.category.entity.Category;
 import com.spring.springserver.domain.category.repository.CategoryRepository;
+import com.spring.springserver.domain.member.dto.MemberDto;
 import com.spring.springserver.domain.member.entity.Member;
 import com.spring.springserver.domain.member.repository.MemberRepository;
 import com.spring.springserver.domain.recommend.dto.RecommendDto;
-import com.spring.springserver.domain.recommend.entity.Recommend;
 import com.spring.springserver.domain.recommend.service.RecommendService;
-import com.spring.springserver.domain.member.dto.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -32,20 +31,20 @@ public class BoardService {
         this.categoryRepository = categoryRepository;
     }
 
-    public BoardDto.Result getPostCategory(BoardDto.RequestData req){
+    public BoardDto.Result getPostCategory(BoardDto.RequestData req) throws IllegalAccessException {
         // 해당 카테고리가 존재하는지 검증하기
         Optional<Category> res = categoryRepository.findById(req.getId());
         if(res.isPresent()) {
             return boardRepository.findByCategoryId(req);
         }
-        throw new IllegalArgumentException("해당 카테고리는 존재하지 않습니다.");
+        throw new IllegalAccessException("해당 카테고리는 존재하지 않습니다.");
     }
 
     public BoardDto.Result getPostAll(BoardDto.RequestData req){
         return boardRepository.findAll(req);
     }
     
-    public BoardDto.Post getPost(Long id, MemberDto.Auth auth){
+    public BoardDto.Post getPost(Long id, MemberDto.Auth auth) throws IllegalAccessException {
         Optional<Board> res = boardRepository.findById(id);
         if(res.isPresent()){
             Board board = res.get();
@@ -71,21 +70,21 @@ public class BoardService {
                     .member(new MemberDto.Search(board.getMember()))
                     .build();
         }
-        throw new IllegalArgumentException("해당 게시글은 존재하지 않습니다.");
+        throw new IllegalAccessException("해당 게시글은 존재하지 않습니다.");
     }
 
     public void addViewCount(Long id){
         boardRepository.updateViewCount(id);
     }
 
-    public Board initPostByUser(BoardDto.Write write){
+    public Board initPostByUser(BoardDto.Write write) throws IllegalAccessException {
         Optional<Member> member = memberRepository.findByEmail(write.getEmail());
         if (member.isEmpty()){
-            throw new IllegalArgumentException("유저가 존재하지 않습니다.");
+            throw new IllegalAccessException("유저가 존재하지 않습니다.");
         }
         Optional<Category> category = categoryRepository.findById(write.getCategory());
         if (category.isEmpty()){
-            throw new IllegalArgumentException("카테고리가 존재하지 않습니다.");
+            throw new IllegalAccessException("카테고리가 존재하지 않습니다.");
         }
         return Board.builder()
                 .title(write.getTitle())
