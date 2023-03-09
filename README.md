@@ -1,7 +1,7 @@
 # React.js + Spring 공부
 
 공부하려고 만든 레포. 이것저것 대충 끄적이는 용도입니다. <br>
-사이트링크는 http://westreedserver.kro.kr:3000/ 입니다. <br>
+사이트링크는 http://westreedserver.kro.kr 입니다. <br>
 
 ## 사용된 기술스택
 
@@ -19,7 +19,7 @@
 ## 서버 배포
 
 ```bash
-serve -s build
+serve -s build -p 80
 java -jar -Dspring.profiles.active=prod 파일명.jar
 ```
 
