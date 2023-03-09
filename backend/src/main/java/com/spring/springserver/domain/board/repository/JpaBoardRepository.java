@@ -29,7 +29,8 @@ public class JpaBoardRepository implements BoardRepository {
         Long totalCount = entityManager.createQuery("select count(b) from Board b", Long.class)
                 .getSingleResult();
         int totalPages = (int) (totalCount / req.getPageSize()) + ((totalCount % req.getPageSize()) > 0 ? 1 : 0);
-        List<Board> boards = entityManager.createQuery("select b from Board b order by b.createData desc", Board.class)
+        String jpql = "select b from Board b left join fetch b.member left join fetch b.category order by b.createData desc";
+        List<Board> boards = entityManager.createQuery(jpql, Board.class)
                 .setFirstResult(req.getPage() * req.getPageSize())
                 .setMaxResults(req.getPageSize())
                 .getResultList();
@@ -60,11 +61,17 @@ public class JpaBoardRepository implements BoardRepository {
                 .setParameter("id", req.getId())
                 .getSingleResult();
         int totalPages = (int) (totalCount / req.getPageSize()) + ((totalCount % req.getPageSize()) > 0 ? 1 : 0);
-        List<BoardDto.Search> results = entityManager.createQuery("select new jpql.BoardDto.Search from Board b where b.category.id = :id order by b.createData desc", BoardDto.Search.class)
+        String jpql = "select b from Board b left join fetch b.member where b.category.id = :id order by b.createData desc";
+        List<Board> boards = entityManager.createQuery(jpql, Board.class)
                 .setParameter("id", req.getId())
                 .setFirstResult(req.getPage() * req.getPageSize())
                 .setMaxResults(req.getPageSize())
                 .getResultList();
+
+        List<BoardDto.Search> results = new ArrayList<>();
+        for(Board board : boards){
+            results.add(new BoardDto.Search(board));
+        }
 
         return BoardDto.Result.builder()
                 .id(req.getId())
@@ -82,11 +89,17 @@ public class JpaBoardRepository implements BoardRepository {
                 .setParameter("id", req.getId())
                 .getSingleResult();
         int totalPages = (int) (totalCount / req.getPageSize()) + ((totalCount % req.getPageSize()) > 0 ? 1 : 0);
-        List<BoardDto.Search> results = entityManager.createQuery("select new jpql.BoardDto.Search from Board b where b.category.id = :id order by b.createData desc", BoardDto.Search.class)
+        String jpql = "select b from Board b left join fetch b.member where b.category.id = :id order by b.createData desc";
+        List<Board> boards = entityManager.createQuery(jpql, Board.class)
                 .setParameter("id", req.getId())
                 .setFirstResult(req.getPage() * req.getPageSize())
                 .setMaxResults(req.getPageSize())
                 .getResultList();
+
+        List<BoardDto.Search> results = new ArrayList<>();
+        for(Board board : boards){
+            results.add(new BoardDto.Search(board));
+        }
 
         return BoardDto.Result.builder()
                 .totalPages(totalPages)
