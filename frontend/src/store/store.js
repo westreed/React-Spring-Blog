@@ -1,4 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import category from "./slice/category";
 import member from "./slice/member";
 import modal from "./slice/modal";
@@ -8,6 +10,13 @@ import postList from "./slice/postList";
 import storeKey from "./slice/storeKey";
 import widgets from "./slice/widgets";
 import writing from "./slice/writing";
+
+const persistConfig = {
+    key: 'root',
+    version: 1,
+    storage,
+    whitelist: ['member', 'writing']
+  };
 
 const reducers = combineReducers({
     member: member.reducer,
@@ -21,7 +30,9 @@ const reducers = combineReducers({
     storeKey: storeKey.reducer
 })
 
+const persistedReducer = persistReducer(persistConfig, reducers);
+
 
 export const store = configureStore({
-    reducer: reducers
-})
+    reducer: persistedReducer
+});

@@ -15,7 +15,8 @@ const App = () => {
             dispatch(setMember(res));
         }
         fetchData();
-    })
+        // eslint-disable-next-line
+    }, [])
 
     return (
         <div className="App">
