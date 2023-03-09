@@ -10,11 +10,13 @@ import hideImg from '../images/hide.png';
 import viewImg from '../images/view.png';
 import { setMember } from '../store/member';
 import { setModal } from '../store/modal';
+import { setRSAPublicKey } from '../store/storeKey';
 import API from '../utils/api';
 
 
 const Login = () => {
     const showModal = useSelector((state) => state.modal.data);
+    const rsaKey    = useSelector((state) => state.storeKey.rsaKey);
     const dispatch = useDispatch();
 
     const [email,       setEmail    ] = useState('');
@@ -24,19 +26,25 @@ const Login = () => {
     const [keepLogin,   setKeepLogin] = useState(false);
 
     const loginUser = async() => {
-        const data = await API.getRsakey();
+        let rsaPublicKey = rsaKey;
+        if (rsaPublicKey == null){
+            const data = await API.getRsakey();
+            rsaPublicKey = data;
+            dispatch(setRSAPublicKey(data));
+        }
+        
         if (email === '' || password === ''){
             alert("이메일과 비밀번호를 입력해주세요.");
             return false;
         }
 
-        if (data.modulus == null) {
+        if (rsaPublicKey.modulus == null) {
             alert("서버에 문제가 발생했습니다.");
             return false;
         }
 
         const rsa = new RSAKey();
-        rsa.setPublic(data.modulus, data.exponent);
+        rsa.setPublic(rsaPublicKey.modulus, rsaPublicKey.exponent);
         
         const res = await API.login({
             "email" : rsa.encrypt(email),
