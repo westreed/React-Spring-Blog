@@ -42,10 +42,6 @@ public class MemberService {
         Optional<Member> checkMember = memberRepository.findByEmail(email);
         if (checkMember.isPresent()){
             Member loginMember = checkMember.get();
-
-            System.out.println("요청 : " + password);
-            System.out.println("데이터 : " + loginMember.getPassword());
-
             if(passwordEncoder.matches(password, loginMember.getPassword())){
                 return loginMember;
             }

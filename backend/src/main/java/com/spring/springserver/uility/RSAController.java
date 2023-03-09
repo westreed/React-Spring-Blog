@@ -19,16 +19,14 @@ public class RSAController {
         PrivateKey key = (PrivateKey) session.getAttribute("RSAPrivateKey");
         if (key != null) { // 기존 키 파기
             session.removeAttribute("RSAPrivateKey");
-            System.out.println("세션 파기됨");
         }
         RSA rsa = rsaUtil.createRSA();
-        RSAForm rsaForm = new RSAForm(rsa.getModulus(), rsa.getExponent());
         session.setAttribute("RSAPrivateKey", rsa.getPrivateKey());
-        return rsaForm;
+        return new RSAForm(rsa.getModulus(), rsa.getExponent());
     }
 
     @Getter
-    public class RSAForm {
+    public static class RSAForm {
         private String modulus;
         private String exponent;
 
