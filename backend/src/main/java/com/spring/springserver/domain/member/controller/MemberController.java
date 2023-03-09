@@ -86,13 +86,7 @@ public class MemberController {
 
     @GetMapping("/api/session")
     public MemberDto.Auth getSession(@SessionAttribute(name="isAuthenticated", required = false) boolean isAuth, HttpSession session){
-        if (!isAuth){
-            System.out.println("세션 로그인 기록 없음");
-            return this.nullAuth;
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "로그인된 기록이 없습니다.");
-        }
-//        System.out.println("세션 " + session.getMaxInactiveInterval());
-//        session.setMaxInactiveInterval(60*30); // 세션 시간 갱신
+        if (!isAuth){return this.nullAuth;}
         return (MemberDto.Auth) session.getAttribute("auth");
     }
 
