@@ -35,7 +35,7 @@ PC 화면
 
 모바일 화면
 <div style="display:flex; flex-direction:row;">
-  <img src="https://github.com/westreed/React-Spring-Blog/blob/main/img/M-1.png" width="33%" height="33%" />
-  <img src="https://github.com/westreed/React-Spring-Blog/blob/main/img/M-2.png" width="33%" height="33%" />
-  <img src="https://github.com/westreed/React-Spring-Blog/blob/main/img/M-3.png" width="33%" height="33%" />
+  <img src="https://github.com/westreed/React-Spring-Blog/blob/main/img/M-1.png" width="32%" height="32%" />
+  <img src="https://github.com/westreed/React-Spring-Blog/blob/main/img/M-2.png" width="32%" height="32%" />
+  <img src="https://github.com/westreed/React-Spring-Blog/blob/main/img/M-3.png" width="32%" height="32%" />
 </div>
