@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setCategory } from "../store/category";
-import { setPostList } from "../store/postList";
+import { setCategory } from "../store/slice/category";
+import { setPostList } from "../store/slice/postList";
 import API from "../utils/api";
 import Functions from "../utils/functions";
 

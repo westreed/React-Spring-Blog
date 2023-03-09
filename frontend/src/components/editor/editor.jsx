@@ -86,10 +86,10 @@ import { ReactComponent as Plane } from "../../assets/paper-plane-handmade-folde
 import { Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import API from "../../utils/api";
-import { setCategory } from "../../store/category";
+import { setCategory } from "../../store/slice/category";
 import Functions from "../../utils/functions";
-import { setWriting } from "../../store/writing";
-import { setPreviousModal } from "../../store/modal";
+import { setWriting } from "../../store/slice/writing";
+import { setPreviousModal } from "../../store/slice/modal";
 import Previous from "./previous";
 import { useNavigate } from "react-router-dom";
 

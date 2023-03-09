@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Functions from "../utils/functions";
 import API from "../utils/api";
 import { useDispatch } from "react-redux";
-import { setCategory } from "../store/category";
+import { setCategory } from "../store/slice/category";
 
 const getCategories = async(setCategories, dispatch) => {
     const res = await API.getCategories();

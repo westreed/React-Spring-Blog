@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Pages from "../components/pages";
-import { setPostList } from "../store/postList";
+import { setPostList } from "../store/slice/postList";
 import API from "../utils/api";
 
 

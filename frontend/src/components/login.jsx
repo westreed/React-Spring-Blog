@@ -8,9 +8,9 @@ import { Link } from 'react-router-dom';
 
 import hideImg from '../images/hide.png';
 import viewImg from '../images/view.png';
-import { setMember } from '../store/member';
-import { setModal } from '../store/modal';
-import { setRSAPublicKey } from '../store/storeKey';
+import { setMember } from '../store/slice/member';
+import { setModal } from '../store/slice/modal';
+import { setRSAPublicKey } from '../store/slice/storeKey';
 import API from '../utils/api';
 
 

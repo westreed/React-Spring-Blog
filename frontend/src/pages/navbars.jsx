@@ -1,8 +1,8 @@
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { setModal } from '../store/modal';
+import { setModal } from '../store/slice/modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { setMember } from '../store/member';
+import { setMember } from '../store/slice/member';
 import API from '../utils/api';
 
 const Navbars = () => {

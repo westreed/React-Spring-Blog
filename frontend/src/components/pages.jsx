@@ -3,8 +3,8 @@ import { useEffect, useRef } from "react";
 import { Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setPageSize } from "../store/pageSize";
-import { setPostList } from "../store/postList";
+import { setPageSize } from "../store/slice/pageSize";
+import { setPostList } from "../store/slice/postList";
 import API from "../utils/api";
 import Dog from "../images/christmas-dog.png";
 

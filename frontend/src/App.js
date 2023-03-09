@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setMember } from './store/member';
+import { setMember } from './store/slice/member';
 import Routing from './Routing';
 import API from './utils/api';
 

@@ -1,7 +1,7 @@
 import { Button, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { setPreviousModal } from "../../store/modal";
-import { setWriting } from "../../store/writing";
+import { setPreviousModal } from "../../store/slice/modal";
+import { setWriting } from "../../store/slice/writing";
 
 
 const Previous = (props) => {
