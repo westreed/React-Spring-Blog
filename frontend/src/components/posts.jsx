@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { setPosting } from "../store/posting";
-import { setPosts } from "../store/posts";
+import { setPostList } from "../store/postList";
 import API from "../utils/api";
 import { ReactComponent as Menu } from "../assets/dot-menu-more-svgrepo-com.svg";
 import { ReactComponent as Heart1 } from "../assets/heart1-svgrepo-com.svg";
@@ -48,7 +48,7 @@ const Posts = () => {
         };
         const res = await API.getCategoryPosts(req);
         if (res !== null) res.name = name;
-        dispatch(setPosts(res));
+        dispatch(setPostList(res));
         if (res !== null) navigate(`/category`);
     }
 

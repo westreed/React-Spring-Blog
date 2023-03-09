@@ -4,15 +4,15 @@ const initialState = {
     data: null
 }
 
-export const posts = createSlice({
-    name : 'posts',
+export const postList = createSlice({
+    name : 'postList',
     initialState,
     reducers : {
-        setPosts(state, action){
+        setPostList(state, action){
             state.data = action.payload;
         }
     }
 })
 
-export const { setPosts } = posts.actions;
-export default posts;
+export const { setPostList } = postList.actions;
+export default postList;

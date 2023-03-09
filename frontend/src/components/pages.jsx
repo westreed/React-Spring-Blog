@@ -4,36 +4,36 @@ import { Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setPageSize } from "../store/pageSize";
-import { setPosts } from "../store/posts";
+import { setPostList } from "../store/postList";
 import API from "../utils/api";
 import Dog from "../images/christmas-dog.png";
 
 const pageSizeList = [1, 5, 10, 15, 20, 30, 50];
 
-const bottomPageList = (posts, pageSize, changeData, scrollToRef) => {
+const bottomPageList = (postList, pageSize, changeData, scrollToRef) => {
     const pageElement = [];
     const split = window.innerWidth > 768 ? 10 : 5;
-    const currentPage = Math.floor(posts?.pageNumber/split);
+    const currentPage = Math.floor(postList?.pageNumber/split);
     const currentEndPage = (currentPage+1)*split;
-    const currentLastPage = currentEndPage > posts?.totalPages ? posts?.totalPages : currentEndPage;
+    const currentLastPage = currentEndPage > postList?.totalPages ? postList?.totalPages : currentEndPage;
 
     const buttonClick = async(page) => {
         scrollToRef();
-        await changeData(page, pageSize, posts?.id, posts?.name);
+        await changeData(page, pageSize, postList?.id, postList?.name);
     }
 
     if(currentPage > 0){
         pageElement.push(<button className="noEffect page shadow-sm" onClick={() => buttonClick((currentPage-1)*split)}>〈 이전</button>);
     }
     for(let i=currentPage*split; i<currentLastPage; i++){
-        if(i === posts?.pageNumber){
+        if(i === postList?.pageNumber){
             pageElement.push(<button key={i} className="noEffect pick page shadow-sm" onClick={() => buttonClick(i)}>{i+1}</button>);
         }
         else{
             pageElement.push(<button key={i} className="noEffect page shadow-sm" onClick={() => buttonClick(i)}>{i+1}</button>);
         }
     }
-    if(currentEndPage < posts?.totalPages){
+    if(currentEndPage < postList?.totalPages){
         pageElement.push(<button className="noEffect page shadow-sm" onClick={() => buttonClick((currentPage+1)*split)}>다음 〉</button>);
     }
     return pageElement;
@@ -42,7 +42,8 @@ const bottomPageList = (posts, pageSize, changeData, scrollToRef) => {
 const Pages = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const posts = useSelector((state) => state.posts.data);
+    const postList = useSelector((state) => state.postList.data);
+    const categories = useSelector((state) => state.category.data);
     const pageSize = useSelector((state) => state.pageSize.data);
     const member = useSelector((state) => state.member.data);
     const nowMoment = moment();
@@ -60,7 +61,7 @@ const Pages = () => {
         };
         const res = await API.getCategoryPosts(req);
         if (res !== null) res.name = name;
-        dispatch(setPosts(res));
+        dispatch(setPostList(res));
         if(size !== pageSize) dispatch(setPageSize(size));
     }
 
@@ -69,7 +70,7 @@ const Pages = () => {
         navigate(`/category`);
     }
 
-    const pageElement = bottomPageList(posts, pageSize, changeData, scrollToRef);
+    const pageElement = bottomPageList(postList, pageSize, changeData, scrollToRef);
 
     const formmatedDate = (date) => {
         const formmatDate = moment(date);
@@ -84,11 +85,18 @@ const Pages = () => {
     }
 
     const writePost = (id) => {
-        navigate(`/write`, {state:{id:id}});
+        let idx = 0;
+        for(let i=0; i<categories.length; i++){
+            if (categories[i].id === id){
+                idx = i+1;
+                break;
+            }
+        }
+        navigate(`/write`, {state:{id:idx}});
     }
 
     useEffect(() => {
-        if(posts == null) navigate("/");
+        if(postList == null) navigate("/");
         // eslint-disable-next-line
     }, [])
 
@@ -96,7 +104,7 @@ const Pages = () => {
         return (
             <div>
                 <div>
-                {posts?.boards.map((res, idx) => 
+                {postList?.boards.map((res, idx) => 
                     <div className="blogCard shadow-sm bg-body rounded" key={idx}>
                         <div style={{display:"flex", flexDirection:"row", color:"grey", fontSize:"0.8em"}}>
                             <div style={{marginRight:"0.5em"}}>{formmatedDate(res.createData)}</div>
@@ -126,7 +134,7 @@ const Pages = () => {
                 <div style={{fontSize:"1.5em", color:"gray"}}>작성된 게시글이 없네요.</div>
                 <div style={{color:"gray"}}>X﹏X</div>
                 <img src={Dog} alt="게시글 없음" width="200em" height="200em"/>
-                {member?.role === 'admin' ? <button className="noEffect mt-3" style={{color:"gray"}} onClick={() => writePost(posts?.id)}>{"게시글 작성하러 가기 >"}</button> : null}
+                {member?.role === 'admin' ? <button className="noEffect mt-3" style={{color:"gray"}} onClick={() => writePost(postList?.id)}>{"게시글 작성하러 가기 >"}</button> : null}
             </div>
         );
     }
@@ -136,15 +144,15 @@ const Pages = () => {
             {/* 카테고리 헤더 */}
             <div className="blogCard shadow-sm bg-body rounded" style={{backgroundColor:"#f7f7f7"}}>
                 <div style={{marginBottom:"6px", fontSize:"1.4em", fontWeight:"bold"}}>
-                    <div>{posts?.name}</div>
+                    <div>{postList?.name}</div>
                 </div>
                 <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
                     <div style={{display:"flex", flexDirection:"row", fontSize:"0.9em"}}>
-                        <div style={{fontWeight:"bold"}}>{posts?.totalCount.toLocaleString()}</div>
+                        <div style={{fontWeight:"bold"}}>{postList?.totalCount.toLocaleString()}</div>
                         <div>개의 게시글</div>
                     </div>
                     <div style={{display:"flex", flexDirection:"row"}}>
-                        <button className="noEffect" style={{backgroundColor:"#3273dc", borderRadius:"4px", marginRight:"5px", color:"white", fontSize:"14px"}} onClick={() => writePost(posts?.id)}>글쓰기</button>
+                        <button className="noEffect" style={{backgroundColor:"#3273dc", borderRadius:"4px", marginRight:"5px", color:"white", fontSize:"14px"}} onClick={() => writePost(postList?.id)}>글쓰기</button>
                         <Dropdown>
                             <Dropdown.Toggle variant="primary" size="sm" id="dropdown-basic" style={{backgroundColor:"#3273dc"}}>
                                 {pageSize}개씩
@@ -153,7 +161,7 @@ const Pages = () => {
                                 {pageSizeList.map((res, idx) => 
                                     <Dropdown.Item
                                         key={idx}
-                                        onClick={() => changeData(0, res, posts?.id, posts?.name)}
+                                        onClick={() => changeData(0, res, postList?.id, postList?.name)}
                                     >
                                         {res}개씩
                                     </Dropdown.Item>
@@ -164,7 +172,7 @@ const Pages = () => {
                 </div>
             </div>
             {/* 게시글 리스트 */}
-            {posts?.boards.length > 0 ? pageList() : noPost()}
+            {postList?.boards.length > 0 ? pageList() : noPost()}
         </div>
     );
 }

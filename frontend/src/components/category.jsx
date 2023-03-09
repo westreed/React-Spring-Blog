@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setCategory } from "../store/category";
-import { setPosts } from "../store/posts";
+import { setPostList } from "../store/postList";
 import API from "../utils/api";
 import Functions from "../utils/functions";
 
@@ -35,7 +35,7 @@ const Categories = () => {
         };
         const res = await API.getCategoryPosts(req);
         if (res !== null) res.name = data.name;
-        dispatch(setPosts(res));
+        dispatch(setPostList(res));
         if (res !== null) navigate(`/category`);
     }
 

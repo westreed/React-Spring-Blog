@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Pages from "../components/pages";
-import { setPosts } from "../store/posts";
+import { setPostList } from "../store/postList";
 import API from "../utils/api";
 
 
 const Home = () => {
     const dispatch = useDispatch();
     const pageSize = useSelector((state) => state.pageSize.data);
-    const posts = useSelector((state) => state.posts.data);
+    const postList = useSelector((state) => state.postList.data);
 
     const select = async() => {
         const req = {
@@ -19,20 +19,21 @@ const Home = () => {
         const res = await API.getCategoryPosts(req);
         if (res !== false){
             res.name = "전체글보기";
-            dispatch(setPosts(res));
+            dispatch(setPostList(res));
         }
         else{
-            dispatch(setPosts(null));
+            dispatch(setPostList(null));
         }
     }
 
     useEffect(() => {
         select();
+        // eslint-disable-next-line
     }, [])
     
-    if(posts == null){
+    if(postList == null){
         return (
-            <div></div>
+            <div/>
         );
     }
     return (

@@ -15,6 +15,7 @@ const Write = () => {
         return () => {
             dispatch(setWidgets(true));
         }
+        // eslint-disable-next-line
     }, [])
 
     return (
