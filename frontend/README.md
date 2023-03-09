@@ -11,6 +11,7 @@
 * ~~게시글 보기~~
 * 게시글 이미지 첨부 기능
 * 게시글 파일 첨부 기능
+* 게시글 코드 하이라이팅 지원
 * 댓글 작성
 * 댓글 보기
 * 회원가입
@@ -52,7 +53,7 @@ const about = (props) => {
 
 
 ---
-### Babel Parsing Error
+### 4. Babel Parsing Error
 
 CKEditor5를 커스텀해서 쓰려면, webpack을 추출해야하는데 이때 모든 React 코드에 babel error가 뜸.
 해결방법은
