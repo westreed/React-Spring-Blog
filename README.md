@@ -30,12 +30,14 @@ PC 화면
   <img src="https://github.com/westreed/React-Spring-Blog/blob/main/img/PC-1.png" width="49%" height="49%" />
   <img src="https://github.com/westreed/React-Spring-Blog/blob/main/img/PC-2.png" width="49%" height="49%" />
   <img src="https://github.com/westreed/React-Spring-Blog/blob/main/img/PC-3.png" width="49%" height="49%" />
+  <img src="https://github.com/westreed/React-Spring-Blog/blob/main/img/PC-4.png" width="49%" height="49%" />
 </div>
 
 
 모바일 화면
 <div style="display:flex; flex-direction:row;">
-  <img src="https://github.com/westreed/React-Spring-Blog/blob/main/img/M-1.png" width="32%" height="32%" />
-  <img src="https://github.com/westreed/React-Spring-Blog/blob/main/img/M-2.png" width="32%" height="32%" />
-  <img src="https://github.com/westreed/React-Spring-Blog/blob/main/img/M-3.png" width="32%" height="32%" />
+  <img src="https://github.com/westreed/React-Spring-Blog/blob/main/img/M-1.png" width="24%" height="24%" />
+  <img src="https://github.com/westreed/React-Spring-Blog/blob/main/img/M-2.png" width="24%" height="24%" />
+  <img src="https://github.com/westreed/React-Spring-Blog/blob/main/img/M-3.png" width="24%" height="24%" />
+  <img src="https://github.com/westreed/React-Spring-Blog/blob/main/img/M-4.png" width="24%" height="24%" />
 </div>
