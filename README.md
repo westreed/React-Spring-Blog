@@ -18,3 +18,7 @@ java -jar -Dspring.profiles.active=prod 파일명.jar
 * SpringBoot
 * JPA
 * MySQL
+
+## 사용된 오픈소스
+
+* CKEditor5 (Post editor)
