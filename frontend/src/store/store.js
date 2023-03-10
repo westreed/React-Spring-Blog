@@ -7,6 +7,7 @@ import modal from "./slice/modal";
 import pageSize from "./slice/pageSize";
 import posting from "./slice/posting";
 import postList from "./slice/postList";
+import refList from "./slice/refList";
 import storeKey from "./slice/storeKey";
 import widgets from "./slice/widgets";
 import writing from "./slice/writing";
@@ -27,7 +28,8 @@ const reducers = combineReducers({
     posting: posting.reducer,
     widgets: widgets.reducer,
     writing: writing.reducer,
-    storeKey: storeKey.reducer
+    storeKey: storeKey.reducer,
+    refList: refList.reducer
 })
 
 const persistedReducer = persistReducer(persistConfig, reducers);
