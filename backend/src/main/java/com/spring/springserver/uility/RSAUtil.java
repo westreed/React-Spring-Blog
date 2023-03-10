@@ -8,6 +8,7 @@ import java.security.*;
 import java.security.spec.RSAPublicKeySpec;
 
 public class RSAUtil {
+    // TODO: logger 사용법 나중에 찾아보기
     private static  final Logger logger = LoggerFactory.getLogger(RSAUtil.class);
 
     private KeyPairGenerator generator;
