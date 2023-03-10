@@ -131,3 +131,13 @@ a:hover {
     background-color: #3273dc;
     color: white;
 }
+
+.postCard {
+    outline: 1px solid #ffffff;
+    transition: all 0.6s;
+}
+
+.postCard:hover {
+    outline: 1px solid #7286D3;
+    transition: all 0.6s;
+}

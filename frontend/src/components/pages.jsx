@@ -1,5 +1,5 @@
 import moment from "moment/moment";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -46,11 +46,13 @@ const Pages = () => {
     const categories = useSelector((state) => state.category.data);
     const pageSize = useSelector((state) => state.pageSize.data);
     const member = useSelector((state) => state.member.data);
+    const headerRef = useSelector((state) => state.refList.header);
     const nowMoment = moment();
-    const headerRef = useRef(null);
 
     const scrollToRef = () => {
-        headerRef.current.scrollIntoView({ behavior: 'smooth' });
+        if(headerRef){
+            headerRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
     };
 
     const changeData = async(page, size, id, name) => {
@@ -105,7 +107,7 @@ const Pages = () => {
             <div>
                 <div>
                 {postList?.boards.map((res, idx) => 
-                    <div className="blogCard shadow-sm bg-body rounded" key={idx}>
+                    <div className="blogCard postCard shadow-sm bg-body rounded" key={idx}>
                         <div style={{display:"flex", flexDirection:"row", color:"grey", fontSize:"0.8em"}}>
                             <div style={{marginRight:"0.5em"}}>{formmatedDate(res.createData)}</div>
                             <div>카테고리｜</div>
@@ -140,9 +142,9 @@ const Pages = () => {
     }
 
     return (
-        <div ref={headerRef} style={{width:"100%"}}>
+        <div style={{width:"100%"}}>
             {/* 카테고리 헤더 */}
-            <div className="blogCard shadow-sm bg-body rounded" style={{backgroundColor:"#f7f7f7"}}>
+            <div className="blogCard postCard shadow-sm bg-body rounded" style={{backgroundColor:"#f7f7f7"}}>
                 <div style={{marginBottom:"6px", fontSize:"1.4em", fontWeight:"bold"}}>
                     <div>{postList?.name}</div>
                 </div>
