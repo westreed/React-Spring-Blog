@@ -10,17 +10,11 @@ import Forbidden from './components/forbidden';
 import PostList from './pages/postList';
 import Post from './pages/post';
 import Write from './pages/write';
+import Functions from './utils/functions';
 
 
-const Routing = () => {
+const AppRoute = () => {
     const member = useSelector((state) => state.member.data);
-
-    const isAdmin = (member) => {
-        if (member != null && member.role === 'admin'){
-            return true;
-        }
-        return false;
-    }
 
     return (
         <BrowserRouter>
@@ -32,7 +26,7 @@ const Routing = () => {
                         <Widget/>
                         <Routes>
                             <Route exact path='/' element={<Home/>} />
-                            <Route exact path='/settings' element={isAdmin(member) ?<Settings/> : <Forbidden/>}/>
+                            <Route exact path='/settings' element={Functions.isAdmin(member) ?<Settings/> : <Forbidden/>}/>
                             <Route exact path='/category' element={<PostList/>}/>
                             <Route exact path='/write' element={<Write/>}/>
                             <Route exact path='/post/:id' element={<Post/>}/>
@@ -45,4 +39,4 @@ const Routing = () => {
     );
 }
 
-export default Routing;
+export default AppRoute;

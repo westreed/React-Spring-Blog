@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setMember } from './store/slice/member';
-import Routing from './Routing';
+import AppRoute from './AppRoute';
 import API from './utils/api';
 
 
@@ -20,7 +20,7 @@ const App = () => {
 
     return (
         <div className="App">
-            <Routing/>
+            <AppRoute />
         </div>
     );
 }

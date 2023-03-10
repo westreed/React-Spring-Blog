@@ -8,6 +8,12 @@ const Functions = {
             return 1;
         });
         return arr;
+    },
+    isAdmin: (member) => {
+        if (member != null && member.role === 'admin'){
+            return true;
+        }
+        return false;
     }
 }
 
