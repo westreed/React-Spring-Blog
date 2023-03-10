@@ -120,3 +120,9 @@ https://naubull2.tistory.com/166
 https://tech-monster.tistory.com/95
 
 ---
+
+## 7. Nginx로 배포
+
+https://tobegood.tistory.com/entry/Nginx%EB%A1%9C-React%EB%A5%BC-%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0-%EC%9A%B0%EB%B6%84%ED%88%AC-%ED%99%98%EA%B2%BD
+
+---

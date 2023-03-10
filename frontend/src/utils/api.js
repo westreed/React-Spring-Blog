@@ -1,11 +1,11 @@
 import axios from "axios";
 
 axios.defaults.withCredentials = true;
-const apiLink = process.env.REACT_APP_API_ENDPOINT;
+// const apiLink = process.env.REACT_APP_API_ENDPOINT;
 const API = {
     getSession: async() => {
         try{
-            const res = await axios.get(`${apiLink}/api/session`);
+            const res = await axios.get(`/api/session`);
             return res.data;
         }
         catch(error){
@@ -15,7 +15,7 @@ const API = {
     },
     getCategories: async() => {
         try{
-            const res = await axios.get(`${apiLink}/api/categories`);
+            const res = await axios.get(`/api/categories`);
             return res.data;
         }
         catch(error){
@@ -25,7 +25,7 @@ const API = {
     },
     postCategories: async(data) => {
         try{
-            const res = await axios.post(`${apiLink}/api/categories`, data);
+            const res = await axios.post(`/api/categories`, data);
             return res.data;
         }
         catch(error){
@@ -35,7 +35,7 @@ const API = {
     },
     getRsakey: async() => {
         try {
-            const res = await axios.get(`${apiLink}/api/key`);
+            const res = await axios.get(`/api/key`);
             return {
                 modulus: res.data.modulus,
                 exponent: res.data.exponent,
@@ -48,7 +48,7 @@ const API = {
     },
     login: async(data) => {
         try {
-            const res = await axios.post(`${apiLink}/api/login`, data);
+            const res = await axios.post(`/api/login`, data);
             return {error:false, data:res.data};
         }
         catch(error){
@@ -58,7 +58,7 @@ const API = {
     },
     logout: async() => {
         try {
-            await axios.get(`${apiLink}/api/logout`);
+            await axios.get(`/api/logout`);
             return true;
         }
         catch(error){
@@ -68,7 +68,7 @@ const API = {
     },
     getCategoryPosts: async(data) => {
         try {
-            const res = await axios.get(`${apiLink}/api/posts`, {params:data});
+            const res = await axios.get(`/api/posts`, {params:data});
             return res.data;
         }
         catch(error){
@@ -78,7 +78,7 @@ const API = {
     },
     getPost: async(data) => {
         try {
-            const res = await axios.get(`${apiLink}/api/post`, {params:data});
+            const res = await axios.get(`/api/post`, {params:data});
             return res.data;
         }
         catch(error){
@@ -88,7 +88,7 @@ const API = {
     },
     addViewCount: async(data) => {
         try {
-            const res = await axios.put(`${apiLink}/api/post`, {id:data});
+            const res = await axios.put(`/api/post`, {id:data});
             return res.data;
         }
         catch(error){
@@ -98,7 +98,7 @@ const API = {
     },
     addLike: async(data) => {
         try {
-            const res = await axios.post(`${apiLink}/api/like/${data}`);
+            const res = await axios.post(`/api/like/${data}`);
             return res.data;
         }
         catch(error){
@@ -108,7 +108,7 @@ const API = {
     },
     removeLike: async(data) => {
         try {
-            const res = await axios.delete(`${apiLink}/api/like/${data}`);
+            const res = await axios.delete(`/api/like/${data}`);
             return res.data;
         }
         catch(error){
@@ -118,7 +118,7 @@ const API = {
     },
     writePost: async(data) => {
         try{
-            const res = await axios.post(`${apiLink}/api/write`, data);
+            const res = await axios.post(`/api/write`, data);
             return res.data;
         }
         catch(error){
