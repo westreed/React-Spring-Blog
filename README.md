@@ -19,7 +19,7 @@
 ## 서버 배포
 
 ```bash
-serve -s build -p 80 // React앱을 serve로 배포 (프록시 설정이 불가능해서 사용 X)
+serve -s build -p 80 # React앱을 serve로 배포 (프록시 설정이 불가능해서 사용 X)
 java -jar -Dspring.profiles.active=prod 파일명.jar
 ```
 
@@ -44,7 +44,7 @@ server {
 ```bash
 sudo systemctl stop nginx
 sudo systemctl start nginx
-sudo systemctl status nginx // 웹서버 동작 상태 확인하는 명령어
+sudo systemctl status nginx # 웹서버 동작 상태 확인하는 명령어
 ```
 
 ## Preview
