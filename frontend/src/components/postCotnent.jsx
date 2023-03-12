@@ -15,6 +15,7 @@ const PostCotnent = (props) => {
     const navigate = useNavigate();
     const params = useParams();
     const member = useSelector((state) => state.member.data);
+    const categories = useSelector((state) => state.category.data);
     const pageSize = useSelector((state) => state.pageSize.data);
     const posting = useSelector((state) => state.posting.data);
     const dispatch = useDispatch();
@@ -67,6 +68,17 @@ const PostCotnent = (props) => {
             setLike(true);
             setLikeCount(likeCount+1);
         }
+    }
+
+    const clickEdit = (id) => {
+        let idx = 0;
+        for(let i=0; i<categories.length; i++){
+            if (categories[i].id === id){
+                idx = i+1;
+                break;
+            }
+        }
+        navigate(`/write`, {state:{id:idx, edit:true}});
     }
 
     const scrollToRef = () => {
@@ -128,7 +140,7 @@ const PostCotnent = (props) => {
                     </div>
                     <div style={{display:"flex", flexDirection:"row"}}>
                         {/* Edit */}
-                        <button className="noEffect useButton2" style={{border:"1px solid #c3c3c3", alignItems:"center", fontSize:"0.9em", padding:"4px"}}>
+                        <button className="noEffect useButton2" style={{border:"1px solid #c3c3c3", alignItems:"center", fontSize:"0.9em", padding:"4px"}} onClick={() => clickEdit(posting?.category.id)}>
                             <div>수정</div>
                         </button>
                         {/* Delete */}

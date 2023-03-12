@@ -46,4 +46,10 @@ public class BoardController {
         boardService.uploadPost(board);
         return "success";
     }
+
+    @PostMapping("/api/edit")
+    public String editPost(@RequestBody BoardDto.Edit edit) throws IllegalAccessException {
+        boardService.editPost(edit);
+        return "success";
+    }
 }

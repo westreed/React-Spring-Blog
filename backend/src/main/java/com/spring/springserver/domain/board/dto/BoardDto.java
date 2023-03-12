@@ -132,4 +132,24 @@ public class BoardDto {
             this.category = category;
         }
     }
+
+    @Setter
+    @Getter
+    @NoArgsConstructor
+    public static class Edit {
+        private Long id;
+        private String title;
+        private String content;
+        private String email;
+        private Long category;
+
+        @Builder
+        public Edit(Long id, String title, String content, String email, Long category){
+            this.id = id;
+            this.title = title;
+            this.content = content;
+            this.email = email;
+            this.category = category;
+        }
+    }
 }

@@ -21,7 +21,7 @@ const Write = () => {
     return (
         <div className="Write">
             <div style={{width:"100%", height:"100%", marginBottom:"-48px"}}>
-                <Editor category={location.state?.id} types={0} />
+                <Editor category={location.state?.id} edit={location.state?.edit ? true : false} types={0} />
             </div>
         </div>
     );

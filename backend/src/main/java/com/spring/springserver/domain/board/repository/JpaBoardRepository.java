@@ -2,6 +2,7 @@ package com.spring.springserver.domain.board.repository;
 
 import com.spring.springserver.domain.board.dto.BoardDto;
 import com.spring.springserver.domain.board.entity.Board;
+import com.spring.springserver.domain.category.entity.Category;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -134,5 +135,16 @@ public class JpaBoardRepository implements BoardRepository {
         Board board = entityManager.find(Board.class, id);
         board.setView(board.getView()+1);
         entityManager.flush();
+    }
+
+    @Override
+    public void updatePostByEdit(BoardDto.Edit edit, Category category) {
+        String jpql = "Update Board b Set b.title = :title, b.content = :content, b.category = :category Where b.id = :id";
+        entityManager.createQuery(jpql)
+                .setParameter("id", edit.getId())
+                .setParameter("title", edit.getTitle())
+                .setParameter("content", edit.getContent())
+                .setParameter("category", category)
+                .executeUpdate();
     }
 }

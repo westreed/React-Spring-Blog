@@ -92,6 +92,7 @@ import { setWriting } from "../../store/slice/writing";
 import { setPreviousModal } from "../../store/slice/modal";
 import Previous from "./previous";
 import { useNavigate } from "react-router-dom";
+import { setMember } from "../../store/slice/member";
 
 const editorConfig = {
     language: "ko",
@@ -316,6 +317,7 @@ const Editor = (props) => {
     const [editorInstance, setEditorInstance] = useState(null);
     const categories = useSelector((state) => state.category.data);
     const writing = useSelector((state) => state.writing.data);
+    const posting = useSelector((state) => state.posting.data);
     // const [content, setContent] = useState('');
     // const imgLink = "http://localhost:8080/uploads";
 
@@ -351,7 +353,6 @@ const Editor = (props) => {
     //         return customUploadAdapter(loader);
     //     }
     // }
-    console.log("이전에 작성된 글 여부", writing);
 
     const config = props.types === 0 ? editorConfig : null;
     useEffect(() => {
@@ -376,20 +377,29 @@ const Editor = (props) => {
         }
         fetchData();
         
-        if(writing != null){
+        if(writing != null && props.edit === false){
             dispatch(setPreviousModal(true));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    useEffect(() => {
+        // Edit 일때, 게시글 내용 불러오기
+        if(props?.edit && editorInstance != null){
+            const data = `<h1>${posting?.title}</h1>${posting?.content}`;
+            editorInstance.setData(data);
+        }
+    }, [editorInstance])
+
     const selectCategory = (idx) => {
         setCategoryId(idx+1);
     }
 
-    const publish = async() => {
-        const user = await API.getSession();
-        console.log(user);
-        if (user.email == null){
+    const checkBeforePost = async() => {
+        let user = await API.getSession();
+        if (user.role === null){user = null;}
+        dispatch(setMember(user));
+        if (user == null || user.email == null){
             alert("로그인을 먼저 해야합니다.");
             return false;
         }
@@ -398,20 +408,46 @@ const Editor = (props) => {
         const title = doc.querySelector('h1').textContent;
         const detail = writing.substring(writing.indexOf("</h1>")+5);
         const data = {
-            title: title,
+            title: title.trim(),
             content: detail,
             email: user.email,
             category: categories[categoryId-1].id
         }
-        console.log(data);
-        const res = await API.writePost(data);
-        if (res == null){
-            alert("게시글을 업로드하는데 실패했습니다.");
+        if(data.title === ''){
+            alert("게시글 제목을 작성해주세요.");
             return false;
         }
-        dispatch(setWriting(null));
-        alert("게시글을 업로드했습니다!");
-        navigate(`/`);
+        return data;
+    }
+
+    const postEdit = async() => {
+        const data = await checkBeforePost();
+        if (data !== false){
+            data.id = posting.id;
+            console.log(data);
+            const res = await API.editPost(data);
+            if (res == null){
+                alert("게시글을 수정하는데 실패했습니다.");
+                return false;
+            }
+            dispatch(setWriting(null));
+            alert("게시글을 수정했습니다!");
+            navigate(`/`);
+        }
+    }
+
+    const publish = async() => {
+        const data = await checkBeforePost();
+        if (data !== false){
+            const res = await API.writePost(data);
+            if (res == null){
+                alert("게시글을 업로드하는데 실패했습니다.");
+                return false;
+            }
+            dispatch(setWriting(null));
+            alert("게시글을 업로드했습니다!");
+            navigate(`/`);
+        }
     }
 
     return (
@@ -437,7 +473,7 @@ const Editor = (props) => {
                         </Dropdown>
                     </div>
                 </div>
-                <button className="noEffect ck-publish" onClick={publish}>
+                <button className="noEffect ck-publish" onClick={props.edit ? postEdit : publish}>
                     <Plane width="1.3em" height="1.3em" fill="#ffffff" />
                     <span> 발행</span>
                 </button>
@@ -452,7 +488,7 @@ const Editor = (props) => {
                     const data = editor.getData();
                     dispatch(setWriting(data));
                     // setContent(data);
-                    console.log({ event, editor, data });
+                    // console.log({ event, editor, data });
                 }}
             />
             <Previous editor={editorInstance} />

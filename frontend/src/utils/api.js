@@ -125,6 +125,16 @@ const API = {
             console.log(error);
             return null;
         }
+    },
+    editPost: async(data) => {
+        try{
+            const res = await axios.post(`/api/edit`, data);
+            return res.data;
+        }
+        catch(error){
+            console.log(error);
+            return false;
+        }
     }
 }
 

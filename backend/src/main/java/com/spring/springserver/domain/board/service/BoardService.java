@@ -97,4 +97,16 @@ public class BoardService {
     public void uploadPost(Board board){
         boardRepository.save(board);
     }
+
+    public void editPost(BoardDto.Edit edit) throws IllegalAccessException {
+        Optional<Member> member = memberRepository.findByEmail(edit.getEmail());
+        if (member.isEmpty()){
+            throw new IllegalAccessException("유저가 존재하지 않습니다.");
+        }
+        Optional<Category> category = categoryRepository.findById(edit.getCategory());
+        if (category.isEmpty()){
+            throw new IllegalAccessException("카테고리가 존재하지 않습니다.");
+        }
+        boardRepository.updatePostByEdit(edit, category.get());
+    }
 }
