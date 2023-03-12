@@ -99,6 +99,22 @@ const PostCotnent = (props) => {
         // eslint-disable-next-line
     }, [params.id, member])
 
+    const postOptionView = () => {
+        if (member === null || member?.email !== posting?.member.email) return(<div/>);
+        return (
+            <div style={{display:"flex", flexDirection:"row"}}>
+                {/* Edit */}
+                <button className="noEffect useButton2" style={{border:"1px solid #c3c3c3", alignItems:"center", fontSize:"0.9em", padding:"4px"}} onClick={() => clickEdit(posting?.category.id)}>
+                    <div>수정</div>
+                </button>
+                {/* Delete */}
+                <button className="noEffect useButton2" style={{border:"1px solid #c3c3c3", borderLeft:"0px", alignItems:"center", fontSize:"0.9em", padding:"4px"}} onClick={() => clickDelete()}>
+                    <div>삭제</div>
+                </button>
+            </div>
+        );
+    }
+
     return (
         <div>
             {/* Header */}
@@ -146,16 +162,7 @@ const PostCotnent = (props) => {
                             <div>0</div>
                         </button>
                     </div>
-                    <div style={{display:"flex", flexDirection:"row"}}>
-                        {/* Edit */}
-                        <button className="noEffect useButton2" style={{border:"1px solid #c3c3c3", alignItems:"center", fontSize:"0.9em", padding:"4px"}} onClick={() => clickEdit(posting?.category.id)}>
-                            <div>수정</div>
-                        </button>
-                        {/* Delete */}
-                        <button className="noEffect useButton2" style={{border:"1px solid #c3c3c3", borderLeft:"0px", alignItems:"center", fontSize:"0.9em", padding:"4px"}} onClick={() => clickDelete()}>
-                            <div>삭제</div>
-                        </button>
-                    </div>
+                    {postOptionView()}
                 </div>
             </div>
         </div>
