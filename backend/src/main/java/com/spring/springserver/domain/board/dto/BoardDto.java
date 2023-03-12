@@ -21,7 +21,7 @@ public class BoardDto {
         private Long id;
         private String title;
         private int view;
-        private MemberDto.Search member;
+        private MemberDto.UserData member;
         private CategoryDto.Search category;
         private Timestamp createData;
 
@@ -30,7 +30,7 @@ public class BoardDto {
             this.id = board.getId();
             this.title = board.getTitle();
             this.view = board.getView();
-            this.member = new MemberDto.Search(board.getMember());
+            this.member = new MemberDto.UserData(board.getMember());
             this.category = new CategoryDto.Search(board.getCategory());
             this.createData = board.getCreateData();
         }
@@ -82,7 +82,7 @@ public class BoardDto {
         private String content;
         private int view;
         private List<RecommendDto.RecommendUser> recommends;
-        private MemberDto.Search member;
+        private MemberDto.UserData member;
         private CategoryDto.Search category;
         private boolean likeState;
         private int likeCount;
@@ -90,7 +90,7 @@ public class BoardDto {
         private Timestamp createData;
 
         @Builder
-        public Post (Board board, List<RecommendDto.RecommendUser> recommends, MemberDto.Search member, CategoryDto.Search category, boolean likeState, int likeCount){
+        public Post (Board board, List<RecommendDto.RecommendUser> recommends, MemberDto.UserData member, CategoryDto.Search category, boolean likeState, int likeCount){
             this.id = board.getId();
             this.title = board.getTitle();
             this.content = board.getContent();

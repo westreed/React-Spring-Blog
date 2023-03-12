@@ -67,7 +67,7 @@ public class BoardService {
                     .likeState(likeState)
                     .likeCount(recommends.size())
                     .category(new CategoryDto.Search(board.getCategory()))
-                    .member(new MemberDto.Search(board.getMember()))
+                    .member(new MemberDto.UserData(board.getMember()))
                     .build();
         }
         throw new IllegalAccessException("해당 게시글은 존재하지 않습니다.");

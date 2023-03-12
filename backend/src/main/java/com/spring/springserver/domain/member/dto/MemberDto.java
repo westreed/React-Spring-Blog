@@ -72,4 +72,17 @@ public class MemberDto {
             this.username = member.getUsername();
         }
     }
+
+    @Setter
+    @Getter
+    @NoArgsConstructor
+    public static class UserData {
+        private String username;
+        private String email;
+
+        public UserData (Member member){
+            this.username = member.getUsername();
+            this.email = member.getEmail();
+        }
+    }
 }
