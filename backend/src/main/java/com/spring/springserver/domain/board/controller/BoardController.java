@@ -41,15 +41,20 @@ public class BoardController {
     }
 
     @PostMapping("/api/write")
-    public String writePost(@RequestBody BoardDto.Write write) throws IllegalAccessException {
+    public Long writePost(@RequestBody BoardDto.Write write) throws IllegalAccessException {
         Board board = boardService.initPostByUser(write);
-        boardService.uploadPost(board);
-        return "success";
+        return boardService.uploadPost(board).getId();
     }
 
     @PostMapping("/api/edit")
     public String editPost(@RequestBody BoardDto.Edit edit) throws IllegalAccessException {
         boardService.editPost(edit);
+        return "success";
+    }
+
+    @DeleteMapping("api/post")
+    public String deletePost(@RequestParam Long id, @SessionAttribute(name="auth", required = false) MemberDto.Auth auth) throws IllegalAccessException {
+        boardService.deletePost(id, auth);
         return "success";
     }
 }

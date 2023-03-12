@@ -432,7 +432,7 @@ const Editor = (props) => {
             }
             dispatch(setWriting(null));
             alert("게시글을 수정했습니다!");
-            navigate(`/`);
+            navigate(`/post/${posting.id}`);
         }
     }
 
@@ -446,7 +446,7 @@ const Editor = (props) => {
             }
             dispatch(setWriting(null));
             alert("게시글을 업로드했습니다!");
-            navigate(`/`);
+            navigate(`/post/${res}`);
         }
     }
 

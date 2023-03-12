@@ -133,7 +133,17 @@ const API = {
         }
         catch(error){
             console.log(error);
-            return false;
+            return null;
+        }
+    },
+    deletePost: async(data) => {
+        try{
+            const res = await axios.delete(`/api/post`, {params:data});
+            return res.data;
+        }
+        catch(error){
+            console.log(error);
+            return null;
         }
     }
 }

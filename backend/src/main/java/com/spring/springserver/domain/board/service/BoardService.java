@@ -94,8 +94,8 @@ public class BoardService {
                 .build();
     }
 
-    public void uploadPost(Board board){
-        boardRepository.save(board);
+    public Board uploadPost(Board board){
+        return boardRepository.save(board);
     }
 
     public void editPost(BoardDto.Edit edit) throws IllegalAccessException {
@@ -108,5 +108,21 @@ public class BoardService {
             throw new IllegalAccessException("카테고리가 존재하지 않습니다.");
         }
         boardRepository.updatePostByEdit(edit, category.get());
+    }
+
+    public void deletePost(Long id, MemberDto.Auth auth) throws IllegalAccessException {
+        Optional<Board> res_board = boardRepository.findById(id);
+        if (res_board.isEmpty()) throw new IllegalAccessException("게시글이 존재하지 않습니다.");
+        Board board = res_board.get();
+
+        if (auth == null) throw new IllegalStateException("로그인되지 않은 유저가 게시글 삭제를 시도했습니다.");
+        Optional<Member> res_member = memberRepository.findByEmail(auth.getEmail());
+        if (res_member.isEmpty()) throw new IllegalAccessException("유저가 존재하지 않습니다.");
+        Member member = res_member.get();
+
+        if (Objects.equals(member.getRole(), "admin") || Objects.equals(board.getMember().getId(), member.getId())){
+            boardRepository.delete(board);
+        }
+        else throw new IllegalAccessException("해당 게시글을 삭제할 권한이 없습니다.");
     }
 }

@@ -81,6 +81,14 @@ const PostCotnent = (props) => {
         navigate(`/write`, {state:{id:idx, edit:true}});
     }
 
+    const clickDelete = async() => {
+        const res = await API.deletePost({id : posting?.id});
+        if (res){
+            alert("게시글을 삭제했습니다.");
+            navigate(-1);
+        }
+    }
+
     const scrollToRef = () => {
         props.headerRef.current.scrollIntoView({ behavior: 'smooth' });
     };
@@ -144,7 +152,7 @@ const PostCotnent = (props) => {
                             <div>수정</div>
                         </button>
                         {/* Delete */}
-                        <button className="noEffect useButton2" style={{border:"1px solid #c3c3c3", borderLeft:"0px", alignItems:"center", fontSize:"0.9em", padding:"4px"}}>
+                        <button className="noEffect useButton2" style={{border:"1px solid #c3c3c3", borderLeft:"0px", alignItems:"center", fontSize:"0.9em", padding:"4px"}} onClick={() => clickDelete()}>
                             <div>삭제</div>
                         </button>
                     </div>
