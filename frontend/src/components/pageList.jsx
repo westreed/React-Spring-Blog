@@ -39,20 +39,17 @@ const bottomPageList = (postList, pageSize, changeData, scrollToRef) => {
     return pageElement;
 }
 
-const Pages = () => {
+const PageList = (props) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const postList = useSelector((state) => state.postList.data);
     const categories = useSelector((state) => state.category.data);
     const pageSize = useSelector((state) => state.pageSize.data);
     const member = useSelector((state) => state.member.data);
-    const headerRef = useSelector((state) => state.refList.header);
     const nowMoment = moment();
 
     const scrollToRef = () => {
-        if(headerRef){
-            headerRef.current.scrollIntoView({ behavior: 'smooth' });
-        }
+        props.headerRef.current.scrollIntoView({ behavior: 'smooth' });
     };
 
     const changeData = async(page, size, id, name) => {
@@ -179,4 +176,4 @@ const Pages = () => {
     );
 }
 
-export default Pages;
+export default PageList;
