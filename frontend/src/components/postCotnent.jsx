@@ -11,13 +11,12 @@ import { ReactComponent as Heart1 } from "../assets/heart1-svgrepo-com.svg";
 import { ReactComponent as Heart2 } from "../assets/heart2-svgrepo-com.svg";
 import { ReactComponent as Comment } from "../assets/comment-dots-svgrepo-com.svg";
 
-const PostCotnent = () => {
+const PostCotnent = (props) => {
     const navigate = useNavigate();
     const params = useParams();
     const member = useSelector((state) => state.member.data);
     const pageSize = useSelector((state) => state.pageSize.data);
     const posting = useSelector((state) => state.posting.data);
-    const headerRef = useSelector((state) => state.refList.header);
     const dispatch = useDispatch();
     const [like, setLike] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
@@ -71,9 +70,7 @@ const PostCotnent = () => {
     }
 
     const scrollToRef = () => {
-        if(headerRef){
-            headerRef.current.scrollIntoView({ behavior: 'smooth' });
-        }
+        props.headerRef.current.scrollIntoView({ behavior: 'smooth' });
     };
 
     useEffect(() => {

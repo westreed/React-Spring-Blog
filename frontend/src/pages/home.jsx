@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Pages from "../components/pages";
+import PageList from "../components/pageList";
 import { setPostList } from "../store/slice/postList";
 import API from "../utils/api";
 
 
-const Home = () => {
+const Home = (props) => {
     const dispatch = useDispatch();
     const pageSize = useSelector((state) => state.pageSize.data);
     const postList = useSelector((state) => state.postList.data);
@@ -38,7 +38,7 @@ const Home = () => {
     }
     return (
         <div style={{width:"100%"}}>
-            <Pages/>
+            <PageList headerRef={props.headerRef} />
         </div>
     );
 }

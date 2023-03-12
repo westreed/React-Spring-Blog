@@ -1,4 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import logger from 'redux-logger';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import category from "./slice/category";
@@ -7,7 +8,6 @@ import modal from "./slice/modal";
 import pageSize from "./slice/pageSize";
 import posting from "./slice/posting";
 import postList from "./slice/postList";
-import refList from "./slice/refList";
 import storeKey from "./slice/storeKey";
 import widgets from "./slice/widgets";
 import writing from "./slice/writing";
@@ -29,12 +29,15 @@ const reducers = combineReducers({
     widgets: widgets.reducer,
     writing: writing.reducer,
     storeKey: storeKey.reducer,
-    refList: refList.reducer
 })
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 
 export const store = configureStore({
-    reducer: persistedReducer
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: false
+        })//.concat(logger),
 });
