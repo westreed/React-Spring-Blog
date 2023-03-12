@@ -486,7 +486,7 @@ const Editor = (props) => {
                 }}
                 onChange={(event, editor) => {
                     const data = editor.getData();
-                    dispatch(setWriting(data));
+                    if (!props.edit) dispatch(setWriting(data));
                     // setContent(data);
                     // console.log({ event, editor, data });
                 }}
