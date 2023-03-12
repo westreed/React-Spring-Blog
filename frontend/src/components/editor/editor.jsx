@@ -404,9 +404,10 @@ const Editor = (props) => {
             return false;
         }
         const parser = new DOMParser();
-        const doc = parser.parseFromString(writing, "text/html");
+        const postContent = editorInstance.getData();
+        const doc = parser.parseFromString(postContent, "text/html");
         const title = doc.querySelector('h1').textContent;
-        const detail = writing.substring(writing.indexOf("</h1>")+5);
+        const detail = postContent.substring(postContent.indexOf("</h1>")+5);
         const data = {
             title: title.trim(),
             content: detail,
@@ -430,7 +431,6 @@ const Editor = (props) => {
                 alert("게시글을 수정하는데 실패했습니다.");
                 return false;
             }
-            dispatch(setWriting(null));
             alert("게시글을 수정했습니다!");
             navigate(`/post/${posting.id}`);
         }
