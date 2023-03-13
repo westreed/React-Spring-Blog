@@ -76,6 +76,10 @@ Type List
 3. Notion
 - 자료 정리는 md 파일보다는 노션을 조금 더 적극적으로 활용하기.
 
+4. Backend Test Code
+- 첫 스프링 플젝이라 놓치고 있던 부분들 중 하나.
+- 백엔드는 특히 오류에 민감한 파트이니, Test Code를 작성하는 습관을 가지기.
+
 ## Preview
 
 PC 화면
