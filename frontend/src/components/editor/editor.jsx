@@ -81,18 +81,17 @@ import '@ckeditor/ckeditor5-alignment/build/translations/ko';
 import '@ckeditor/ckeditor5-find-and-replace/build/translations/ko';
 import '@ckeditor/ckeditor5-style/build/translations/ko';
 import { useEffect, useState } from "react";
-// import axios from "axios";
 import { ReactComponent as Plane } from "../../assets/paper-plane-handmade-folded-shape-svgrepo-com.svg";
 import { Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import API from "../../utils/api";
-import { setCategory } from "../../store/slice/category";
 import Functions from "../../utils/functions";
+import { useNavigate } from "react-router-dom";
+import { setCategory } from "../../store/slice/category";
+import { setMember } from "../../store/slice/member";
 import { setWriting } from "../../store/slice/writing";
 import { setPreviousModal } from "../../store/slice/modal";
-import Previous from "./previous";
-import { useNavigate } from "react-router-dom";
-import { setMember } from "../../store/slice/member";
+import RestorePost from "./restorePost";
 
 const editorConfig = {
     language: "ko",
@@ -491,7 +490,7 @@ const Editor = (props) => {
                     // console.log({ event, editor, data });
                 }}
             />
-            <Previous editor={editorInstance} />
+            <RestorePost editor={editorInstance} />
         </div>
     );
 }

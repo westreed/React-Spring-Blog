@@ -4,7 +4,7 @@ import { setPreviousModal } from "../../store/slice/modal";
 import { setWriting } from "../../store/slice/writing";
 
 
-const Previous = (props) => {
+const RestorePost = (props) => {
     const show = useSelector((state) => state.modal.previous);
     const writing = useSelector((state) => state.writing.data);
     const dispatch = useDispatch();
@@ -42,4 +42,4 @@ const Previous = (props) => {
     );
 }
 
-export default Previous;
+export default RestorePost;
