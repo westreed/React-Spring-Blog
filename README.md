@@ -1,4 +1,4 @@
-# React.js + Spring 공부
+# React.js + Spring + MySQL 공부
 
 공부하려고 만든 레포. 이것저것 대충 끄적이는 용도입니다. <br>
 사이트링크는 http://westreedserver.kro.kr 입니다. <br>
@@ -46,6 +46,35 @@ sudo systemctl stop nginx
 sudo systemctl start nginx
 sudo systemctl status nginx # 웹서버 동작 상태 확인하는 명령어
 ```
+
+## 개선해야할 사항
+
+> 개선사항들은 면접이 끝나면, 차근차근 적용해보기.
+
+1. Git Commit
+- ADD, UPDATE, FIX, REV 방식은 시각적으로도, 또한 코드 추적시에도 불편하다.
+- 앞으로 Commit을 할 땐, 제대로 규칙을 세워서 내용을 작성하기.
+```
+{타입}: {커밋 제목}
+```
+```
+Type List
+* feat: A new feature
+* fix: A bug fix
+* docs: Changes to documentation
+* style: Formatting, missing semi colons, etc; no code change
+* refactor: Refactoring production code
+* test: Adding tests, refactoring test; no production code change
+* chore: Updating build tasks, package manager configs, etc; no production code change
+```
+
+2. Git Branch
+- 이부분은 아직까지는 필요성을 느끼진 못하고 있음.
+- 보통 main, dev, feat 순으로 브랜치를 나눠서 작업을 진행하는 걸 봤었음.
+- feat 브랜치를 만들 때, front, back도 구분해서 만들기.
+
+3. Notion
+- 자료 정리는 md 파일보다는 노션을 조금 더 적극적으로 활용하기.
 
 ## Preview
 
